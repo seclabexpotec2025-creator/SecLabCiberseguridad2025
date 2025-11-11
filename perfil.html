@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil - SecLab</title>
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  .button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+   
+        /* --- Barra de Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Brand (logo + texto) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Enlaces */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links .button {
+  padding: 8px 18px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-accent);
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a  href="team2.html">Contáctanos</a></li> 
+         <li><a class="button" href="perfil.html">Perfil</a></li>
+        </ul>
+        </nav>
+  <div class="bod">
+  <div class="perfil-box">
+    <div class="titulo">
+        <div  class="imagen"><img src="gray-user-profile-icon-png-fP8Q1P.png" alt=""></div>
+        <div class=" user"><h1 id="user"></h1></div>
+    </div>
+
+
+    <div class="info">
+        <h1 id="in">Informacion de usuario</h1>
+    <p id="info"></p>
+    </div>
+
+
+    <div class="acciones">
+         <button onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="perfil-box2">
+    <div class="titulo">
+        <h1>Progreso del curso</h1>
+    </div>
+
+    <div class="info">
+        <p id="examen">Progreso del examen</p>
+       
+    <p id="progreso"></p>
+
+    </div>
+
+  </div>
+</div>
+  <div class="footer">
+    <p>© 2025 SecLab — Seguridad y Confianza Digital</p>
+    <p>San José, Costa Rica | <a href="mailto:contacto@seclab.cr" style="color:inherit; text-decoration:underline">SecLab@gmail.com</a></p>
+  </div>
+  <div id="recaptcha-container" style="height:0;overflow:hidden;"></div>
+  <script type="module" src="JS/perfil.js">
+  </script>
+</body>
+</html>

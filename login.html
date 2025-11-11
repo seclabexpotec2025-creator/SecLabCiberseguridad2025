@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+  /* =================== Paleta =================== */
+  :root{
+    --dark-blue:#1E3A5F;
+    --light-beige:#F2EBE0;
+    --gold-accent:#D4AC5D;
+    --brown-detail:#6B5B51;
+    --white:#ffffff;
+    --shadow:0 4px 20px rgba(0,0,0,.07);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial;
+    background:var(--white); color:#1f2937; line-height:1.6;
+  }
+  .container{ max-width:1200px; margin:0 auto; padding:0 22px; }
+
+  /* =================== NAVBAR (SecLab) =================== */
+  .navbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 22px; background:var(--dark-blue); box-shadow:var(--shadow);
+  }
+  .logo{
+    color:var(--gold-accent); text-decoration:none;
+    font-family:'Playfair Display',serif; font-weight:800; letter-spacing:.5px; font-size:1.4rem;
+  }
+  .nav-links{ list-style:none; display:flex; gap:18px; margin:0; padding:0; }
+  .nav-links a{
+    color:var(--white); text-decoration:none; font-weight:500; padding:8px 10px; border-radius:8px;
+    transition:background .2s ease, color .2s ease;
+  }
+  .nav-links a:hover{ background:rgba(255,255,255,.08); color:var(--gold-accent); }
+
+  /* =================== HERO / TITULO =================== */
+  .hero{
+    background:linear-gradient(180deg, var(--light-beige) 0%, #fff 100%);
+    padding:48px 0 28px; border-bottom:1px solid rgba(0,0,0,.06);
+  }
+  .hero h1{
+    margin:0; text-align:center; color:var(--dark-blue);
+    font-family:'Playfair Display',serif; font-size:clamp(2rem, 1.6rem + 1.5vw, 3rem);
+  }
+  .hero p{ text-align:center; color:var(--brown-detail); margin-top:8px; }
+
+  /* =================== LOGIN CARD =================== */
+  .auth-wrap{
+    display:grid; place-items:center; padding:42px 22px;
+  }
+  .Formulario{
+    width:100%; max-width:420px;
+    background:#fff; border:1px solid rgba(0,0,0,.06);
+    border-radius:16px; box-shadow:var(--shadow);
+    padding:26px 22px 24px;
+  }
+  .Formulario h1{
+    text-align:center; margin-bottom:6px;
+    font-family:'Playfair Display',serif; color:var(--dark-blue);
+    font-size:1.8rem;
+  }
+  .Formulario form{ margin-top:14px; }
+
+  /* Grupos con floating label (input primero, label después) */
+  .username, .contrasena{
+    position:relative; margin:18px 0 20px;
+  }
+  .username input, .contrasena input{
+    width:100%; padding:14px 12px 14px 12px;
+    font-size:1rem; border-radius:12px; outline:none;
+    border:1.5px solid #e5e7eb; background:#fff;
+    transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .username input:focus, .contrasena input:focus{
+    border-color:var(--gold-accent);
+    box-shadow:0 0 0 4px rgba(212,172,93,.15);
+  }
+  /* label flota cuando focus o cuando hay contenido (usando :placeholder-shown hack) */
+  .username label, .contrasena label{
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    background:#fff; padding:0 6px; color:#6b7280; pointer-events:none;
+    transition:all .15s ease; border-radius:6px;
+  }
+  .username input:not(:placeholder-shown) + label,
+  .contrasena input:not(:placeholder-shown) + label,
+  .username input:focus + label, .contrasena input:focus + label{
+    top:-10px; font-size:.78rem; color:var(--dark-blue);
+    border:1px solid rgba(0,0,0,.06);
+  }
+  /* Para que :placeholder-shown funcione sin mostrar texto */
+  .username input::placeholder, .contrasena input::placeholder{ color:transparent; }
+
+  .recordar{
+    font-size:.92rem; color:#0f172a; text-align:right; margin-top:4px;
+  }
+  .recordar a{ color:#0f172a; text-decoration:none; border-bottom:2px solid var(--gold-accent); }
+  .recordar a:hover{ color:var(--gold-accent); }
+
+  .btn-primary{
+    margin-top:16px; width:100%;
+    background:var(--dark-blue); color:var(--white);
+    border:none; border-radius:12px; padding:12px 14px;
+    font-weight:700; cursor:pointer; transition:transform .15s ease, background .2s ease;
+  }
+  .btn-primary:hover{ background:#1d3350; transform:translateY(-1px); }
+  .btn-primary:active{ transform:translateY(0); }
+
+  .registrarse{
+    margin-top:14px; text-align:center; font-size:.95rem; color:#374151;
+  }
+  .registrarse .button{
+    display:inline-block; margin-left:6px;
+    text-decoration:none; color:var(--dark-blue); font-weight:700;
+    border:1px solid var(--dark-blue); border-radius:10px; padding:8px 12px;
+    transition:background .2s ease, color .2s ease;
+  }
+  .registrarse .button:hover{ background:var(--dark-blue); color:#fff; }
+
+  .button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+   
+        /* --- Barra de Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Brand (logo + texto) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Enlaces */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links .button {
+  padding: 8px 18px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-accent);
+}
+
+  /* =================== FOOTER simple =================== */
+  .footer {
+    background-color: var(--dark-blue);
+    color: var(--light-beige);
+    padding: 40px 20px;
+    text-align: center;
+  }
+  .footer p{ margin:5px 0; }
+   .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--gold-accent);
+            color: var(--dark-blue);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+
+
+    </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+<nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="Registro.html">Registrate</a></li>
+         <li><a class="button" href="">Contáctanos</a></li> 
+        </ul>
+        </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Inicio de Sesión</h1>
+      <p>Accede a tu cuenta para continuar con tus actividades y recursos de SecLab.</p>
+    </div>
+  </section>
+
+  <!-- LOGIN -->
+  <section class="auth-wrap">
+    <div class="Formulario">
+      <h1>Inicio de Sesión</h1>
+      <form id="loginForm" method="post" autocomplete="off">
+        <div class="username">
+          <input type="text" id="usuario" name="usuario" required placeholder="Nombre de usuario">
+          <label for="usuario">Nombre de usuario</label>
+        </div>
+
+        <div class="contrasena">
+          <input type="password" id="clave" name="clave" required placeholder="Contraseña">
+          <label for="clave">Contraseña</label>
+        </div>
+
+        <div class="recordar">
+          <a href="recuperar.html">¿Olvidó su contraseña?</a>
+        </div>
+
+        <input class="btn-primary" type="submit" value="Iniciar Sesión">
+<div id="mensaje" style="display:none;"></div>
+
+        <div class="registrarse">
+          ¿No tienes cuenta?
+          <a class="button" href="Registro.html">Registrarme</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+ 
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>© 2025 SecLab — Seguridad y Confianza Digital</p>
+    <p>San José, Costa Rica | <a href="mailto:contacto@seclab.cr" style="color:inherit; text-decoration:underline">SecLab@gmail.com</a></p>
+  </div>
+  <div id="recaptcha-container" style="height:0;overflow:hidden;"></div>
+ <script type="module" src="JS/login.js" defer></script>
+
+
+</body>
+</html>

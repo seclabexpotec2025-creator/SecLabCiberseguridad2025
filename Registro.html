@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+/* =================== Paleta SecLab =================== */
+:root {
+  --dark-blue: #1E3A5F;
+  --light-beige: #F2EBE0;
+  --gold-accent: #D4AC5D;
+  --brown-detail: #6B5B51;
+  --white: #ffffff;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+/* =================== Base =================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--light-beige);
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+/* =================== Navbar (igual a SecLab) =================== */
+.navbar {
+  background: var(--dark-blue);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 22px;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold-accent);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+}
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav-links a:hover {
+  color: var(--gold-accent);
+}
+
+/* =================== HERO =================== */
+.hero {
+  padding: 50px 0 30px;
+  text-align: center;
+  background: var(--white);
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  color: var(--dark-blue);
+}
+.hero p {
+  color: var(--brown-detail);
+  margin-top: 8px;
+}
+
+/* =================== Formulario =================== */
+.cajon {
+  display: grid;
+  place-items: center;
+  padding: 50px 20px;
+}
+.cajon form {
+  width: 100%;
+  max-width: 420px;
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: var(--shadow);
+  border-radius: 16px;
+  padding: 26px 24px 30px;
+}
+.cajon form h1 {
+  text-align: center;
+  color: var(--dark-blue);
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 18px;
+  font-size: 1.8rem;
+}
+
+/* Inputs */
+.cajon input[type="text"],
+.cajon input[type="email"],
+.cajon input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.cajon input:focus {
+  border-color: var(--gold-accent);
+  box-shadow: 0 0 0 4px rgba(212,172,93,0.2);
+}
+
+/* Botón */
+.cajon input[type="submit"] {
+  width: 100%;
+  background: var(--dark-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.cajon input[type="submit"]:hover {
+  background: #1b314e;
+  transform: translateY(-1px);
+}
+
+/* Enlace inferior */
+.cajon p {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #374151;
+}
+.cajon a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+.cajon a:hover {
+  color: var(--gold-accent);
+}
+
+/* Mensaje */
+#mensaje {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 600;
+  display: none;
+}
+#mensaje.error { color: #b91c1c; }
+#mensaje.exito { color: #15803d; }
+
+/* =================== Tabla (decorativa) =================== */
+table {
+  margin: 40px auto;
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: var(--shadow);
+}
+table td {
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 18px;
+  background: var(--white);
+}
+table td:hover {
+  background: var(--light-beige);
+}
+        
+        .footer {
+            background-color: var(--dark-blue);
+            color: var(--light-beige);
+            padding: 40px 20px;
+            text-align: center;
+        }
+            .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--gold-accent);
+            color: var(--dark-blue);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+.button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+   
+        /* --- Barra de Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Brand (logo + texto) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Enlaces */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links .button {
+  padding: 8px 18px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-accent);
+}
+</style>
+</head>
+<body>
+    <!-- NAVBAR -->
+<nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="">Inicio</a></li>
+            <li><a href="">Información</a></li>
+            <li><a href="">Actividades</a></li>
+            <li><a href="">Perfil</a></li>
+         <li><a class="button" href="">Contáctanos</a></li> 
+        </ul>
+        </nav>
+   <div class="cajon">
+    <form onsubmit="formulario(event)">
+        <h1>Registro</h1>
+        <input type="text" name="nombre" placeholder="Nombre Completo" id="nombre" required>
+        <input type="text" name="usuario" placeholder="Usuario" id="Usuario" required>
+        <input type="text" id="Telefono" placeholder="Teléfono (ej. +50688105678)" required>
+        <input type="email" name="correo" placeholder="Correo Electrónico" id="Correo" required>
+        <input type="password" name="contraseña" placeholder="Contraseña" id="Contra" required>
+        <input type="submit" value="Registrar">
+        <p>¿Ya tienes una cuenta? <a href="login.html">Iniciar Sesión</a></p>
+    </form>
+   </div> 
+
+
+         
+          <footer class="footer">
+      <!-- FOOTER -->
+    <p>© 2025 SecLab — Seguridad y Confianza Digital</p>
+    <p>San José, Costa Rica | <a href="mailto:contacto@seclab.cr" style="color:inherit; text-decoration:underline">SecLab@gmail.com</a></p>
+  </div>
+    </footer>
+</body>
+<script type="module" src="JS/Registro.js">
+
+</script>
+
+</html>
