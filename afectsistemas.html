@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> Afectaciones de Sistemas </title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --dark-blue:#1E3A5F;
+      --light-beige:#F2EBE0;
+      --gold-accent:#D4AC5D;
+      --brown-detail:#6B5B51;
+      --white:#ffffff;
+      --radius:14px;
+      --shadow:0 8px 24px rgba(0,0,0,.10);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: 'Montserrat', sans-serif;
+      color:#2b2b2b; background:linear-gradient(180deg, var(--light-beige), #fff);
+      line-height:1.7;
+    }
+
+    /* Navbar corporativa */
+    .navbar{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 40px; background:var(--white); border-bottom:1px solid #eee;
+      position:sticky; top:0; z-index:1000; box-shadow:var(--shadow);
+    }
+    .brand{display:flex; align-items:center; gap:12px; text-decoration:none}
+    .brand img{height:60px; width:auto; object-fit:contain}
+    .logo-text{font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:800; color:var(--dark-blue)}
+    .nav-links{list-style:none; display:flex; gap:28px; margin:0; padding:0}
+    .nav-links a{text-decoration:none; color:var(--dark-blue); font-weight:500}
+    .nav-links .button{
+      padding:8px 18px; border-radius:999px;
+      background:var(--gold-accent); color:var(--dark-blue); font-weight:700;
+      border:1px solid var(--gold-accent);
+    }
+
+    /* Hero */
+    .hero{
+      display:grid; grid-template-columns: 1.2fr 1fr; gap:40px;
+      max-width:1100px; margin:40px auto; padding:0 20px;
+    }
+    .hero h1{
+      font-family:'Playfair Display',serif; color:var(--dark-blue);
+      font-size:2.6rem; line-height:1.2; margin:0 0 10px 0;
+    }
+    .hero p{margin:0; color:#494949}
+    .hero img{width:100%; border-radius:var(--radius); box-shadow:var(--shadow)}
+
+    /* Secciones */
+    .section{max-width:1100px; margin:50px auto; padding:0 20px}
+    .section h2{
+      text-align:center; font-family:'Playfair Display',serif; color:var(--dark-blue); margin-bottom:26px
+    }
+    .lead{max-width:900px; margin:0 auto 26px auto; text-align:center; color:#4c4c4c}
+
+    /* Tarjetas */
+    .grid{
+      display:grid; gap:24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .card{
+      background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:20px; display:flex; flex-direction:column; gap:12px;
+      transition: transform .25s ease;
+    }
+    .card:hover{ transform: translateY(-4px) }
+    .card img{width:100%; border-radius:10px}
+    .card h3{color:var(--dark-blue); margin:6px 0 0 0}
+    .meta{display:flex; gap:10px; flex-wrap:wrap; font-size:.9rem; color:#656565}
+    .badge{
+      display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px;
+      background:#f5f5f5; color:#333; font-weight:600; font-size:.82rem;
+    }
+    .badge.gold{ background:#fff7e6; color:#9a6b1a; border:1px solid #f3dfbf }
+    .badge.blue{ background:#eaf1f9; color:#1c3f6b; border:1px solid #cdddf4 }
+
+    /* Bloque de comandos */
+    .cmds{
+      background:var(--dark-blue); color:var(--white); border-radius:var(--radius);
+      padding:28px; box-shadow:var(--shadow)
+    }
+    .cmds h3{color:var(--gold-accent); margin-top:0}
+    code, kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background:#0f172a; color:#e5e7eb; padding:2px 6px; border-radius:6px; font-size:.92rem
+    }
+    ul{margin:0 0 0 18px}
+
+    /* Footer */
+    footer{
+      margin-top:50px; background:var(--dark-blue); color:var(--light-beige);
+      text-align:center; padding:30px 15px; font-size:.95rem
+    }
+    footer a{color:var(--gold-accent); text-decoration:none}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a  href="team2.html">Contáctanos</a></li> 
+         <li><a class="button" href="perfil.html">Perfil</a></li>
+        </ul>
+        </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <h1>Afectaciones de Sistemas — Glosario del Simulador</h1>
+      <p>
+        En esta página encontrarás definiciones claras y profesionales de cada medida y acción que ves en el simulador: 
+        CPU, RAM, Disco, Firewall, Red, Puertos, Archivos cifrados y los comandos que modifican el estado del sistema.
+      </p>
+    </div>
+    <img src="Imagenes/afect.jpg" alt="Panel de métricas y análisis de un sistema">
+  </section>
+
+  <!-- MÉTRICAS PRINCIPALES -->
+  <section class="section">
+    <h2>Métricas del sistema</h2>
+    <p class="lead">Indicadores que resumen el estado operativo del equipo. Observa su variación cuando ejecutas comandos en el editor.</p>
+
+    <div class="grid">
+      <article class="card">
+        <img src="Imagenes/cpu.jpg" alt="Indicador de CPU">
+        <h3>CPU (Uso del procesador)</h3>
+        <div class="meta">
+          <span class="badge blue">Rango sano: 0–70%</span>
+          <span class="badge gold">Alto: &gt; 80%</span>
+        </div>
+        <p>Representa el porcentaje de capacidad del procesador en uso. Valores sostenidos por encima de 80–90% pueden indicar procesos intensivos, scripts mal optimizados o actividad maliciosa.</p>
+      </article>
+
+      <article class="card">
+        <img src="Imagenes/ram.jpg" alt="Indicador de RAM">
+        <h3>RAM (Memoria)</h3>
+        <div class="meta">
+          <span class="badge blue">Rango sano: 0–75%</span>
+          <span class="badge gold">Crítico: &gt; 85%</span>
+        </div>
+        <p>Mide la memoria activa utilizada. Cuando la RAM se agota, el sistema se vuelve lento y puede fallar. Scripts que cargan grandes volúmenes o múltiples procesos elevan este valor.</p>
+      </article>
+
+      <article class="card">
+        <img src="Imagenes/disco.jpg" alt="Indicador de Disco">
+        <h3>Disco (Uso de almacenamiento)</h3>
+        <div class="meta">
+          <span class="badge blue">Óptimo: &lt; 80%</span>
+          <span class="badge gold">Riesgo: &ge; 85%</span>
+        </div>
+        <p>Cuantifica el porcentaje del disco ocupado. Subidas rápidas pueden venir de <em>scripts</em> que crean archivos masivos, copias duplicadas o procesos de cifrado.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ESTADO DE SEGURIDAD -->
+  <section class="section">
+    <h2>Controles y superficie de ataque</h2>
+    <p class="lead">Elementos que amplían o reducen el riesgo. Muchos comandos del editor actúan aquí.</p>
+
+    <div class="grid">
+      <article class="card">
+        <img src="Imagenes/Copia de afect.jpg" alt="Firewall activado">
+        <h3>Firewall</h3>
+        <p>Es una barrera de seguridad que filtra el tráfico de red. <strong>ON</strong> protege y limita accesos; <strong>OFF</strong> abre la puerta a conexiones no deseadas, aumentando el riesgo de intrusión.</p>
+      </article>
+
+      <article class="card">
+        <img src="imagenes/network.jpg" alt="Conectividad de red">
+        <h3>Red (NET)</h3>
+        <p>Indica si la conectividad está disponible (<strong>UP</strong>) o deshabilitada (<strong>DOWN</strong>). Bajar la red puede cortar propagaciones maliciosas, pero también interrumpe servicios legítimos.</p>
+      </article>
+
+      <article class="card">
+        <img src="Imagenes/cables.jpg" alt="Puertos abiertos">
+        <h3>Puertos abiertos</h3>
+        <p>Puertos como <code>8080</code> o <code>4444</code> habilitan servicios o canales de comunicación. Mantener puertos innecesarios abiertos incrementa la superficie de ataque.</p>
+      </article>
+
+      <article class="card">
+        <img src="Imagenes/filesencript.jpg" alt="Archivos cifrados">
+        <h3>Archivos cifrados</h3>
+        <p>El conteo de archivos bloqueados criptográficamente. Un aumento repentino puede ser indicio de ransomware u operaciones de cifrado no autorizadas.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- COMANDOS DEL EDITOR -->
+  <section class="section">
+    <h2>Comandos disponibles en el editor</h2>
+    <div class="cmds">
+      <h3>Acciones que puedes ejecutar</h3>
+      <p>El simulador interpreta una instrucción por línea. Ejemplos y efectos típicos:</p>
+      <ul>
+        <li><code>CPU &lt;0-100&gt;</code> / <code>RAM &lt;0-100&gt;</code> / <code>DISK &lt;0-100&gt;</code>: fija los porcentajes de uso mostrados en el panel.</li>
+        <li><code>FIREWALL ON|OFF</code>: enciende o apaga el firewall (sube o baja el riesgo).</li>
+        <li><code>NET UP|DOWN</code>: habilita o corta conectividad.</li>
+        <li><code>OPENPORT &lt;número&gt;</code> / <code>CLOSEPORT &lt;número&gt;</code>: abre o cierra puertos; abrir puertos altos puede elevar el riesgo.</li>
+        <li><code>CREATE &lt;ruta/archivo&gt; &lt;tamaño&gt;</code> y <code>DELETE &lt;ruta/archivo&gt;</code>: simulan creación/eliminación y afectan el listado y el disco.</li>
+        <li><code>ENCRYPT &lt;ruta&gt; &lt;n&gt;</code> / <code>DECRYPT &lt;ruta&gt; &lt;n&gt;</code>: “cifran/descifran” n archivos en la ruta.</li>
+        <li><code>SLEEP &lt;ms&gt;</code>: pausa simulada; <code>PRINT &lt;text&gt;</code> escribe en consola.</li>
+      </ul>
+      <p style="margin-top:12px; font-size:.95rem; opacity:.9">
+        Estos comandos están presentes en el simulador y su sintaxis puede verse directamente en el área del editor (comentarios iniciales). :contentReference[oaicite:1]{index=1}
+      </p>
+    </div>
+  </section>
+
+  <!-- PIE -->
+  <footer>
+    © 2025 SecLab — Seguridad & Resiliencia para PYMEs · San José, Costa Rica ·
+    <a href="mailto:contacto@seclab.cr">contacto@seclab.cr</a>
+  </footer>
+</body>
+</html>

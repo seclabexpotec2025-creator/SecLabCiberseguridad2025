@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seguridad & Ransomware — Guía clara</title>
+  
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
+
+    :root{
+      --dark-blue: #1E3A5F;
+      --light-beige: #F2EBE0;
+      --gold-accent: #D4AC5D;
+      --brown-detail: #6B5B51;
+      --white: #ffffff;
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(0,0,0,.12);
+      --divider: rgba(0,0,0,.08);
+    }
+
+    /* Base */
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 100% -10%, rgba(212,172,93,.15), transparent 60%),
+        radial-gradient(1000px 500px at 0% -10%, rgba(107,91,81,.10), transparent 60%),
+        var(--light-beige);
+      color: var(--dark-blue);
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+
+    /* Header */
+    header{position:sticky; top:0; z-index:10; padding:14px 40px; background:rgba(255,255,255,.9); backdrop-filter: blur(6px); box-shadow: var(--shadow); display:flex; align-items:center; justify-content:space-between}
+    .logo{font-weight:900; font-size:20px}
+    nav ul{list-style:none; display:flex; gap:24px}
+    nav a{text-decoration:none; color:var(--brown-detail); font-weight:600; position:relative}
+    nav a::after{content:""; position:absolute; left:0; bottom:-6px; width:0; height:2px; background:var(--gold-accent); transition:.2s}
+    nav a:hover::after{ width:100% }
+
+    /* Layout */
+    .container{ width:min(1200px, 92vw); margin: 0 auto; }
+    .section{ padding: 56px 0; border-top: 1px solid var(--divider); scroll-margin-top:84px }
+    .section:first-of-type{ border-top: none }
+    .eyebrow{ text-transform:uppercase; letter-spacing:.12em; font-weight:800; color: var(--brown-detail); font-size:12px }
+    h1{ font-size: clamp(28px, 6vw, 56px); line-height:1.1; margin: 8px 0 10px }
+    h2{ font-size: clamp(22px, 3.4vw, 32px); margin-bottom: 14px }
+    p.lead{ color: var(--brown-detail); font-size: clamp(16px, 2.2vw, 18px); max-width: 900px }
+
+    /* Hero */
+    .hero{ padding: 56px 0 28px; position:relative; overflow:hidden }
+    .hero::before{
+      content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.75)), url('https://picsum.photos/1600/700?blur=5') center/cover; z-index:-1;
+    }
+    .hero .container{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items:center }
+    .panel{ background: var(--white); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+
+    /* KPIs */
+    .kpis{ display:flex; gap:14px; flex-wrap:wrap; margin-top:14px }
+    .kpi{ background:var(--white); border:1px solid var(--divider); border-radius:999px; padding:8px 12px; box-shadow:0 4px 14px rgba(0,0,0,.06); font-weight:700 }
+
+    /* Grids */
+    .cards{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items:stretch }
+    .cards.two{ grid-template-columns: repeat(2, minmax(0, 1fr)) }
+    .card{ background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; display:flex; flex-direction:column; min-height: 240px; position:relative; overflow:hidden }
+    .card::after{ content:""; position:absolute; right:-20px; top:-20px; width:140px; height:140px; border-radius:50%; background: radial-gradient(circle at center, rgba(212,172,93,.35), transparent 60%); pointer-events:none }
+    .card h3{ font-size:18px; margin-bottom:8px; display:flex; align-items:center; gap:6px }
+    .card h3 img{ width:20px; height:20px; object-fit:contain; display:inline-block }
+    .card h3 .icon{ width:20px; height:20px; display:inline-block; vertical-align:middle }
+    .card p, .card ul{ color: var(--brown-detail); line-height: 1.55; font-size: 15px }
+    .card ul{ padding-left: 18px; margin-top: 6px }
+
+    /* Numbered badge */
+    .badge{ width:32px; height:32px; border-radius:999px; display:grid; place-content:center; font-weight:800; background: linear-gradient(135deg, var(--gold-accent), #f3dba7); color:#2e2e2e; box-shadow:0 6px 18px rgba(212,172,93,.35); margin-bottom:8px }
+
+    /* Emphasis band */
+    .band{ background: #ffffff; border: 1px solid var(--divider); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow) }
+
+    /* CTA Banner */
+    .cta{ margin: 22px 0 0; display:flex; align-items:center; justify-content:space-between; gap:16px; background: linear-gradient(90deg, rgba(212,172,93,.18), rgba(107,91,81,.08)); border:1px solid var(--divider); border-radius: var(--radius); padding: 16px 18px }
+    .cta b{ font-size: 16px }
+    .cta button{ background: var(--gold-accent); color: var(--dark-blue); border:none; border-radius:999px; padding:10px 16px; font-weight:800; cursor:pointer; box-shadow:0 8px 24px rgba(212,172,93,.35); }
+    .cta button:hover{ filter:brightness(1.05) }
+
+    /* Enhancements */
+    #progress{position:fixed;left:0;top:0;height:3px;background:var(--gold-accent);width:0;z-index:999;box-shadow:0 2px 10px rgba(212,172,93,.5);}    
+    .js .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+    .js .reveal.visible{opacity:1;transform:none}
+    .checklist{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:16px}
+    .checklist .item{background:var(--white);border:1px solid var(--divider);border-radius:var(--radius);padding:14px 16px;display:flex;gap:10px;align-items:flex-start;box-shadow:var(--shadow)}
+    .checklist input{margin-top:2px}
+
+    /* Footer */
+    footer{ padding:20px; background:var(--dark-blue); color:var(--white); text-align:center; font-size:14px }
+
+    /* To Top */
+    #toTop{ position:fixed; right:16px; bottom:18px; border:none; border-radius:999px; padding:10px 12px; font-weight:900; background:var(--gold-accent); color:var(--dark-blue); box-shadow:0 10px 24px rgba(0,0,0,.18); cursor:pointer; display:none }
+    #toTop.show{ display:block }
+
+    /* Responsive */
+    @media (max-width: 980px){ .hero .container{ grid-template-columns: 1fr } .cards{ grid-template-columns: repeat(2, minmax(0,1fr)) } }
+    @media (max-width: 560px){ .cards, .cards.two{ grid-template-columns: 1fr } header{ padding: 12px 16px } }
+  
+    /* === Overrides para asemejar estilo de referencia === */
+    /* Tipografías y títulos */
+    body{ background: var(--white); color: var(--brown-detail); font-family:'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif; }
+    h1,h2,h3{ font-family:'Playfair Display', serif; color: var(--dark-blue); }
+    h1{ font-size:clamp(2.2rem,4vw,3.4rem); line-height:1.2; margin-bottom:16px }
+    h2{ font-size:clamp(1.9rem,3.2vw,3rem); text-align:center; margin-bottom:12px }
+    h3{ font-size:clamp(1.05rem,2.1vw,1.45rem); line-height:1.35; margin:0 }
+
+    /* Hero con fondo claro y tarjetas limpias */
+    .hero{ background: var(--light-beige); padding-bottom:110px }
+    .panel{ background:#fff; border-radius:12px; padding:24px; box-shadow: var(--shadow); border:1px solid #eee }
+
+    /* Tarjetas como las de la referencia */
+    .cards{ gap:22px }
+    .card{ background:#fff; border:1px solid #eee; border-radius:12px; box-shadow: var(--shadow); padding:20px }
+    .band{ background:#fff; border:1px solid #eee; border-radius:12px }
+
+    /* Badges tipo chip */
+    .badge{ width:max-content; font-size:.8rem; font-weight:700; letter-spacing:.2px; color:var(--dark-blue); background: var(--light-beige); border-radius:999px; padding:4px 10px; margin-bottom:10px }
+
+    /* Animación scroll como la referencia */
+    .hidden{opacity:0;transform:translateY(30px);transition:opacity .6s ease-out,transform .6s ease-out}
+    .show{opacity:1;transform:translateY(0)}
+
+    /* === Carrusel de testimonios (estilo referencia) === */
+    .testimonials-section{background:var(--dark-blue);padding:70px 0;color:var(--light-beige)}
+    .testimonials-section h2{color:#fff;margin-bottom:18px}
+    .carousel-container{position:relative;max-width:800px;margin:auto;overflow:hidden}
+    .carousel-slides{display:flex;transition:transform .5s ease-in-out}
+    .carousel-slide{min-width:100%;box-sizing:border-box;padding:0 40px;text-align:center}
+    .carousel-slide p{font-size:1.1rem;font-style:italic;color:var(--light-beige)}
+    .carousel-slide strong{color:var(--gold-accent);font-weight:700}
+    .carousel-controls{position:absolute;top:50%;width:100%;display:flex;justify-content:space-between;transform:translateY(-50%)}
+    .carousel-controls button{background:none;border:2px solid rgba(242,235,224,.5);color:var(--light-beige);font-size:1.5rem;cursor:pointer;height:45px;width:45px;border-radius:50%;transition:.3s}
+    .carousel-controls button:hover{background:var(--gold-accent);border-color:var(--gold-accent);color:var(--dark-blue)}
+    .carousel-dots{text-align:center;margin-top:25px}
+    .dot{cursor:pointer;height:12px;width:12px;margin:0 5px;background:rgba(242,235,224,.4);border-radius:50%;display:inline-block;transition:background-color .3s ease}
+    .dot.active{background:var(--gold-accent)}
+
+    /* ====== Slots de imagen (placeholders) ====== */
+    .img-slot{
+      background:#faf7f1;
+      border:2px dashed rgba(0,0,0,.15);
+      border-radius:12px;
+      box-shadow: var(--shadow);
+      display:grid; place-items:center;
+      color:#9a8b7d; text-align:center;
+      font-size:.95rem; padding:10px;
+      overflow:hidden;
+    }
+    .img-slot img{width:100%;height:100%;object-fit:cover;display:block}
+    .img-slot.ratio-21x9{aspect-ratio:21/9}
+    .img-slot.ratio-16x9{aspect-ratio:16/9}
+    .img-slot.ratio-4x3 {aspect-ratio:4/3}
+    .img-slot.ratio-1x1 {aspect-ratio:1/1}
+    .img-slot.small{min-height:140px}
+    .img-slot .hint{opacity:.75;font-weight:600}
+
+    /* Contenedores media */
+    .media{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+    @media (max-width: 980px){ .media{grid-template-columns:1fr;} }
+    .figure{margin:0}
+    .figcap{font-size:.9rem;color:var(--brown-detail);margin-top:8px;text-align:center}
+
+    /* Full-bleed */
+    .full-bleed{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);}
+
+    /* Hero right wrapper spacing */
+    .hero-right > * + *{ margin-top:14px }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 30px;
+      background-color: var(--white);
+      border-bottom: 1px solid #eee;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      color: var(--dark-blue);
+      font-size: 1.4rem;
+    }
+
+    .logo img { height: 28px; width: auto; display: block; }
+    
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0; padding: 0;
+    }
+    .nav-links a {
+      text-decoration: none; color: var(--dark-blue); font-weight: 500;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--gold-accent); transform: translateY(-2px); }
+    .button {
+      background: var(--gold-accent); color: var(--dark-blue);
+      padding: 8px 14px; border-radius: 8px; font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+    .button:hover { background: #c59b4b; color: var(--white); }
+  </style>
+</head>
+<body>
+  <!-- SPRITE SVG OFFLINE (oculto) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ico-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></symbol>
+  <symbol id="ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></symbol>
+  <symbol id="ico-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></symbol>
+  <symbol id="ico-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M14 12l7-7"/><path d="M18 5l3 3"/></symbol>
+  <symbol id="ico-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1"/><path d="M4 21V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14"/><path d="M8 21v-3a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"/></symbol>
+  <symbol id="ico-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></symbol>
+  <symbol id="ico-network" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v5m0 0l-5 3m5-3l5 3"/></symbol>
+  <symbol id="ico-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="ico-fingerprint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 20 0"/><path d="M12 2a10 10 0 0 0-4 19"/><path d="M12 6a6 6 0 0 1 6 6"/><path d="M12 10a2 2 0 0 1 2 2"/><path d="M10 14a6 6 0 0 0 2 4"/></symbol>
+  <symbol id="ico-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 13h3v5H7zM12 9h3v9h-3zM17 5h3v13h-3z"/></symbol>
+  <symbol id="ico-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="ico-vault" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2"/><path d="M13 12h5"/></symbol>
+</svg>
+
+  <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a  href="team2.html">Contáctanos</a></li> 
+         <li><a class="button" href="perfil.html">Perfil</a></li>
+        </ul>
+        </nav>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div>
+        <div class="eyebrow">Guía práctica</div>
+        <h1>Protege tu vida digital del ransomware</h1>
+        <p class="lead">Consejos claros y aplicables para personas y empresas. Usa esta guía para reducir riesgos, mejorar tus hábitos digitales y organizar defensas básicas.</p>
+        <div class="kpis">
+          <span class="kpi">⚙️ Buenas prácticas</span>
+          <span class="kpi">🔐 Defensa por capas</span>
+          <span class="kpi">🧭 Guía rápida</span>
+        </div>
+      </div>
+
+      <!-- Columna derecha: panel + imagen del hero -->
+      <div class="hero-right">
+        <div class="panel">
+          <div class="eyebrow">Resumen</div>
+          <p class="lead">• 4 prácticas personales clave<br>• Reglas de descarga y uso de redes<br>• Microsegmentación y control de privilegios (Zero Trust) para pymes</p>
+          <!-- Imagen retirada a petición -->
+        </div>
+
+        <!-- IMG: hero-illustration (16:9) -->
+        <figure class="figure">
+          <div class="img-slot ratio-16x9">
+            <!-- Reemplaza el src con tu imagen hero -->
+            <img src="Fotos/1.jpg.jpg" alt="Ilustración principal SecLab" loading="lazy" width="1600" height="900">
+          </div>    
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÁMBITO PERSONAL -->
+  <section id="personal" class="section">
+    <div class="container">
+      <h2>Ámbito personal</h2>
+      <div class="band reveal">
+        <p class="lead">Todos los usuarios de internet son objetivos potenciales del ransomware. Un dispositivo desprotegido es fácil de atacar. Educar y aplicar controles por capas reduce drásticamente el riesgo.</p>
+      </div>
+
+      <!-- IMG: personal-overview (16:9) -->
+      <div class="media" style="margin-top:16px">
+        <div>
+          <p class="lead">Es importante aplicar medidas de seguridad y prevención en ámbitos personales.</p>
+        </div>
+        <figure class="figure">
+          <div class="img-slot ratio-16x9">
+            <img src="Fotos/2.jpg.jpg" alt="Buenas prácticas personales en línea" loading="lazy" width="1600" height="900">
+          </div>
+        
+        </figure>
+      </div>
+
+      <div class="cards" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">1</div>
+          <h3><svg class="icon"><use href="#ico-wifi"/></svg> VPN en Wi-Fi públicas</h3>
+          <p>Evita transacciones sensibles en redes abiertas. Usa una VPN confiable si no puedes postergar la conexión.</p>
+          <ul>
+            <li>Prefiere redes conocidas o el tethering del móvil.</li>
+            <li>Cierra sesión en banca y servicios críticos.</li>
+            <li>Desactiva conexiones automáticas a Wi-Fi públicas.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">2</div>
+          <h3><svg class="icon"><use href="#ico-shield"/></svg> Software de seguridad</h3>
+          <p>Mantén antivirus/antimalware activos y actualizados; activa protección en tiempo real y cortafuegos.</p>
+          <ul>
+            <li>Actualiza sistema operativo y aplicaciones.</li>
+            <li>Habilita filtros anti-phishing en navegador y correo.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">3</div>
+          <h3><svg class="icon"><use href="#ico-download"/></svg> Descargas confiables</h3>
+          <p>Prefiere sitios con <b>HTTPS</b>, sello de confianza y candado. Evita enlaces y adjuntos sospechosos.</p>
+          <ul>
+            <li>Desconfía de nombres de imagen o archivos inesperados.</li>
+            <li>Verifica el dominio del remitente y la URL real.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">4</div>
+          <h3><svg class="icon"><use href="#ico-key"/></svg> Contraseñas seguras y MFA</h3>
+          <p>Usa contraseñas únicas y robustas (12–16+ caracteres) y complementa con MFA para frenar el uso de credenciales robadas.</p>
+          <ul>
+            <li>Longitud y complejidad: mayúsculas, minúsculas, números y símbolos.</li>
+            <li>Una contraseña por servicio: evita la reutilización entre cuentas.</li>
+            <li>Cambios inteligentes: cambia si hay indicios de filtración o acceso inusual.</li>
+            <li>MFA fuerte: TOTP, push o llaves FIDO2 (mejor que SMS).</li>
+            <li>Respalda códigos de recuperación en un lugar seguro.</li>
+          </ul>
+        </div>
+        <!-- Nueva: Gestor de contraseñas -->
+        <div class="card reveal">
+          <div class="badge">5</div>
+          <h3><svg class="icon"><use href="#ico-vault"/></svg> Gestor de contraseñas</h3>
+          <p>Centraliza y genera contraseñas largas y únicas automáticamente. Reduce el riesgo de contraseñas débiles y repetidas.</p>
+          <ul>
+            <li>Genera claves de 16–24 caracteres con aleatoriedad real.</li>
+            <li>Autocompletado con <em>domain matching</em> para evitar phishing.</li>
+            <li>Sincroniza entre dispositivos y protege con MFA del gestor.</li>
+          </ul>
+        </div>
+        <!-- Nueva: Passkeys / FIDO2 -->
+        <div class="card reveal">
+          <div class="badge">6</div>
+          <h3><svg class="icon"><use href="#ico-fingerprint"/></svg> Passkeys (FIDO2/WebAuthn)</h3>
+          <p>Activa <b>passkeys</b> donde esté disponible: autenticación resistente al phishing que reemplaza o añade capa a las contraseñas.</p>
+          <ul>
+            <li>Registra al menos dos autenticadores (móvil y llave física).</li>
+            <li>Guarda claves de recuperación y prueba el inicio de sesión.</li>
+            <li>Prioriza servicios críticos: correo, banca y almacenamiento.</li>
+          </ul>
+        </div>
+        </div>
+      <div class="cta">
+        <b>Consejo rápido:</b> crea recordatorios mensuales para actualizar apps y revisar copias de seguridad.
+        <button type="button" onclick="document.getElementById('checklist').scrollIntoView({behavior:'smooth'});">Ver checklist</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSEJOS (EXTRA) -->
+  <section id="protegerte" class="section">
+    <div class="container">
+      <h2>Buenas prácticas complementarias</h2>
+
+      <!-- IMG: best-practices-banner (21:9) -->
+      <figure class="figure" style="margin:12px 0 18px">
+        <div class="img-slot ratio-21x9">
+          <img src="Fotos/3.jpg.jpg" alt="Banner de buenas prácticas" loading="lazy" width="2100" height="900">
+        </div>
+        
+      </figure>
+
+      <div class="cards two">
+        <div class="card reveal">
+          <div class="badge">A</div>
+          <h3>Copias de seguridad</h3>
+          <p>Regla 3-2-1: tres copias, dos medios distintos, una fuera de línea o en la nube con versión inmutable.</p>
+        </div>
+        <div class="card reveal">
+          <div class="badge">B</div>
+          <h3>Actualizaciones</h3>
+          <p>Activa actualizaciones automáticas de sistema y aplicaciones. Parchear cierra vulnerabilidades explotables.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÁMBITO EMPRESARIAL -->
+  <section id="empresarial" class="section">
+    <div class="container">
+      <h2>Ámbito empresarial</h2>
+      <div class="band reveal">
+        <p class="lead">Las pymes son objetivos frecuentes: menos recursos y procesos, pero datos valiosos. Implementa defensa por capas, microsegmentación y control estricto de privilegios.</p>
+      </div>
+
+      <!-- IMG: smb-security (4:3) -->
+      <figure class="figure" style="margin-top:16px">
+        <div class="img-slot ratio-4x3">
+          <img src="Fotos/4.jpg.jpg" alt="Seguridad para PYMEs: microsegmentación y Zero Trust" loading="lazy" width="1200" height="900">
+        </div>
+        
+      </figure>
+
+      <!-- Bloque 1: panorama general -->
+      <div class="cards" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">1</div>
+          <h3><svg class="icon"><use href="#ico-building"/></svg> Vulnerabilidad de las pymes</h3>
+          <p>Limitaciones de presupuesto y personal aumentan la exposición a campañas dirigidas y oportunistas de ransomware.</p>
+          <ul>
+            <li>Menor madurez en procesos y respuesta a incidentes.</li>
+            <li>Brechas por dependencias con terceros.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">2</div>
+          <h3><svg class="icon"><use href="#ico-database"/></svg> Valor de la información</h3>
+          <p>Datos de clientes, proveedores, facturación y PI son monetizables y objeto de extorsión.</p>
+          <ul>
+            <li>Daño reputacional y sanciones.</li>
+            <li>Interrupción operativa y chantaje.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">3</div>
+          <h3><svg class="icon"><use href="#ico-network"/></svg> Microsegmentación</h3>
+          <p>Divide la red en segmentos con políticas y accesos propios para contener el movimiento lateral.</p>
+          <ul>
+            <li>Visibilidad del flujo de datos.</li>
+            <li>Políticas adaptables a cambios de apps.</li>
+            <li>Alineada con <b>Zero Trust</b>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bloque 2: Acceso y privilegios (Zero Trust) -->
+      <div class="band reveal" style="margin-top:22px"><strong>Control de acceso y Zero Trust</strong>: limitar privilegios reduce la superficie de ataque y el impacto de intrusiones. Zero Trust exige verificar continuamente identidad, dispositivo y contexto antes de otorgar acceso.</div>
+
+      <div class="cards" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">A</div>
+          <h3><svg class="icon"><use href="#ico-key"/></svg> Privilegio mínimo (PLP)</h3>
+          <p>Otorga solo el acceso estrictamente necesario para la función laboral.</p>
+          <ul>
+            <li>Perfiles de rol (RBAC) y separación de funciones.</li>
+            <li>Revisión trimestral de accesos.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">B</div>
+          <h3><svg class="icon"><use href="#ico-shield-check"/></svg> Zero Trust</h3>
+          <p>No confíes por defecto: valida continuamente identidad y postura del dispositivo.</p>
+          <ul>
+            <li>Contexto: ubicación, hora, riesgo.</li>
+            <li>Acceso condicional y micro-autorización.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">C</div>
+          <h3><svg class="icon"><use href="#ico-key"/></svg> PAM (accesos privilegiados)</h3>
+          <p>Gestiona y audita cuentas privilegiadas con vault, rotación y registro de sesiones.</p>
+          <ul>
+            <li>Credenciales en bóveda y rotación automática.</li>
+            <li>Grabación de sesiones y alertas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cards" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">D</div>
+          <h3><svg class="icon"><use href="#ico-lock"/></svg> Eliminar admin local & JIT</h3>
+          <p>Quita derechos de administrador local y usa elevación Just-In-Time (temporal y con aprobación).</p>
+          <ul>
+            <li>Menos persistencia e impacto del malware.</li>
+            <li>Expiración automática de privilegios.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">E</div>
+          <h3><svg class="icon"><use href="#ico-fingerprint"/></svg> MFA para cuentas críticas</h3>
+          <p>Exige MFA fuerte (TOTP, push o FIDO2) para admins, acceso remoto y datos sensibles.</p>
+          <ul>
+            <li>Bloquea uso de contraseñas robadas.</li>
+            <li>Endurece accesos VPN/SSH/RDP.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">F</div>
+          <h3><svg class="icon"><use href="#ico-chart"/></svg> Auditoría y revisión</h3>
+          <p>Monitorea accesos, genera logs inmutables y revisa permisos periódicamente.</p>
+          <ul>
+            <li>Alertas por actividad anómala.</li>
+            <li>Campañas de re-certificación de accesos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST VISUAL -->
+  <section id="checklist" class="section">
+    <div class="container">
+      <h2>Checklist rápida</h2>
+      <div class="checklist">
+        <label class="item reveal"><input type="checkbox"> Mantener antivirus y sistema actualizados</label>
+        <label class="item reveal"><input type="checkbox"> Verificar HTTPS y procedencia antes de descargar</label>
+        <label class="item reveal"><input type="checkbox"> Realizar copias 3-2-1 mensualmente</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENIDO ADICIONAL -->
+  <section id="extra" class="section">
+    <div class="container">
+      <h2>Copia de seguridad de datos</h2>
+      <div class="band reveal">
+        <p class="lead">La copia de seguridad de datos es la mejor manera de protegerse contra el ransomware. Un respaldo limpio y aislado permite recuperarse sin pagar rescates.</p>
+      </div>
+
+      <!-- Bloque 1 -->
+      <div class="cards two" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">1</div>
+          <h3>Copias sin conexión (offline)</h3>
+          <p>Mantén una copia secundaria fuera de línea (p. ej., cinta o dispositivo desconectado) para evitar el cifrado simultáneo.</p>
+          <ul>
+            <li>Desconecta físicamente tras finalizar el respaldo.</li>
+            <li>Almacena en ubicación separada.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">2</div>
+          <h3>Almacenamiento inmutable</h3>
+          <p>Usa WORM (Write-Once-Read-Many) o <em>object lock</em> para impedir modificaciones y borrado de copias.</p>
+          <ul>
+            <li>Políticas de retención y <em>legal hold</em>.</li>
+            <li>Protege contra borrado malicioso.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- IMG: backup-mini-grid (3x1, 1:1) -->
+      <div class="cards two" style="margin-top:16px">
+        <figure class="card">
+          <div class="img-slot ratio-1x1 small">
+            <img src="Fotos/5.jpg.jpg"  loading="lazy" width="800" height="800">
+          </div>
+       
+        </figure>
+        <figure class="card">
+          <div class="img-slot ratio-1x1 small">
+            <img src="Fotos/7.jpg.jpg" loading="lazy" width="800" height="800">
+          </div>
+         
+        </figure>
+    
+        </figure>
+      </div>
+
+      <!-- Bloque 2 -->
+      <div class="cards two" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">3</div>
+          <h3>Protección en servidores de respaldo</h3>
+          <p>Implementa EDR/antimalware en los servidores de backup para detectar y aislar comportamientos de cifrado.</p>
+          <ul>
+            <li>Bloqueo automático y cuarentena.</li>
+            <li>Alertas ante procesos masivos de cifrado.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">4</div>
+          <h3>Frecuencia de copias</h3>
+          <p>Para datos críticos, respalda al menos cada hora. Ajusta RPO/RTO según impacto de negocio.</p>
+          <ul>
+            <li>Incrementales frecuentes, completos programados.</li>
+            <li>Prioriza bases de datos y sistemas clave.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bloque 3 -->
+      <div class="cards two" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">5</div>
+          <h3>Regla 3-2-1-1-0</h3>
+          <p>3 copias, en 2 tipos de medio, 1 fuera del sitio, 1 inmutable/offline y 0 errores verificados.</p>
+          <ul>
+            <li>Automatiza verificaciones de integridad.</li>
+            <li>Revisa que no existan errores en logs.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">6</div>
+          <h3>Red separada / Air-gap</h3>
+          <p>Segmenta la red de backups o utiliza <em>air-gap</em> lógico/físico para aislar los repositorios del resto del entorno.</p>
+          <ul>
+            <li>Accesos restringidos y <em>allow-lists</em>.</li>
+            <li>Deshabilita rutas administrativas innecesarias.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bloque 4 -->
+      <div class="cards two" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">7</div>
+          <h3>Pruebas de restauración</h3>
+          <p>Ensaya restauraciones periódicas (parciales y completas) para validar tiempos y procedimientos reales.</p>
+          <ul>
+            <li>Simula escenarios de ransomware.</li>
+            <li>Documenta pasos y responsables.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">8</div>
+          <h3>Cifrado y llaves</h3>
+          <p>Cifra copias en tránsito y en reposo. Gestiona llaves con KMS/HSM y rotación programada.</p>
+          <ul>
+            <li>Separa llaves de los repositorios.</li>
+            <li>Control de acceso estricto al KMS.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bloque 5 -->
+      <div class="cards two" style="margin-top:16px">
+        <div class="card reveal">
+          <div class="badge">9</div>
+          <h3>Versionado y retención</h3>
+          <p>Habilita versiones múltiples y retenciones suficientes para evitar sobrescrituras de copias limpias.</p>
+          <ul>
+            <li>Retención diferenciada por criticidad.</li>
+            <li>Elimina rotaciones demasiado cortas.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <div class="badge">10</div>
+          <h3>Monitoreo y anomalías</h3>
+          <p>Usa alertas ante picos anómalos de cambios/cifrado y fallos de jobs de backup.</p>
+          <ul>
+            <li>Dashboards y notificaciones en tiempo real.</li>
+            <li>Integración con SIEM/SOAR.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="band reveal" style="margin-top:22px">
+        <strong>Consejo:</strong> documenta tu <b>plan de recuperación</b> (RTO/RPO, responsables, pasos) y revísalo tras cada ejercicio.
+      </div>
+    </div>
+  </section>
+
+  <!-- IMG: full-bleed-divider (21:9) antes de Testimonios -->
+  <figure class="full-bleed" style="margin:0; border-top:1px solid var(--divider); border-bottom:1px solid var(--divider)">
+    <div class="img-slot ratio-21x9" style="border:none;border-radius:0;box-shadow:none">
+      <img src="Fotos/6.jpg.jpg" alt="Panorámica inspiracional SecLab" loading="lazy" width="2400" height="1028">
+    </div>
+  </figure>
+
+  <!-- TESTIMONIOS -->
+  <section id="testimonios" class="testimonials-section">
+    <div class="container reveal">
+      <h2>SecLab Seguridad y Confianza</h2>
+      <div class="carousel-container">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <p>"Gracias por elegir SecLab como tu capacitación esencial y a mano. Seguridad y Confianza para tu PYME"</p>
+            <p><strong>- El equipo de SecLab</strong></p>
+          </div>
+          <div class="carousel-slide">
+            <p>"Implementar buenas prácticas reduce drásticamente el riesgo de ransomware en tu organización."</p>
+            <p><strong>- Consultor de Seguridad</strong></p>
+          </div>
+          <div class="carousel-slide">
+            <p>"La prevención y los respaldos inmutables son la clave para una recuperación efectiva."</p>
+            <p><strong>- Responsable de TI</strong></p>
+          </div>
+        </div>
+        <div class="carousel-controls"><button id="prevBtn">‹</button><button id="nextBtn">›</button></div>
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    © <span id="y"></span> SecuLab — Privacidad · Términos · Soporte
+  </footer>
+
+  <button id="toTop" aria-label="Volver arriba">↑</button>
+
+  <script>
+    // Habilitar clases dependientes de JS
+    document.body.classList.add('js');
+
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Progreso de scroll
+    const progress = document.getElementById('progress');
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = Math.max(h.scrollHeight - h.clientHeight, 1);
+      const scrolled = h.scrollTop / max;
+      progress.style.width = (scrolled * 100) + '%';
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // Revelado al hacer scroll (con fallback)
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, {threshold: 0.12});
+      document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+    }
+
+    // Botón volver arriba
+    const toTop = document.getElementById('toTop');
+    if(toTop){
+      window.addEventListener('scroll', () => {
+        if(window.scrollY > 500){ toTop.classList.add('show'); } else { toTop.classList.remove('show'); }
+      });
+      toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+    }
+
+    /* Carrusel de testimonios */
+    (function(){
+      const slides = document.querySelector('.carousel-slides');
+      if(!slides) return;
+      const items = document.querySelectorAll('.carousel-slide');
+      const prev = document.getElementById('prevBtn');
+      const next = document.getElementById('nextBtn');
+      const dotsWrap = document.querySelector('.carousel-dots');
+      let index = 0;
+      function renderDots(){
+        dotsWrap.innerHTML='';
+        items.forEach((_,i)=>{
+          const d=document.createElement('span');
+          d.className='dot'+(i===index?' active':'');
+          d.addEventListener('click',()=>go(i));
+          dotsWrap.appendChild(d);
+        });
+      }
+      function update(){ slides.style.transform = `translateX(-${index*100}%)`; renderDots(); }
+      function go(i){ index=(i+items.length)%items.length; update(); }
+      prev&&prev.addEventListener('click',()=>go(index-1));
+      next&&next.addEventListener('click',()=>go(index+1));
+      renderDots(); update();
+      setInterval(()=>go(index+1),7000);
+    })();
+  </script>
+</body>
+</html>

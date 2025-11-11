@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SecLab — Actividad: Detección de Archivos Maliciosos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --dark-blue:#1E3A5F; --light-beige:#F2EBE0; --gold-accent:#D4AC5D;
+      --brown-detail:#6B5B51; --white:#ffffff; --radius:14px;
+      --shadow:0 8px 24px rgba(0,0,0,.12); --divider:rgba(0,0,0,.08);
+    }
+
+    /* Base */
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 100% -10%, rgba(212,172,93,.15), transparent 60%),
+        radial-gradient(1000px 500px at 0% -10%, rgba(107,91,81,.10), transparent 60%),
+        var(--light-beige);
+      color: var(--dark-blue);
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+
+    /* Header (igual que tu base) */
+    header{position:sticky; top:0; z-index:10; padding:14px 40px; background:rgba(255,255,255,.9); backdrop-filter: blur(6px); box-shadow: var(--shadow); display:flex; align-items:center; justify-content:space-between}
+    .logo{font-weight:900; font-size:20px}
+    nav ul{list-style:none; display:flex; gap:24px}
+    nav a{text-decoration:none; color:var(--brown-detail); font-weight:600; position:relative}
+    nav a::after{content:""; position:absolute; left:0; bottom:-6px; width:0; height:2px; background:var(--gold-accent); transition:.2s}
+    nav a:hover::after{ width:100% }
+
+    /* Layout helpers de tu base */
+    .container{ width:min(1200px, 92vw); margin: 0 auto; }
+    .section{ padding: 56px 0; border-top: 1px solid var(--divider); scroll-margin-top:84px }
+    .section:first-of-type{ border-top: none }
+    .panel{ background:#fff; border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); border:1px solid #eee }
+    .eyebrow{ text-transform:uppercase; letter-spacing:.12em; font-weight:800; color: var(--brown-detail); font-size:12px }
+    h1,h2,h3{ font-family:'Playfair Display', serif; color: var(--dark-blue); }
+    h1{ font-size:clamp(2.2rem,4vw,3.4rem); line-height:1.2; margin-bottom:16px }
+    h2{ font-size:clamp(1.9rem,3.2vw,3rem); text-align:center; margin-bottom:12px }
+    p.lead{ color: var(--brown-detail); font-size: clamp(16px, 2.2vw, 18px); max-width: 900px }
+
+    /* Slots de imagen (como tu base) */
+    .img-slot{ background:#faf7f1; border:2px dashed rgba(0,0,0,.15); border-radius:12px; box-shadow: var(--shadow); display:grid; place-items:center; overflow:hidden }
+    .img-slot.ratio-16x9{aspect-ratio:16/9}
+    .img-slot img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* CTA */
+    .cta{ margin: 22px 0 0; display:flex; align-items:center; justify-content:space-between; gap:16px; background: linear-gradient(90deg, rgba(212,172,93,.18), rgba(107,91,81,.08)); border:1px solid var(--divider); border-radius: var(--radius); padding: 16px 18px }
+    .cta b{ font-size: 16px }
+    .cta button{ background: var(--gold-accent); color: var(--dark-blue); border:none; border-radius:999px; padding:10px 16px; font-weight:800; cursor:pointer; box-shadow:0 8px 24px rgba(212,172,93,.35); }
+    .cta button:hover{ filter:brightness(1.05) }
+
+    /* Footer */
+    footer{ padding:20px; background:var(--dark-blue); color:var(--white); text-align:center; font-size:14px }
+
+    /* To Top (igual que tu base) */
+    #toTop{ position:fixed; right:16px; bottom:18px; border:none; border-radius:999px; padding:10px 12px; font-weight:900; background:var(--gold-accent); color:var(--dark-blue); box-shadow:0 10px 24px rgba(0,0,0,.18); cursor:pointer; display:none }
+    #toTop.show{ display:block }
+
+    /* Carrusel (exacto a tu base para que coincida el tamaño) */
+    .testimonials-section{background:var(--dark-blue);padding:70px 0;color:var(--light-beige)}
+    .testimonials-section h2{color:#fff;margin-bottom:18px}
+    .carousel-container{position:relative;max-width:800px;margin:auto;overflow:hidden}
+    .carousel-slides{display:flex;transition:transform .5s ease-in-out}
+    .carousel-slide{min-width:100%;box-sizing:border-box;padding:0 40px;text-align:center}
+    .carousel-slide p{font-size:1.1rem;font-style:italic;color:var(--light-beige)}
+    .carousel-slide strong{color:var(--gold-accent);font-weight:700}
+    .carousel-controls{position:absolute;top:50%;width:100%;display:flex;justify-content:space-between;transform:translateY(-50%)}
+    .carousel-controls button{background:none;border:2px solid rgba(242,235,224,.5);color:var(--light-beige);font-size:1.5rem;cursor:pointer;height:45px;width:45px;border-radius:50%;transition:.3s}
+    .carousel-controls button:hover{background:var(--gold-accent);border-color:var(--gold-accent);color:var(--dark-blue)}
+    .carousel-dots{text-align:center;margin-top:25px}
+    .dot{cursor:pointer;height:12px;width:12px;margin:0 5px;background:rgba(242,235,224,.4);border-radius:50%;display:inline-block;transition:background-color .3s ease}
+    .dot.active{background:var(--gold-accent)}
+
+    /* Responsive (como tu base) */
+    @media (max-width:980px){ .cards{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    @media (max-width:560px){ header{padding:12px 16px} }
+
+    /* === Cuadritos de pasos / criterios / checklist === */
+.steps-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.step-card{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:12px;
+  box-shadow: var(--shadow);
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.step-card .badge{
+  width:max-content;
+  font-size:.8rem;
+  font-weight:800;
+  letter-spacing:.2px;
+  color:var(--dark-blue);
+  background: var(--light-beige);
+  border-radius:999px;
+  padding:4px 10px;
+}
+.step-card h3{
+  font-family:'Playfair Display', serif;
+  font-size:clamp(1.05rem,2.1vw,1.3rem);
+  color:var(--dark-blue);
+}
+.step-card p, .step-card ul{
+  color:var(--brown-detail);
+  line-height:1.55;
+  font-size:15px;
+}
+.step-card ul{padding-left:18px}
+
+.tips-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  margin-top:14px;
+}
+.tip{
+  background:#fff;
+  border:1px dashed rgba(0,0,0,.12);
+  border-radius:12px;
+  padding:14px 16px;
+  color:var(--brown-detail);
+}
+
+.checklist-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.checkitem{
+  background:#fff;
+  border:1px solid var(--divider);
+  border-radius:12px;
+  padding:12px 14px;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  box-shadow: var(--shadow);
+}
+.checkitem input{margin-top:3px}
+
+.band.warn{
+  background: #fff7f6;
+  border:1px solid #ffd6d1;
+}
+
+/* Responsive */
+@media (max-width:980px){
+  .steps-grid, .tips-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .steps-grid, .tips-grid, .checklist-grid{grid-template-columns:1fr}
+}
+/* === Sección de Análisis de Archivos (SecLab) === */
+#analisis{
+  background: var(--light-beige);
+  padding: 70px 0;
+  scroll-margin-top: 84px;
+}
+
+#analisis h2{
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  color: var(--dark-blue);
+  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  margin-bottom: 12px;
+}
+
+#analisis .lead{
+  text-align: center;
+  color: var(--brown-detail);
+  max-width: 880px;
+  margin: 0 auto 26px;
+  line-height: 1.6;
+}
+
+/* Cuadros contenedores */
+#analisis .band{
+  background: var(--white);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+  margin-top: 28px;
+}
+
+#analisis .band h3{
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--dark-blue);
+  margin-bottom: 10px;
+}
+
+#analisis .band.warn{
+  background: #fff8f6;
+  border: 1px solid #ffd9d2;
+}
+
+/* Tarjetas de archivos */
+#analisis .cards{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+#analisis .card{
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#analisis .card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,.12);
+}
+
+#analisis .card h3{
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--dark-blue);
+  margin-bottom: 8px;
+}
+
+#analisis .card p{
+  color: var(--brown-detail);
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+
+#analisis .card ul{
+  margin-top: 6px;
+  padding-left: 18px;
+  color: var(--brown-detail);
+  font-size: 0.92rem;
+}
+
+#analisis .badge{
+  width: max-content;
+  background: var(--light-beige);
+  color: var(--dark-blue);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+
+/* Responsividad */
+@media (max-width: 980px){
+  #analisis .cards{
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 640px){
+  #analisis .cards{
+    grid-template-columns: 1fr;
+  }
+  #analisis .band{
+    padding: 18px 20px;
+  }
+}
+ .button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+   
+        /* --- Barra de Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Brand (logo + texto) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Enlaces */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links .button {
+  background-color: var(--gold-accent); /* fondo amarillo */
+  color: var(--dark-blue);              /* letras azules */
+  padding: 8px 18px;
+  margin-left: 6px;
+  border: none;                         /* sin borde */
+  border-radius: 999px;
+  font-weight: 400;
+  transition: background-color .25s ease, transform .25s ease;
+}
+
+.nav-links .button:hover {
+  background-color: #c59b4b; /* tono más oscuro al pasar el mouse */
+  transform: translateY(-2px);
+}
+
+
+/* Ajustes responsive */
+@media (max-width: 900px) {
+  .navbar { padding: 10px 20px; }
+  .nav-links { gap: 18px; }
+}
+
+
+  </style>
+  
+</head>
+<body>
+  <!-- Progreso -->
+  <div id="progress" aria-hidden="true" style="position:fixed;left:0;top:0;height:3px;background:var(--gold-accent);width:0;z-index:999;box-shadow:0 2px 10px rgba(212,172,93,.5);"></div>
+
+  <!-- NAVBAR: mismo contenido que tu página -->
+   <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a  href="team2.html">Contáctanos</a></li> 
+         <li><a class="button" href="perfil.html">Perfil</a></li>
+        </ul>
+        </nav>
+
+  <!-- HERO corto y claro -->
+  <section class="section" style="padding-top:42px">
+    <div class="container">
+      <div class="eyebrow">Actividad guiada</div>
+      <h1>Identifica y elimina archivos maliciosos</h1>
+      <p class="lead">Descarga una carpeta con archivos ficticios que simulan un caso real. Analiza nombres, extensiones y señales de ransomware; elimina lo sospechoso.</p>
+    </div>
+  </section>
+
+  <!-- INSTRUCCIONES -->
+  <section class="section" id="actividad">
+  <div class="container">
+    <div class="eyebrow">Actividad guiada</div>
+    <h2>Indicaciones paso a paso</h2>
+
+    <!-- PASOS -->
+    <div class="steps-grid" style="margin-top:10px">
+      <article class="step-card">
+        <span class="badge">Paso 1 — Descarga</span>
+        <h3>Obtén la carpeta de práctica</h3>
+        <p>Descarga el archivo comprimido con materiales ficticios (algunos legítimos y otros que simulan ransomware).</p>
+        <ul>
+          <li>Guárdalo en tu escritorio o una carpeta de trabajo.</li>
+          <li>Descomprime el ZIP antes de iniciar el análisis.</li>
+        </ul>
+      </article>
+
+      <article class="step-card">
+        <span class="badge">Paso 2 — Exploración</span>
+        <h3>Revisa el contenido sin ejecutar</h3>
+        <p>Abre la carpeta y observa nombres, extensiones, tamaños, fechas y procedencia.</p>
+        <ul>
+          <li><b>No abras</b> archivos ejecutables ni macros.</li>
+          <li>Compara el tamaño con lo esperado (p. ej., un “.png” de 40 MB puede ser sospechoso).</li>
+        </ul>
+      </article>
+
+      <article class="step-card">
+        <span class="badge">Paso 3 — Identificación</span>
+        <h3>Detecta señales sospechosas</h3>
+        <ul>
+          <li>Extensiones dobles: <code>informe.pdf.exe</code>, <code>foto.jpg.scr</code>.</li>
+          <li>Archivos con nombres urgentes o de miedo: “URGENTE_PAGO”, “bloqueo_cuenta”.</li>
+          <li>Atajos <code>.lnk</code> o scripts <code>.js/.vbs/.ps1</code> camuflados como documentos.</li>
+        </ul>
+      </article>
+
+      <article class="step-card">
+        <span class="badge">Paso 4 — Decisión</span>
+        <h3>Clasifica cada archivo</h3>
+        <ul>
+          <li><b>Legítimo</b>: formato y tamaño consistentes, metadatos normales.</li>
+          <li><b>Sospechoso</b>: cumple uno o más criterios de riesgo.</li>
+          <li>Marca los sospechosos para eliminación.</li>
+        </ul>
+      </article>
+
+      <article class="step-card">
+        <span class="badge">Paso 5 — Eliminación</span>
+        <h3>Elimina sin abrir</h3>
+        <ul>
+          <li>Mueve a papelera (o área aislada) y vacíala al finalizar.</li>
+          <li>No ejecutes binarios desconocidos para “ver qué hacen”.</li>
+        </ul>
+      </article>
+
+      <article class="step-card">
+        <span class="badge">Paso 6 — Evidencia</span>
+        <h3>Documenta tu criterio</h3>
+        <ul>
+          <li>Anota por qué un archivo fue marcado: extensión, tamaño, origen, etc.</li>
+          <li>Prepara un breve informe con capturas si es posible.</li>
+        </ul>
+      </article>
+    </div>
+
+    <!-- CRITERIOS Y ERRORES FRECUENTES -->
+    <h2 style="margin-top:26px">Criterios y errores frecuentes</h2>
+    <div class="tips-grid">
+      <div class="tip">
+        <strong>Indicadores fuertes</strong>
+        <ul style="margin-top:6px; padding-left:18px">
+          <li>Extensión ejecutable (<code>.exe, .scr, .bat, .cmd, .ps1</code>) disfrazada.</li>
+          <li>Archivos comprimidos encadenados (<code>.zip</code> dentro de otro <code>.zip</code>).</li>
+          <li>Fechas/autor inconsistentes en metadatos.</li>
+        </ul>
+      </div>
+      <div class="tip">
+        <strong>Indicadores moderados</strong>
+        <ul style="margin-top:6px; padding-left:18px">
+          <li>Pesos anómalos para el tipo de archivo.</li>
+          <li>Nombres con presión/urgencia (“pago hoy”, “multas”).</li>
+          <li>Icono que no coincide con la extensión.</li>
+        </ul>
+      </div>
+      <div class="tip">
+        <strong>Errores comunes a evitar</strong>
+        <ul style="margin-top:6px; padding-left:18px">
+          <li>Hacer doble clic “para probar”.</li>
+          <li>Confiar solo en el icono o miniatura.</li>
+          <li>Ignorar extensiones ocultas en Windows.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ADVERTENCIA -->
+    <div class="band warn" style="margin-top:18px">
+      <strong>Nota de seguridad:</strong> realiza la práctica en un entorno controlado (usuario estándar, sin privilegios de administrador). No habilites macros ni ejecución de scripts.
+    </div>
+
+    <!-- MOCKUP VISUAL + CTA -->
+    <div class="panel" style="margin-top:20px">
+      <h2>Descarga de la carpeta</h2>
+      <p class="lead">El paquete contiene archivos legítimos y otros diseñados para simular comportamiento de ransomware. Tu objetivo es identificar y eliminar lo riesgoso sin abrir binarios.</p>
+      <div class="img-slot ratio-16x9" style="margin-top:12px">
+        <img src="Fotos/8.jpg.png" alt="Carpeta de práctica">
+      </div>
+      <div class="cta" style="margin-top:12px">
+        <b>Descarga la carpeta de práctica</b>
+        <button type="button" onclick="descargarCarpeta()">⬇ Descargar ZIP</button>
+      </div>
+    </div>
+
+    <!-- CHECKLIST DE ENTREGA -->
+    <h2 style="margin-top:26px">Checklist de entrega</h2>
+    <div class="checklist-grid" style="margin-top:10px">
+      <label class="checkitem"><input type="checkbox"> Identifiqué y eliminé los archivos sospechosos sin ejecutarlos.</label>
+      <label class="checkitem"><input type="checkbox"> Registré el criterio de decisión para cada archivo marcado.</label>
+      <label class="checkitem"><input type="checkbox"> Verifiqué extensiones reales (mostrando extensiones en el sistema).</label>
+      <label class="checkitem"><input type="checkbox"> Realicé la práctica con usuario estándar (sin admin local).</label>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: Análisis de Archivos -->
+<section class="section" id="analisis">
+  <div class="container">
+    <div class="eyebrow">Análisis de resultados</div>
+    <h2>Archivos buenos y archivos maliciosos</h2>
+    <p class="lead">A continuación se explica el propósito de cada archivo y por qué algunos son seguros (legítimos) y otros presentan señales de riesgo o comportamiento malicioso.</p>
+
+    <!-- Cuadro de archivos legítimos -->
+    <div class="band" style="margin-top:20px">
+      <h3>✅ Archivos legítimos</h3>
+      <div class="cards two" style="margin-top:14px">
+        <div class="card">
+          <div class="badge">1</div>
+          <h3>informe_anual.pdf</h3>
+          <p>Documento real que contiene información corporativa. No presenta extensiones dobles ni contenido ejecutable.</p>
+          <ul>
+            <li><b>Motivo:</b> formato PDF estándar, extensión correcta, nombre coherente.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">2</div>
+          <h3>manual_usuario.docx</h3>
+          <p>Manual en formato Word con texto y estilo corporativo.</p>
+          <ul>
+            <li><b>Motivo:</b> extensión de documento legítima, sin macros activas ni enlaces sospechosos.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">3</div>
+          <h3>plan_marketing.xlsx</h3>
+          <p>Hoja de cálculo normal con datos de planificación trimestral.</p>
+          <ul>
+            <li><b>Motivo:</b> tamaño y extensión adecuados, sin macros habilitadas.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">4</div>
+          <h3>foto_equipo.jpg</h3>
+          <p>Imagen del equipo de trabajo o material ilustrativo.</p>
+          <ul>
+            <li><b>Motivo:</b> archivo de imagen simple, extensión única, metadatos normales.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">5</div>
+          <h3>reporte_interno.txt</h3>
+          <p>Archivo de texto plano con observaciones o apuntes del equipo.</p>
+          <ul>
+            <li><b>Motivo:</b> formato básico, sin macros ni código embebido.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cuadro de archivos maliciosos -->
+    <div class="band warn" style="margin-top:28px">
+      <h3>☣️ Archivos potencialmente maliciosos</h3>
+      <div class="cards two" style="margin-top:14px">
+        <div class="card">
+          <div class="badge">A</div>
+          <h3>factura_urgente.pdf.exe</h3>
+          <p>Archivo ejecutable disfrazado de documento PDF. Intenta engañar al usuario con un nombre de factura y doble extensión.</p>
+          <ul>
+            <li><b>Motivo:</b> doble extensión (.pdf.exe) — el sistema lo tratará como ejecutable, no como PDF.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">B</div>
+          <h3>actualizacion_sistema.bat</h3>
+          <p>Script de comandos que podría ejecutar acciones no autorizadas en el sistema.</p>
+          <ul>
+            <li><b>Motivo:</b> archivos .bat, .cmd o .ps1 ejecutan órdenes directamente; alto riesgo si se ejecutan desde fuentes no confiables.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">C</div>
+          <h3>seguridad_reporte.scr</h3>
+          <p>Extensión .scr (protector de pantalla de Windows) usada con frecuencia por malware para camuflarse como documento.</p>
+          <ul>
+            <li><b>Motivo:</b> ejecutable con formato engañoso; potencial portador de ransomware.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">D</div>
+          <h3>credenciales_admin.txt</h3>
+          <p>Archivo señuelo con supuestas contraseñas o accesos administrativos.</p>
+          <ul>
+            <li><b>Motivo:</b> técnica de ingeniería social (phishing local) para atraer la curiosidad del usuario.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">E</div>
+          <h3>backup_datos.zip</h3>
+          <p>Archivo comprimido que puede contener otro malware oculto.</p>
+          <ul>
+            <li><b>Motivo:</b> los ZIP encadenados o sin analizar pueden ocultar ejecutables o scripts maliciosos.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="badge">F</div>
+          <h3>IMG_2030.jpg.js</h3>
+          <p>Script JavaScript disfrazado de imagen.</p>
+          <ul>
+            <li><b>Motivo:</b> doble extensión (imagen + script); al ejecutarse puede descargar o ejecutar código remoto.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consejos generales -->
+    <div class="band" style="margin-top:28px">
+      <strong>Conclusión:</strong>  
+      <p>Los archivos legítimos comparten extensiones conocidas, nombres coherentes y tamaños esperables.  
+      Los maliciosos suelen intentar <b>parecer documentos normales</b>, usan <b>extensiones dobles</b> o <b>nombres urgentes/engañosos</b>, y pueden tener iconos o descripciones falsas.  
+      Antes de abrir cualquier archivo desconocido, analiza su tipo real, origen y extensión visible.</p>
+    </div>
+  </div>
+</section>
+
+</section>
+
+
+  <!-- CARRUSEL (mismo tamaño/estilo que tu base) -->
+  <section id="testimonios" class="testimonials-section">
+    <div class="container">
+      <h2>SecLab Seguridad y Confianza</h2>
+      <div class="carousel-container">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <p>"Gracias por elegir SecLab como tu capacitación esencial y a mano. Seguridad y Confianza para tu PYME"</p>
+            <p><strong>- El equipo de SecLab</strong></p>
+          </div>
+          <div class="carousel-slide">
+            <p>"Implementar buenas prácticas reduce drásticamente el riesgo de ransomware en tu organización."</p>
+            <p><strong>- Consultor de Seguridad</strong></p>
+          </div>
+          <div class="carousel-slide">
+            <p>"La prevención y los respaldos inmutables son la clave para una recuperación efectiva."</p>
+            <p><strong>- Responsable de TI</strong></p>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button id="prevBtn">‹</button>
+          <button id="nextBtn">›</button>
+        </div>
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    © <span id="y"></span> SecLab — Privacidad · Términos · Soporte
+  </footer>
+
+  <!-- Botón “ir arriba” -->
+  <button id="toTop" aria-label="Volver arriba">↑</button>
+
+  <script>
+    // Año
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Barra de progreso
+    const progress = document.getElementById('progress');
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = Math.max(h.scrollHeight - h.clientHeight, 1);
+      const scrolled = h.scrollTop / max;
+      progress.style.width = (scrolled * 100) + '%';
+    };
+    window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+    // Botón ir arriba (mismo comportamiento que base)
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 500){ toTop.classList.add('show'); } else { toTop.classList.remove('show'); }
+    });
+    toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    // Carrusel (igual que base)
+    (function(){
+      const slides = document.querySelector('.carousel-slides');
+      const items  = document.querySelectorAll('.carousel-slide');
+      const prev   = document.getElementById('prevBtn');
+      const next   = document.getElementById('nextBtn');
+      const dotsWrap = document.querySelector('.carousel-dots');
+      let index = 0;
+
+      function renderDots(){
+        dotsWrap.innerHTML='';
+        items.forEach((_,i)=>{
+          const d=document.createElement('span');
+          d.className='dot'+(i===index?' active':'');
+          d.addEventListener('click',()=>go(i));
+          dotsWrap.appendChild(d);
+        });
+      }
+      function update(){ slides.style.transform = `translateX(-${index*100}%)`; renderDots(); }
+      function go(i){ index=(i+items.length)%items.length; update(); }
+      prev.addEventListener('click',()=>go(index-1));
+      next.addEventListener('click',()=>go(index+1));
+      renderDots(); update();
+      setInterval(()=>go(index+1),7000);
+    })();
+
+    // Descarga del ZIP (pon tu ruta real)
+    function descargarCarpeta(){
+      const a=document.createElement('a');
+      a.href='archivos_simulados.zip';
+      a.download='Actividad_SecLab_Ransomware.zip';
+      a.click();
+    }
+  </script>
+</body>
+</html>
