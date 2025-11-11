@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Examen: Ransomware (35 preguntas)</title>
+  <link rel="stylesheet" href="CSS/Examen.css">
+  <style>
+
+  </style>
+</head>
+<body>
+   <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a  href="team2.html">Contáctanos</a></li> 
+         <li><a class="button" href="perfil.html">Perfil</a></li>
+        </ul>
+        </nav>
+  <main class="wrap">
+    <div class="contef">
+    <div class="grid">
+      <section class="col-8">
+        <form id="quiz" class="grid" style="grid-template-columns:1fr; gap:14px">
+
+          <!-- Plantilla: Cada pregunta usa value="1" para correcta y "0" para incorrecta -->
+
+          <!-- 1 -->
+          <article class="card"><div class="num">1</div>
+            <p class="q">¿Qué es un ransomware?</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q1" value="0"> Un antivirus que protege la información</label>
+              <label class="opt"><input type="radio" name="q1" value="1"> Un tipo de malware que cifra los datos y pide rescate</label>
+              <label class="opt"><input type="radio" name="q1" value="0"> Un software de copia de seguridad</label>
+              <label class="opt"><input type="radio" name="q1" value="0"> Un sistema operativo infectado</label>
+            </fieldset>
+          </article>
+
+          <!-- 2 -->
+          <article class="card"><div class="num">2</div>
+            <p class="q">El objetivo principal de un ransomware es…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q2" value="0"> Proteger la información del usuario</label>
+              <label class="opt"><input type="radio" name="q2" value="1"> Retener los datos hasta que se pague un rescate</label>
+              <label class="opt"><input type="radio" name="q2" value="0"> Borrar permanentemente los datos</label>
+              <label class="opt"><input type="radio" name="q2" value="0"> Robar contraseñas bancarias</label>
+            </fieldset>
+          </article>
+
+          <!-- 3 -->
+          <article class="card"><div class="num">3</div>
+            <p class="q">¿Cuál es la forma más sencilla de detectar un ataque de ransomware?</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q3" value="0"> Por tráfico anormal</label>
+              <label class="opt"><input type="radio" name="q3" value="1"> Por firma</label>
+              <label class="opt"><input type="radio" name="q3" value="0"> Por hardware</label>
+              <label class="opt"><input type="radio" name="q3" value="0"> Por el firewall</label>
+            </fieldset>
+          </article>
+
+          <!-- 4 -->
+          <article class="card"><div class="num">4</div>
+            <p class="q">La detección por firma se basa en…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q4" value="1"> Hashes, nombres de dominio y patrones conocidos</label>
+              <label class="opt"><input type="radio" name="q4" value="0"> Análisis de comportamiento</label>
+              <label class="opt"><input type="radio" name="q4" value="0"> Escaneo de red</label>
+              <label class="opt"><input type="radio" name="q4" value="0"> Cifrado de archivos</label>
+            </fieldset>
+          </article>
+
+          <!-- 5 -->
+          <article class="card"><div class="num">5</div>
+            <p class="q">La detección por firma ha perdido eficacia porque…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q5" value="1"> No se actualizan las firmas para nuevas variantes</label>
+              <label class="opt"><input type="radio" name="q5" value="0"> Los antivirus ya no la usan</label>
+              <label class="opt"><input type="radio" name="q5" value="0"> No sirve para archivos grandes</label>
+              <label class="opt"><input type="radio" name="q5" value="0"> Es muy costosa</label>
+            </fieldset>
+          </article>
+
+          <!-- 6 -->
+          <article class="card"><div class="num">6</div>
+            <p class="q">La detección por comportamiento busca…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q6" value="1"> Actividades inusuales en el sistema</label>
+              <label class="opt"><input type="radio" name="q6" value="0"> Archivos repetidos</label>
+              <label class="opt"><input type="radio" name="q6" value="0"> Mensajes de error del sistema</label>
+              <label class="opt"><input type="radio" name="q6" value="0"> Copias de seguridad</label>
+            </fieldset>
+          </article>
+
+          <!-- 7 -->
+          <article class="card"><div class="num">7</div>
+            <p class="q">Durante la etapa de cifrado de un ransomware, típicamente…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q7" value="0"> El sistema se apaga</label>
+              <label class="opt"><input type="radio" name="q7" value="0"> Se eliminan archivos temporales</label>
+              <label class="opt"><input type="radio" name="q7" value="1"> Se abren y reemplazan archivos por versiones cifradas</label>
+              <label class="opt"><input type="radio" name="q7" value="0"> Se borra el registro del sistema</label>
+            </fieldset>
+          </article>
+
+          <!-- 8 -->
+          <article class="card"><div class="num">8</div>
+            <p class="q">Detectar tráfico anormal en red ayuda a…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q8" value="1"> Identificar posibles ataques</label>
+              <label class="opt"><input type="radio" name="q8" value="0"> Optimizar la conexión</label>
+              <label class="opt"><input type="radio" name="q8" value="0"> Eliminar virus manualmente</label>
+              <label class="opt"><input type="radio" name="q8" value="0"> Crear copias de respaldo</label>
+            </fieldset>
+          </article>
+
+          <!-- 9 -->
+          <article class="card"><div class="num">9</div>
+            <p class="q">Los ransomware modernos suelen…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q9" value="1"> Robar datos antes de cifrarlos</label>
+              <label class="opt"><input type="radio" name="q9" value="0"> Esconderse y no robar datos</label>
+              <label class="opt"><input type="radio" name="q9" value="0"> No usar cifrado</label>
+              <label class="opt"><input type="radio" name="q9" value="0"> Solo afectar redes locales</label>
+            </fieldset>
+          </article>
+
+          <!-- 10 -->
+          <article class="card"><div class="num">10</div>
+            <p class="q">Evitar enlaces extraños es una medida para…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q10" value="1"> Bloquear ataques</label>
+              <label class="opt"><input type="radio" name="q10" value="0"> Restaurar sistemas</label>
+              <label class="opt"><input type="radio" name="q10" value="0"> Analizar malware</label>
+              <label class="opt"><input type="radio" name="q10" value="0"> Crear backups</label>
+            </fieldset>
+          </article>
+
+          <!-- 11 -->
+          <article class="card"><div class="num">11</div>
+            <p class="q">Los ransomware suelen llegar al sistema mediante…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q11" value="1"> Enlaces o adjuntos maliciosos</label>
+              <label class="opt"><input type="radio" name="q11" value="0"> Conexiones seguras HTTPS</label>
+              <label class="opt"><input type="radio" name="q11" value="0"> Actualizaciones del sistema</label>
+              <label class="opt"><input type="radio" name="q11" value="0"> Programas oficiales</label>
+            </fieldset>
+          </article>
+
+          <!-- 12 -->
+          <article class="card"><div class="num">12</div>
+            <p class="q">El escaneo de correo electrónico sirve para…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q12" value="1"> Eliminar correos con malware antes de que lleguen</label>
+              <label class="opt"><input type="radio" name="q12" value="0"> Crear copias de seguridad</label>
+              <label class="opt"><input type="radio" name="q12" value="0"> Cambiar contraseñas</label>
+              <label class="opt"><input type="radio" name="q12" value="0"> Reducir el tamaño del buzón</label>
+            </fieldset>
+          </article>
+
+          <!-- 13 -->
+          <article class="card"><div class="num">13</div>
+            <p class="q">Los firewalls analizan…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q13" value="1"> El tráfico de archivos en la red</label>
+              <label class="opt"><input type="radio" name="q13" value="0"> La temperatura del CPU</label>
+              <label class="opt"><input type="radio" name="q13" value="0"> La velocidad de internet</label>
+              <label class="opt"><input type="radio" name="q13" value="0"> El rendimiento de la RAM</label>
+            </fieldset>
+          </article>
+
+          <!-- 14 -->
+          <article class="card"><div class="num">14</div>
+            <p class="q">La protección de endpoint se encarga de…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q14" value="1"> Proteger los puntos finales de amenazas</label>
+              <label class="opt"><input type="radio" name="q14" value="0"> Aumentar la velocidad del sistema</label>
+              <label class="opt"><input type="radio" name="q14" value="0"> Guardar contraseñas</label>
+              <label class="opt"><input type="radio" name="q14" value="0"> Cambiar configuraciones del router</label>
+            </fieldset>
+          </article>
+
+          <!-- 15 -->
+          <article class="card"><div class="num">15</div>
+            <p class="q">Las VPN ayudan a prevenir ataques porque…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q15" value="1"> Cifran la conexión y los datos del usuario</label>
+              <label class="opt"><input type="radio" name="q15" value="0"> Eliminan virus del disco</label>
+              <label class="opt"><input type="radio" name="q15" value="0"> Desconectan la red</label>
+              <label class="opt"><input type="radio" name="q15" value="0"> Borran el historial</label>
+            </fieldset>
+          </article>
+
+          <!-- 16 -->
+          <article class="card"><div class="num">16</div>
+            <p class="q">Las redes públicas de Wi‑Fi son riesgosas porque…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q16" value="1"> Permiten el acceso fácil a atacantes</label>
+              <label class="opt"><input type="radio" name="q16" value="0"> Son lentas</label>
+              <label class="opt"><input type="radio" name="q16" value="0"> Bloquean archivos</label>
+              <label class="opt"><input type="radio" name="q16" value="0"> No permiten cifrado</label>
+            </fieldset>
+          </article>
+
+          <!-- 17 -->
+          <article class="card"><div class="num">17</div>
+            <p class="q">El software de seguridad detecta amenazas mediante…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q17" value="1"> Perfiles de amenazas y tipos de malware conocidos</label>
+              <label class="opt"><input type="radio" name="q17" value="0"> Pruebas físicas</label>
+              <label class="opt"><input type="radio" name="q17" value="0"> Escaneo visual</label>
+              <label class="opt"><input type="radio" name="q17" value="0"> Copias de archivos</label>
+            </fieldset>
+          </article>
+
+          <!-- 18 -->
+          <article class="card"><div class="num">18</div>
+            <p class="q">Una ventaja del software de seguridad es que…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q18" value="1"> Se actualiza con nuevas amenazas</label>
+              <label class="opt"><input type="radio" name="q18" value="0"> No requiere internet</label>
+              <label class="opt"><input type="radio" name="q18" value="0"> Cifra los archivos</label>
+              <label class="opt"><input type="radio" name="q18" value="0"> Funciona sin energía</label>
+            </fieldset>
+          </article>
+
+          <!-- 19 -->
+          <article class="card"><div class="num">19</div>
+            <p class="q">Primer paso ante una infección por ransomware:</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q19" value="1"> Desconectar el equipo de la red</label>
+              <label class="opt"><input type="radio" name="q19" value="0"> Apagar el antivirus</label>
+              <label class="opt"><input type="radio" name="q19" value="0"> Reiniciar el sistema</label>
+              <label class="opt"><input type="radio" name="q19" value="0"> Pagar el rescate</label>
+            </fieldset>
+          </article>
+
+          <!-- 20 -->
+          <article class="card"><div class="num">20</div>
+            <p class="q">El FBI recomienda respecto al pago del rescate…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q20" value="1"> No pagar</label>
+              <label class="opt"><input type="radio" name="q20" value="0"> Pagar siempre</label>
+              <label class="opt"><input type="radio" name="q20" value="0"> Negociar</label>
+              <label class="opt"><input type="radio" name="q20" value="0"> Esperar una semana</label>
+            </fieldset>
+          </article>
+
+          <!-- 21 -->
+          <article class="card"><div class="num">21</div>
+            <p class="q">La mejor forma de recuperar un sistema afectado es…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q21" value="1"> Restaurar desde una copia de seguridad</label>
+              <label class="opt"><input type="radio" name="q21" value="0"> Pagar el rescate</label>
+              <label class="opt"><input type="radio" name="q21" value="0"> Ignorar el ataque</label>
+              <label class="opt"><input type="radio" name="q21" value="0"> Cambiar de antivirus</label>
+            </fieldset>
+          </article>
+
+          <!-- 22 -->
+          <article class="card"><div class="num">22</div>
+            <p class="q">Si no existen backups, una opción es…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q22" value="1"> Formatear e instalar el SO nuevamente</label>
+              <label class="opt"><input type="radio" name="q22" value="0"> Esperar que desaparezca</label>
+              <label class="opt"><input type="radio" name="q22" value="0"> Reiniciar en modo seguro</label>
+              <label class="opt"><input type="radio" name="q22" value="0"> Cambiar de red</label>
+            </fieldset>
+          </article>
+
+          <!-- 23 -->
+          <article class="card"><div class="num">23</div>
+            <p class="q">¿Cuántos tipos generales de ransomware existen?</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q23" value="1"> Dos</label>
+              <label class="opt"><input type="radio" name="q23" value="0"> Uno</label>
+              <label class="opt"><input type="radio" name="q23" value="0"> Tres</label>
+              <label class="opt"><input type="radio" name="q23" value="0"> Cuatro</label>
+            </fieldset>
+          </article>
+
+          <!-- 24 -->
+          <article class="card"><div class="num">24</div>
+            <p class="q">El ransomware criptográfico se caracteriza por…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q24" value="1"> Cifrar los datos y pedir rescate</label>
+              <label class="opt"><input type="radio" name="q24" value="0"> Mostrar anuncios falsos</label>
+              <label class="opt"><input type="radio" name="q24" value="0"> Solo bloquear el sistema operativo</label>
+              <label class="opt"><input type="radio" name="q24" value="0"> Destruir archivos sin aviso</label>
+            </fieldset>
+          </article>
+
+          <!-- 25 -->
+          <article class="card"><div class="num">25</div>
+            <p class="q">El ransomware sin cifrar…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q25" value="1"> Bloquea el acceso al sistema</label>
+              <label class="opt"><input type="radio" name="q25" value="0"> Encripta los datos</label>
+              <label class="opt"><input type="radio" name="q25" value="0"> Copia los archivos</label>
+              <label class="opt"><input type="radio" name="q25" value="0"> Restaura la información</label>
+            </fieldset>
+          </article>
+
+          <!-- 26 -->
+          <article class="card"><div class="num">26</div>
+            <p class="q">El doxware amenaza con…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q26" value="1"> Publicar datos personales robados</label>
+              <label class="opt"><input type="radio" name="q26" value="0"> Eliminar programas</label>
+              <label class="opt"><input type="radio" name="q26" value="0"> Instalar antivirus falsos</label>
+              <label class="opt"><input type="radio" name="q26" value="0"> Borrar copias de seguridad</label>
+            </fieldset>
+          </article>
+
+          <!-- 27 -->
+          <article class="card"><div class="num">27</div>
+            <p class="q">El ransomware móvil afecta principalmente a…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q27" value="1"> Dispositivos móviles</label>
+              <label class="opt"><input type="radio" name="q27" value="0"> Computadoras</label>
+              <label class="opt"><input type="radio" name="q27" value="0"> Servidores web</label>
+              <label class="opt"><input type="radio" name="q27" value="0"> Consolas</label>
+            </fieldset>
+          </article>
+
+          <!-- 28 -->
+          <article class="card"><div class="num">28</div>
+            <p class="q">El limpiaparabrisas (wiper) busca…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q28" value="1"> Destruir o robar información</label>
+              <label class="opt"><input type="radio" name="q28" value="0"> Asustar a la víctima</label>
+              <label class="opt"><input type="radio" name="q28" value="0"> Cifrar datos lentamente</label>
+              <label class="opt"><input type="radio" name="q28" value="0"> Proteger el sistema</label>
+            </fieldset>
+          </article>
+
+          <!-- 29 -->
+          <article class="card"><div class="num">29</div>
+            <p class="q">El scareware intenta…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q29" value="1"> Asustar al usuario con mensajes falsos</label>
+              <label class="opt"><input type="radio" name="q29" value="0"> Borrar archivos automáticamente</label>
+              <label class="opt"><input type="radio" name="q29" value="0"> Proteger el sistema</label>
+              <label class="opt"><input type="radio" name="q29" value="0"> Encriptar bases de datos</label>
+            </fieldset>
+          </article>
+
+          <!-- 30 -->
+          <article class="card"><div class="num">30</div>
+            <p class="q">El scareware puede hacerse pasar por…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q30" value="1"> Autoridades o antivirus falsos</label>
+              <label class="opt"><input type="radio" name="q30" value="0"> Usuarios normales</label>
+              <label class="opt"><input type="radio" name="q30" value="0"> Proveedores de energía</label>
+              <label class="opt"><input type="radio" name="q30" value="0"> Fabricantes de hardware</label>
+            </fieldset>
+          </article>
+
+          <!-- 31 -->
+          <article class="card"><div class="num">31</div>
+            <p class="q">El phishing se utiliza para…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q31" value="1"> Engañar a la víctima y hacerla descargar malware</label>
+              <label class="opt"><input type="radio" name="q31" value="0"> Cifrar archivos sin aviso</label>
+              <label class="opt"><input type="radio" name="q31" value="0"> Crear copias de respaldo</label>
+              <label class="opt"><input type="radio" name="q31" value="0"> Detectar ransomware</label>
+            </fieldset>
+          </article>
+
+          <!-- 32 -->
+          <article class="card"><div class="num">32</div>
+            <p class="q">Una vulnerabilidad del sistema permite que el atacante…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q32" value="1"> Tenga acceso más fácil</label>
+              <label class="opt"><input type="radio" name="q32" value="0"> Proteja mejor la red</label>
+              <label class="opt"><input type="radio" name="q32" value="0"> Bloquee puertos de red</label>
+              <label class="opt"><input type="radio" name="q32" value="0"> Cifre datos automáticamente</label>
+            </fieldset>
+          </article>
+
+          <!-- 33 -->
+          <article class="card"><div class="num">33</div>
+            <p class="q">Antes de cifrar, un ransomware suele prepararse para…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q33" value="1"> Evitar ser detectado</label>
+              <label class="opt"><input type="radio" name="q33" value="0"> Crear usuarios nuevos</label>
+              <label class="opt"><input type="radio" name="q33" value="0"> Instalar actualizaciones</label>
+              <label class="opt"><input type="radio" name="q33" value="0"> Mejorar el rendimiento</label>
+            </fieldset>
+          </article>
+
+          <!-- 34 -->
+          <article class="card"><div class="num">34</div>
+            <p class="q">El mensaje de amenaza del ransomware aparece típicamente…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q34" value="1"> Después del cifrado</label>
+              <label class="opt"><input type="radio" name="q34" value="0"> Antes de robar datos</label>
+              <label class="opt"><input type="radio" name="q34" value="0"> Durante la instalación del SO</label>
+              <label class="opt"><input type="radio" name="q34" value="0"> Solo si el usuario lo solicita</label>
+            </fieldset>
+          </article>
+
+          <!-- 35 -->
+          <article class="card"><div class="num">35</div>
+            <p class="q">Para prevenir ataques, lo más importante es…</p>
+            <fieldset>
+              <label class="opt"><input type="radio" name="q35" value="1"> Mantener backups y software actualizado</label>
+              <label class="opt"><input type="radio" name="q35" value="0"> Usar redes públicas</label>
+              <label class="opt"><input type="radio" name="q35" value="0"> Descargar programas gratuitos</label>
+              <label class="opt"><input type="radio" name="q35" value="0"> Desactivar antivirus</label>
+            </fieldset>
+          </article>
+
+        </form>
+
+        <div class="controls" id="actions">
+          <button class="primary" id="gradeBtn">Calificar</button>
+          <div ><span class="score" id="score">Puntaje: 0 / 35</span></div>        </div>
+
+        <section class="panel" id="feedback" style="display:none">
+                      <div ><span class="score" id="score">Puntaje: 0 / 35</span></div>
+        </section>
+      </section>
+
+      <a href="inicio.html" class="boton" id="botoncito">Volver</a>
+
+    </div>
+    </div>  
+  </main>
+
+  <script src="JS/Examen.js"></script>
+</body>
+</html>
+
