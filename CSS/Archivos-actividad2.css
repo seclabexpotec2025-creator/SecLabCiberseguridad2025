@@ -1,0 +1,311 @@
+/* ===========================
+   Windows 10 File Explorer — CSS limpio
+   (sin HTML extra, sin ribbon, sin duplicados)
+   =========================== */
+
+/* ---- Base ---- */
+        :root {
+            --dark-blue: #1E3A5F;
+            --light-beige: #F2EBE0;
+            --gold-accent: #D4AC5D;
+            --brown-detail: #6B5B51;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+            --wind: #0078D7;
+        }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #1b1b1b;
+  background: #dfe1e5; /* fondo escritorio */
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  justify-items: center;
+}
+
+/* ancho común de “ventana” */
+header, .arriba, .bajo, footer { width: min(1120px, 94vw); }
+
+/* ---- Barra de título ---- */
+header {
+  background: #0078D7; /* azul Win10 */
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 3px 14px rgba(0,0,0,.18);
+  user-select: none;
+}
+
+/* ---- Barra de navegación (.arriba) ---- */
+.arriba {
+  background: #f3f3f3;
+  border: 1px solid #d7d7d7;
+  border-top: none;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 1px 0 #fff inset;
+}
+.arriba button {
+  appearance: none; font: inherit; color: #222;
+  min-width: 34px; height: 28px; padding: 0 10px;
+  border: 1px solid #cfcfcf; border-radius: 2px;
+  background: linear-gradient(#ffffff, #f4f4f4);
+  box-shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(0,0,0,.05);
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease, transform .05s;
+}
+.arriba button:hover { background: linear-gradient(#ffffff, #efefef); border-color: #bdbdbd; }
+.barra-arriba {
+  margin-left: 4px; flex: 1; height: 28px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 10px; background: #fff; color: #353535;
+  border: 1px solid #cfcfcf; border-radius: 2px;
+  box-shadow: 0 1px 0 #fff inset;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.image { width: 18px; height: 18px; object-fit: cover; border-radius: 2px; }
+
+/* ---- Cuerpo (panel + lista) ---- */
+.bajo {
+  display: grid; grid-template-columns: 260px 1fr; gap: 10px;
+  background: #ffffff; border: 1px solid #d7d7d7; border-top: none;
+  padding: 10px; box-shadow: 0 8px 20px rgba(0,0,0,.12);
+  border-radius: 0 0 6px 6px; min-height: 540px;
+}
+
+/* ===== Panel izquierdo: primera tabla ===== */
+.bajo > table {
+  display: block; height: 100%;
+  background: #fbfbfb; border: 1px solid #e2e2e2; border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05) inset;
+  overflow: auto; padding: 6px;
+}
+.bajo > table th {
+  text-align: left; font-weight: 600; font-size: 13px;
+  padding: 8px 10px 8px 28px; margin: 2px 4px; border-radius: 4px;
+  color: #2b2b2b; background: #ffffff; border: 1px solid #ededed;
+  position: relative; cursor: default;
+}
+.bajo > table th:hover { background: #f5f9ff; border-color: #e2ecfb; }
+/* icono carpeta (SVG embebido) */
+.bajo > table th::before {
+  content: ""; position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%23d8a84b'><path d='M10 4H4c-1.1 0-2 .9-2 2v3h20V8c0-1.1-.9-2-2-2h-8l-2-2z'/><path d='M22 9H2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9z' fill='%23ffd36b'/></svg>");
+  background-size: 16px 16px; background-repeat: no-repeat;
+}
+
+/* ===== Tabla principal (.docum) ===== */
+.docum {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;  /* necesario para borde externo de fila */
+  border-spacing: 0;
+  background: #ffffff; border: 1px solid #dcdcdc; border-radius: 6px;
+  overflow: hidden;
+  user-select: none;          /* evita selección de texto al doble clic */
+}
+/* Cabecera pegajosa */
+.docum tr:first-child th {
+  position: sticky; top: 0; z-index: 2;
+  text-align: left; font-weight: 600; font-size: 13px; color: #2a2a2a;
+  padding: 8px 12px; background: linear-gradient(#f6f6f6, #ececec);
+  border-bottom: 1px solid #dedede; box-shadow: 0 1px 0 #fff inset;
+  user-select: none;
+}
+.docum tr:first-child th + th { border-left: 1px solid #e6e6e6; }
+/* anchos aproximados */
+.docum tr:first-child th:nth-child(1){ width: 44%; }
+.docum tr:first-child th:nth-child(2){ width: 22%; }
+.docum tr:first-child th:nth-child(3){ width: 18%; }
+.docum tr:first-child th:nth-child(4){ width: 16%; }
+
+/* Filas */
+.docum td {
+  padding: 9px 12px; font-size: 13.5px; color: #222; vertical-align: middle;
+  border-bottom: 1px solid #f1f1f1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.docum td + td { border-left: 1px solid #fafafa; }
+
+/* Zebra + hover */
+.docum tr.Arch:nth-child(even) td { background: #fcfcfc; }
+.docum tr.Arch:hover td { background: #F5F9FF; }
+
+
+
+/* ===== Selección — SIN check, SIN barras, SOLO borde externo ===== */
+.docum tr#seleccionado td {
+  background: #CDE8FF !important;            /* azul claro Win10 */
+  border-top: 2px solid #3399FF !important;
+  border-bottom: 2px solid #3399FF !important;
+}
+.docum tr#seleccionado td:first-child {
+  border-left: 2px solid #3399FF !important;
+}
+.docum tr#seleccionado td:last-child {
+  border-right: 2px solid #3399FF !important;
+}
+/* elimina cualquier pseudo-elemento previo (check/barras) */
+.docum tr#seleccionado td::before,
+.docum tr#seleccionado td::after {
+  content: none !important;
+}
+/* que el hover no cambie la selección */
+.docum tr#seleccionado:hover td { background: #CDE8FF !important; }
+
+/* ---- Footer ---- */
+footer {
+  color: #5a5a5a; font-size: 12.5px;
+  text-align: right; padding: 8px 2px 14px; opacity: .9;
+}
+
+/* ---- Scrollbar (Chromium/Edge) ---- */
+.bajo > table::-webkit-scrollbar, .docum::-webkit-scrollbar { width: 10px; height: 10px; }
+.bajo > table::-webkit-scrollbar-thumb, .docum::-webkit-scrollbar-thumb {
+  background: #cfcfcf; border: 2px solid #f3f3f3; border-radius: 10px;
+}
+.bajo > table::-webkit-scrollbar-thumb:hover, .docum::-webkit-scrollbar-thumb:hover { background: #bdbdbd; }
+
+/* ---- Responsivo ---- */
+@media (max-width: 900px){
+  .bajo { grid-template-columns: 220px 1fr; }
+  .docum tr:first-child th:nth-child(2), .docum tr:first-child th:nth-child(4){ display:none; }
+  .docum td:nth-child(2), .docum td:nth-child(4){ display:none; }
+}
+@media (max-width: 640px){
+  .arriba { flex-wrap: wrap; }
+  .barra-arriba { order: 2; width: 100%; margin-top: 6px; }
+  .bajo { grid-template-columns: 1fr; }
+  .bajo > table { height: auto; }
+  .docum tr:first-child th:nth-child(3){ display:none; }
+  .docum td:nth-child(3){ display:none; }
+}
+
+/* === Quitar íconos del panel derecho (.docum) === */
+
+
+/* === Forzar SIN íconos en panel derecho (.docum) y sin sangría === */
+.docum tr.Arch td:first-child::before {
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+.docum tr.Arch td:first-child {
+  padding-left: 12px !important;  /* quita el hueco que dejaba el icono */
+}
+
+
+/* ====== ICONOS ====== */
+/* Panel izquierdo: poner icono de carpeta en todos los <th> */
+.bajo > table th {
+  position: relative;
+  padding-left: 28px; /* espacio para el icono */
+}
+.bajo > table th::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%23d8a84b'><path d='M10 4H4c-1.1 0-2 .9-2 2v3h20V8c0-1.1-.9-2-2-2h-8l-2-2z'/><path d='M22 9H2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9z' fill='%23ffd36b'/></svg>");
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+}
+
+/* Panel derecho (.docum): forzar SIN icono y sin sangría extra */
+table.docum tr.Arch td:first-child::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+table.docum tr.Arch td:first-child {
+  padding-left: 12px !important; /* quita el hueco del icono */
+}
+
+/* ====== SELECCIÓN (Windows 10) ====== */
+/* Necesario para borde externo por celdas */
+table.docum {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  user-select: none; /* evita selección de texto molesta */
+}
+
+/* Hover sutil (no pisa selección) */
+table.docum tr.Arch:hover td {
+  background: #F5F9FF;
+}
+
+/* Fila seleccionada: fondo azul claro + borde azul alrededor */
+table.docum tr#seleccionado td {
+  background: #CDE8FF !important;
+  border-top: 2px solid #3399FF !important;
+  border-bottom: 2px solid #3399FF !important;
+}
+table.docum tr#seleccionado td:first-child {
+  border-left: 2px solid #3399FF !important;
+}
+table.docum tr#seleccionado td:last-child {
+  border-right: 2px solid #3399FF !important;
+}
+
+/* No pseudo-elementos en seleccionado (por si quedaba alguno) */
+table.docum tr#seleccionado td::before,
+table.docum tr#seleccionado td::after {
+  content: none !important;
+}
+
+/* Hover sobre seleccionado no cambia color */
+table.docum tr#seleccionado:hover td {
+  background: #CDE8FF !important;
+}
+
+/* --- HARD KILL: elimina cualquier ::before/::after en el panel derecho --- */
+.docum *::before,
+.docum *::after {
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Quita la sangría que dejaba un posible icono en la 1ª columna */
+.docum td:first-child { padding-left: 12px !important; }
+
+/* --- Selección Windows 10: borde azul externo alrededor de toda la fila --- */
+.docum {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  user-select: none;
+}
+.docum tr#seleccionado td {
+  background: #CDE8FF !important;
+  border-top: 2px solid #3399FF !important;
+  border-bottom: 2px solid #3399FF !important;
+}
+.docum tr#seleccionado td:first-child { border-left: 2px solid #3399FF !important; }
+.docum tr#seleccionado td:last-child  { border-right: 2px solid #3399FF !important; }
+.docum tr#seleccionado:hover td       { background: #CDE8FF !important; }
+
+.buton{
+  width: 8%;
+  height: 28%;
+  background-color: var(--wind);
+  color: var(--white);
+  margin-top: 5%;
+  border-radius: 8%;
+  margin-bottom: 5%;
+}

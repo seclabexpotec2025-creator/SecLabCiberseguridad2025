@@ -1,0 +1,288 @@
+/* --- Importación de Fuentes de Google --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
+
+/* --- Paleta de Colores --- */
+:root {
+  --dark-blue: #1E3A5F;
+  --light-beige: #F2EBE0;
+  --gold-accent: #D4AC5D;
+  --brown-detail: #6B5B51;
+  --white: #ffffff;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+/* --- Estilos Generales --- */
+html, body {
+  height: 100%;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--brown-detail);
+  background-color: var(--light-beige);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--dark-blue);
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* --- Input --- */
+.input {
+  display: block;
+  margin: 20px auto;
+  border-radius: 5px;
+  background-color: var(--gold-accent);
+  color: var(--brown-detail);
+  width: 500px;
+  height: 35px;
+  font-size: 20px;
+  padding: 0 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(30, 58, 95, 0.3);
+}
+
+/* --- Botones --- */
+.button, .boton {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: var(--gold-accent);
+  color: var(--dark-blue);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid var(--dark-blue);
+  width: auto;
+  margin: auto;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.button:hover, .boton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.boton {
+  width: 140px;
+  height: 45px;
+  margin-bottom: 100px;
+  border-radius: 15px;
+  font-size: 20px;
+  text-align: center;
+  color: var(--gold-accent);
+  background-color: var(--dark-blue);
+}
+
+/* --- Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--dark-blue);
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links .button {
+  padding: 8px 18px;
+  margin-left: 15px;
+}
+
+/* --- Hero Section --- */
+.hero-wrapper,
+.hero-wrapper2 {
+  background-color: var(--light-beige);
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-top: 60px;
+  padding-bottom: 120px;
+}
+
+.hero-text {
+  width: 500px;
+  background-color: var(--dark-blue);
+  border-radius: 10px;
+  padding: 20px;
+  display: block;
+  color: #ccc;
+  flex: 1;
+  box-shadow: var(--shadow);
+}
+
+.hero-text p {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.hero-image {
+  flex: 1;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Estructura de columnas --- */
+.fle {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin: 40px auto;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.columna-izquierda {
+  max-width: 550px;
+  flex: 1;
+}
+
+.tarjeta {
+  width: auto;
+  margin: auto;
+  align-items: center;
+  display: block;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+ 
+  box-shadow: var(--shadow);
+}
+
+.btex {
+  margin-top: -5px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+/* --- Reglas --- */
+.reglas {
+  width: 500px;
+  background-color: var(--dark-blue);
+  padding: 15px;
+  border-radius: 10px;
+  margin: auto;
+  color: #ccc;
+  box-shadow: var(--shadow);
+}
+
+.tex {
+  padding: 0px;
+  margin: auto;
+  color: #ccc;
+}
+
+/* --- Footer --- */
+.footer {
+  background-color: var(--dark-blue);
+  color: var(--light-beige);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* --- Animaciones --- */
+.hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .fle {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-text,
+  .columna-izquierda {
+    width: 90%;
+    max-width: 500px;
+  }
+}

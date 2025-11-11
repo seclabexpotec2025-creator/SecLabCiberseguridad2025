@@ -1,0 +1,261 @@
+.button23 {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--gold-accent);
+    color: var(--dark-blue);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+main{
+    flex: 1;
+}
+
+
+
+
+
+body{
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    display: flex;
+    background-color: #ece3d2;
+}
+.boton-terminar{
+    height: 100px;
+    width: 300px;
+    font-size: 40px;
+}
+.incase{
+    display: block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+}
+.empezar{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-top:50px  ;
+}
+h1{
+    position: sticky;
+    width: 98%;
+    margin-top:0;
+    z-index: 100;
+    background-color:  #233657;
+    text-align: center;
+    padding: 15px;
+    color:#d7b262;
+}
+#pieprincipal{
+    position:relative;
+    height: 60px;
+    width: 100%;
+    bottom: -166px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    background-color: #685245;
+    clear: both;
+    color: #d7b262;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -1000px;
+}
+.correo{
+width: 400px;
+height: 500px;
+border: 1px solid #ccc;
+border-radius: 10px;
+margin: auto;
+display: block;
+justify-content: center;
+align-items: center;
+ font-size: 20px;
+ text-align: center;
+ background-color: #233657;
+ color: #d7b262;
+}
+.main{
+    display: none;
+    margin-bottom: 100px;
+}
+.linea{
+    display: flex;
+    margin-top: 100px;
+}
+button{ 
+    height: 50px;
+    width: 250px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    color:#233657 ;
+    font-size: 15px;
+    background-color:#d7b262 ;
+}
+h2{
+    font-size: 30px;
+}
+.Instrucciones{
+    display: block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 600px;
+    background-color: #d7b262;
+    color:#233657;
+    border-radius: 20px;
+}
+.empezar{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-top:50px  ;
+    display: block;
+ 
+}
+.incase{
+    display: grid;
+    place-items: center;
+
+
+}
+p{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.terminar{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-bottom:50px  ;
+    display:none;
+ 
+}
+.puntaje{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display:none;
+     margin-bottom:50px  ;
+         font-size: 30px;
+}
+.terminaritem{
+    display:none;
+     margin-bottom:50px  ;
+         font-size: 30px;
+         background-color: #233657;
+         border-radius: 20px;
+         color: #d7b262;
+         height: 50px;
+         width: 400px;  
+    place-items: center;
+    margin-top: 50px;
+}
+.item{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display: grid;
+        place-items: center;
+}
+.main2{
+    display: block;
+        margin-bottom: 200px;
+}
+.correo2{
+width: 300px;
+height: 500px;
+border: 1px solid #ccc;
+border-radius: 10px;
+margin: auto;
+display: block;
+justify-content: center;
+align-items: center;
+ font-size: 20px;
+ text-align: center;
+ margin-left: 10px;
+ background-color: #d7b262;
+}
+.linea2{
+    display: flex;
+    margin-top: 100px;
+        margin-bottom: 200px;
+}
+
+.resultados{
+    margin-bottom: 200px;
+    border: 1px solid transparent;
+    color: #233657;
+}
+
+.boton-empezar{
+color: #233657;
+background-color: #d7b262;
+font-size: 20px;
+border-radius: 20px;
+border: 1px solid transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* --- Importación de Fuentes de Google --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
+
+        /* --- Paleta de Colores --- */
+        :root {
+            --dark-blue: #1E3A5F;
+            --light-beige: #F2EBE0;
+            --gold-accent: #D4AC5D;
+            --brown-detail: #6B5B51;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        /* --- Estilos Generales --- */
+
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+
+
+
+        
+
+
+        .navbar{
+            margin-bottom: 50px;
+        }
+        
+        img{
+            height: 100px;
+        width: 100px;
+        }

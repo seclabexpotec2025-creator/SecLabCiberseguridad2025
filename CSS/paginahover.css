@@ -1,0 +1,170 @@
+/* === FUENTES CORPORATIVAS === */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+/* === VARIABLES DE COLOR ORIGINALES === */
+:root {
+    --dark-blue: #1E3A5F;
+    --light-beige: #F2EBE0;
+    --gold-accent: #D4AC5D;
+    --brown-detail: #6B5B51;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* === ESTILOS GENERALES === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--light-beige);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark-blue);
+    line-height: 1.6;
+}
+
+/* === BARRA DE NAVEGACIÓN === */
+ .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+
+
+
+        
+
+
+        .navbar{
+            margin-bottom: 50px;
+        }
+
+/* === TÍTULO PRINCIPAL === */
+h1 {
+    position: sticky;
+    top: 80px; /* Ajustado para no cubrir navbar */
+    width: 100%;
+    background-color: var(--dark-blue);
+    color: var(--gold-accent);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 2.2rem;
+    font-weight: 600;
+    z-index: 900;
+    box-shadow: var(--shadow);
+}
+
+/* === CONTENEDOR DE TARJETAS === */
+.contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 50px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+/* === TARJETAS FLIP === */
+.tarjeta {
+    background-color: transparent;
+    width: 320px;
+    height: 440px;
+    perspective: 1000px;
+    margin: 30px auto;
+}
+
+.tarjeta-contenedor {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s ease;
+    transform-style: preserve-3d;
+}
+
+.tarjeta:hover .tarjeta-contenedor {
+    transform: rotateY(180deg);
+}
+
+/* === CARAS DE LA TARJETA === */
+.tarjeta-frente,
+.tarjeta-fredos,
+.tarjeta-fretres,
+.tarjeta-frecuatro,
+.tarjeta-atras {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    backface-visibility: hidden;
+}
+
+/* === TARJETAS DELANTERAS === */
+.tarjeta-frente,
+.tarjeta-fredos,
+.tarjeta-fretres,
+.tarjeta-frecuatro {
+    background-color: var(--dark-blue);
+    color: var(--white);
+    border: 1px solid var(--gold-accent);
+}
+
+/* === TARJETA TRASERA === */
+.tarjeta-atras {
+    background-color: var(--white);
+    color: var(--dark-blue);
+    transform: rotateY(180deg);
+    flex-direction: column;
+    font-size: 1rem;
+    border: 1px solid var(--gold-accent);
+}
+
+/* === TEXTOS INTERNOS === */
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1rem;
+    margin: 10px;
+    color: var(--dark-blue);
+}
+
+/* === PIE DE PÁGINA === */
+#pieprincipal {
+    position: sticky;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background-color: var(--brown-detail);
+    color: var(--gold-accent);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow);
+    z-index: 50;
+}
+
+
