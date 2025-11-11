@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SecLab</title>
+<style>
+    /* Fuentes */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
+
+    /* Paleta y escala */
+    :root{
+      --dark-blue:#1E3A5F;
+      --light-beige:#F2EBE0;
+      --gold-accent:#D4AC5D;
+      --brown-detail:#6B5B51;
+      --white:#ffffff;
+      --shadow:0 4px 20px rgba(0,0,0,.07);
+
+      --radius:12px;
+      --gap:22px;
+      --pad-y:18px;
+      --pad-x:20px;
+    }
+
+    /* Base */
+    html{scroll-behavior:smooth}
+    *{box-sizing:border-box}
+    body{
+      margin:0; padding:0; overflow-x:hidden;
+      font-family:'Montserrat',sans-serif; line-height:1.7;
+      color:var(--brown-detail); background:var(--white);
+    }
+    .container{max-width:1100px;margin:0 auto;padding:80px 20px}
+    h1,h2,h3{font-family:'Playfair Display',serif;color:var(--dark-blue);font-weight:700}
+    h1{font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.2;margin:0 0 16px}
+    h2{font-size:clamp(1.9rem,3.2vw,3rem);text-align:center;margin:0 0 8px}
+    h3{font-size:clamp(1.05rem,2.1vw,1.45rem);line-height:1.35;margin:0}
+    p{margin:0 0 10px;color:#555}
+    .lead{font-size:1.05rem}
+
+    /* Navbar (como pediste) */
+    .navbar{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:15px 40px;background:var(--white);border-bottom:1px solid #eee;
+      position:sticky;top:0;z-index:1000;width:100%;box-sizing:border-box;
+    }
+    .logo{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--dark-blue);text-decoration:none}
+    .nav-links{list-style:none;display:flex;align-items:center;margin:0;padding:0;gap:30px}
+    .nav-links a{color:var(--dark-blue);text-decoration:none;font-weight:500}
+    .nav-links .button{padding:8px 18px;margin-left:15px}
+
+    /* Botón */
+    .button{display:inline-block;padding:12px 24px;background:var(--gold-accent);color:var(--dark-blue);text-decoration:none;border-radius:8px;font-weight:700;transition:.25s}
+    .button:hover{transform:translateY(-2px);background:#c59b4b}
+
+    /* Hero */
+    .hero-wrapper{background:var(--light-beige)}
+    .hero{display:flex;align-items:center;gap:40px;padding-top:60px;padding-bottom:110px}
+    .hero-text{flex:1}
+    .hero-image{flex:1}
+    .hero-card{width:100%;border-radius:var(--radius);box-shadow:var(--shadow);background:#fff;padding:24px}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .item-box{background:#fff;border:1px solid #eee;border-radius:10px;padding:14px;box-shadow:var(--shadow)}
+    .chip{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;background:var(--light-beige);color:var(--dark-blue);padding:6px 10px;border-radius:999px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--dark-blue);background:#fff;border:1px solid #eaeaea;border-radius:999px;padding:6px 12px}
+
+    /* Cajas superpuestas */
+    .feature-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:-78px;position:relative;z-index:10;padding:0 20px}
+    .feature-box{background:var(--dark-blue);color:#fff;padding:24px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.08);display:grid;gap:8px}
+    .feature-box p{color:#d7d7d7;font-size:.95rem}
+    .icon{width:36px;height:36px;color:var(--gold-accent)}
+
+    /* Grids por sección */
+    .cards-grid{display:grid;gap:var(--gap)}
+    .cards-3{grid-template-columns:repeat(3,1fr)}
+    .cards-5{grid-template-columns:repeat(5,1fr)}
+    .cards-6{grid-template-columns:repeat(6,1fr)}
+
+    /* Tarjetas acordeón */
+    .exp-card{
+      border:1px solid #eee;border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);overflow:hidden;
+      display:flex;flex-direction:column;
+    }
+    .exp-header{
+      display:flex;align-items:flex-start;gap:14px;
+      padding:var(--pad-y) var(--pad-x); cursor:pointer; background:#fff; width:100%; border:0;
+      text-align:left;
+      outline:none;
+    }
+    .exp-header:focus-visible{
+      box-shadow:0 0 0 3px rgba(212,172,93,.35); border-radius:12px;
+    }
+    .exp-title{
+      display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;
+    }
+    .exp-badge{
+      width:max-content; font-size:.8rem; font-weight:700; letter-spacing:.2px;
+      color:var(--dark-blue); background:var(--light-beige); border-radius:999px; padding:4px 10px;
+    }
+    .exp-heading{
+      display:block; font-size:clamp(1.05rem,2.1vw,1.45rem); line-height:1.35;
+      word-break:break-word; overflow-wrap:anywhere;
+    }
+    .exp-toggle{
+      margin-left:auto; flex-shrink:0;
+      display:inline-grid; place-items:center; width:36px; height:36px; border-radius:999px;
+      border:1px solid #e6e6e6; background:#fff; transition:transform .25s ease, background .2s ease;
+    }
+    .exp-card.open .exp-toggle{transform:rotate(180deg)}
+    .exp-toggle svg{width:18px;height:18px}
+
+    .exp-content-wrapper{
+      height:0; overflow:hidden; transition:height .3s ease;
+      border-top:1px dashed #eee;
+      background:linear-gradient(#fff,#fff);
+    }
+    .exp-content{
+      padding:14px var(--pad-x) var(--pad-x);
+    }
+    .exp-content p{margin:10px 0}
+    .exp-content ul{margin:10px 0 0 18px}
+
+    /* Secciones */
+    .section{padding:48px 0}
+    .problem-intro{text-align:-webkit-match-parent;max-width:760px;margin:0 auto 28px}
+
+    /* Carrusel + footer (como pediste) */
+    .testimonials-section{background:var(--dark-blue)}
+    .testimonials-section h2{color:#fff}
+    .carousel-container{position:relative;max-width:800px;margin:auto;overflow:hidden}
+    .carousel-slides{display:flex;transition:transform .5s ease-in-out}
+    .carousel-slide{min-width:100%;box-sizing:border-box;padding:0 40px;text-align:center}
+    .carousel-slide p{font-size:1.1rem;font-style:italic;color:var(--light-beige)}
+    .carousel-slide strong{color:var(--gold-accent);font-weight:700}
+    .carousel-controls{position:absolute;top:50%;width:100%;display:flex;justify-content:space-between;transform:translateY(-50%)}
+    .carousel-controls button{
+      background:none;border:2px solid rgba(242,235,224,.5);color:var(--light-beige);
+      font-size:1.5rem;cursor:pointer;height:45px;width:45px;border-radius:50%;transition:.3s
+    }
+    .carousel-controls button:hover{background:var(--gold-accent);border-color:var(--gold-accent);color:var(--dark-blue)}
+    .carousel-dots{text-align:center;margin-top:25px}
+    .dot{cursor:pointer;height:12px;width:12px;margin:0 5px;background:rgba(242,235,224,.4);border-radius:50%;display:inline-block;transition:background-color .3s ease}
+    .dot.active{background:var(--gold-accent)}
+    .footer{background:var(--dark-blue);color:var(--light-beige);padding:40px 20px;text-align:center}
+
+    /* Animaciones scroll */
+    .hidden{opacity:0;transform:translateY(30px);transition:opacity .6s ease-out,transform .6s ease-out}
+    .show{opacity:1;transform:translateY(0)}
+
+    /* Responsive */
+    @media (max-width:992px){
+      .hero{flex-direction:column;padding-bottom:80px}
+      .feature-boxes{grid-template-columns:1fr;margin-top:-64px}
+      .cards-5{grid-template-columns:repeat(2,1fr)}
+      .cards-6{grid-template-columns:repeat(3,1fr)}
+      .mini-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .nav-links{gap:16px}
+      .cards-3,.cards-5,.cards-6{grid-template-columns:1fr}
+      .exp-header{padding:16px}
+      .exp-content{padding:12px 16px 16px}
+    }
+    /* ===== Bloqueo: tarjetas XL apiladas (acordeón) ===== */
+.accordion-group--xl .exp-card{
+  border-radius: 16px;
+}
+.accordion-group--xl .exp-header{
+  padding: 20px 24px;
+}
+.accordion-group--xl .exp-badge{
+  font-size: .85rem;
+  padding: 6px 12px;
+}
+.accordion-group--xl .exp-heading{
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+.exp-sub{
+  font-size: .95rem;
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+/* Mini icono circular al lado del título */
+.exp-icon{
+  width: 38px; height: 38px; flex-shrink: 0;
+  border-radius: 999px; border: 1px solid #e6e6e6; display: grid; place-items: center;
+  background: #fff;
+  margin-right: 10px;
+}
+.exp-title-row{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+
+/* ===== Tipos: mosaico grande (NO acordeón) ===== */
+.tile-grid{
+  display:grid; gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+}
+.tile{
+  background:#fff; border:1px solid #eee; border-radius:16px;
+  box-shadow: var(--shadow); overflow:hidden; display:grid; gap: 10px;
+}
+.tile-head{
+  display:flex; align-items:center; gap:14px;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, rgba(242,235,224,.7), rgba(242,235,224,0));
+  border-bottom:1px dashed #eee;
+}
+.tile-icon{
+  width:44px; height:44px; border-radius:12px; display:grid; place-items:center;
+  background: var(--light-beige); color: var(--dark-blue);
+}
+.tile-title{
+  display:flex; flex-direction:column; gap:4px;
+}
+.tile-title .badge{
+  font-size:.8rem; font-weight:700; color:var(--dark-blue);
+  background: #fff; border: 1px solid #eaeaea; border-radius: 999px; padding: 3px 10px; width:max-content;
+}
+.tile-title h3{
+  font-size: clamp(1.05rem, 2.2vw, 1.5rem); margin:0; line-height:1.35;
+}
+.tile-body{
+  padding: 14px 20px 18px; color:#555;
+}
+
+/* Colores de acento por tipo (opcional) */
+.tile--1 .tile-icon{ background:#F2EBE0; }
+.tile--2 .tile-icon{ background:#e8f0fe; }
+.tile--3 .tile-icon{ background:#eaf7f0; }
+.tile--4 .tile-icon{ background:#fff4e5; }
+.tile--5 .tile-icon{ background:#efe9ff; }
+.tile--6 .tile-icon{ background:#ffe9ef; }
+
+/* Responsive */
+@media (max-width: 992px){
+  .tile-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px){
+  .tile-grid{ grid-template-columns: 1fr; }
+}
+  </style>
+
+<head>
+<body>
+<!-- NAVBAR -->
+      <nav class="navbar">
+        <a href="Imagenes/3.png" src class="logo">SecLab</a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a class="button" href="team2.html">Contáctanos</a></li> 
+        </ul>
+        </nav>
+
+
+  <main>
+    <!-- HERO -->
+    <section class="hero-wrapper">
+      <div class="container hero">
+        <div class="hero-text hidden">
+          <span class="hero-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3l7 3v6c0 4.97-3.05 8.11-7 9-3.95-.89-7-4.03-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" fill="none"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Seguridad & Resiliencia para PYMEs
+          </span>
+          <h1>Guía esencial sobre Ransomware</h1>
+          <p class="lead">Qué es, cómo ataca y cómo detectarlo, bloquearlo y recuperarte con prácticas efectivas.</p>
+
+        </div>
+        <div class="hero-image hidden">
+          <div class="hero-card">
+            <h3>Checklist rápido</h3>
+            <div class="mini-grid">
+              <div class="item-box"><span class="chip">Definición</span><p>¿Qué es?</p></div>
+              <div class="item-box"><span class="chip">Detección</span><p>¿Cómo dtectar?</p></div>
+              <div class="item-box"><span class="chip">Bloqueo</span><p>Métodos de bloqueo.</p></div>
+              <div class="item-box"><span class="chip">Tipos</span><p>5 tipos de ransomware.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Intro + Qué es + Cómo ataca (acordeón en pila) -->
+    <section id="introduccion" class="section">
+      <div class="container">
+        <div class="problem-intro hidden">
+          <h2>Introducción al ransomware</h2>
+          <p>Para tener una buena definición de lo que son los ransomware es importante saber y entender completamente cómo es que estos mismos se crean y llegan a afectar los sistemas, además de conocer su comportamiento y cómo se logra filtrar en los sistemas.
+</p>
+        </div>
+
+        <div class="accordion-group" data-scope="intro">
+          <div class="exp-card hidden">
+            <button class="exp-header" aria-expanded="false">
+              <div class="exp-title">
+                <span class="exp-badge">Definición</span>
+                <span class="exp-heading">¿Qué es un ransomware?</span>
+              </div>
+              <span class="exp-toggle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <div class="exp-content-wrapper"><div class="exp-content">
+              <p>Ransomware es un tipo de malware que retiene datos personales, confidenciales o información importante de la víctima amenazando con mantenerla encriptada hasta que el propietario pague una recompensa o un rescate.</p>
+            </div></div>
+          </div>
+
+          <div class="exp-card hidden">
+            <button class="exp-header" aria-expanded="false">
+              <div class="exp-title">
+                <span class="exp-badge">Cadena de ataque</span>
+                <span class="exp-heading">¿Cómo ataca el ransomware?</span>
+              </div>
+              <span class="exp-toggle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <div class="exp-content-wrapper"><div class="exp-content">
+              <p>Existen varias maneras en las que este malware puede atacar un dispositivo, por medio de phishing en el cual el atacante engaña a la víctima para que descargue un archivo malicioso ya sea disfrazado de un pdf o un documento de word, al igual que por medio de sitios web, los atacantes logran engañar a los usuarios para que escaneen códigos QR o entren a sitios web con la intención de ingresar este malware a sus sistemas.
+Una manera muy común por la cual ataques de este tipo logran entrar a dispositivos es por medio de las vulnerabilidades de este mismo, primero el atacante tiene que hacer un diagnóstico para reconocer las vulnerabilidades y los recursos del sistema que pretende afectar, tiene que ser un  proceso en el cual se debe recolectar la mayor información posible para que el desarrollador de este malware logre tener acceso a toda la información disponible y poder continuar con el ataque, una vez dentro del sistema se prepara para evitar ser detectado y ganar más métodos y lograr volver a entrar al dispositivo esto para facilitar el cifrado de archivos o información para después enviar el mensaje de amenaza y pedirle a la víctima que pague el rescate. 
+</p>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detección (3) -->
+    <section id="deteccion" class="section">
+      <div class="container">
+        <h2 class="hidden">¿Cómo se puede detectar?</h2>
+        <p class="problem-intro hidden"> Ya que apredimos conceptos básicos del ransomware, ahora aprenderemos como se puede detectar este mismo.
+          Según Fhabte (2023), los ataques de ransomware pueden ser detectados por diferentes medios, entre los más comunes son:         </p>
+
+        <div class="accordion-group cards-grid cards-3" data-scope="deteccion">
+          <!-- 1 -->
+          <div class="exp-card hidden">
+            <button class="exp-header" aria-expanded="false">
+              <div class="exp-title">
+                <span class="exp-badge">1 · Cambios masivos</span>
+                <span class="exp-heading">Dirección por firma</span>
+              </div>
+              <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            </button>
+            <div class="exp-content-wrapper"><div class="exp-content">
+              <p>Esta es la forma más sencilla de detectar un ataque de ransomware. Las firmas tienen información de indicadores que pueden brindar de una forma efectiva la identificación de algún malware en el sistema.</p>
+              <p>Por ejemplo: hashes de archivos, nombres de dominio, entre otros indicadores. La detección por firma tiene un extenso almacén de firmas, las cuales son comparadas con cada archivo que tiene contacto en un sistema, para así identificar si están tratando con un malware.
+La detección por firma ha disminuido su uso con el paso del tiempo y sigue disminuyendo, debido a que no es útil contra malwares nuevos ya que no se han actualizado las firmas para posibles variantes de malwares.</p>
+            </div></div>
+          </div>
+          <!-- 2 -->
+          <div class="exp-card hidden">
+            <button class="exp-header" aria-expanded="false">
+              <div class="exp-title">
+                <span class="exp-badge">2 Comportamiento</span>
+                <span class="exp-heading">Dirección por comportamiento</span>
+              </div>
+              <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            </button>
+            <div class="exp-content-wrapper"><div class="exp-content">
+              <p> La detección por comportamiento es un algoritmo que es diseñado con el fin de buscar e identificar actividades maliciosas o acciones extrañas que no sigan las normas.
+Esta alternativa de detección toma provecho de que los ataques de ransomware suelen tener comportamientos bastante diferentes e inusuales comparado con cualquier otro archivo; por ejemplo cuando el ransomware se encuentra en etapa de cifrado, este abre muchos archivos en el sistema, los cuales son utilizados para leer el contenido de ellos y luego reemplazar los datos por una versión cifrada. 
+</p>
+            </div></div>
+          </div>
+          <!-- 3 -->
+          <div class="exp-card hidden">
+            <button class="exp-header" aria-expanded="false">
+              <div class="exp-title">
+                <span class="exp-badge">3 tráfico</span>
+                <span class="exp-heading">Tráfico anormal</span>
+              </div>
+              <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            </button>
+            <div class="exp-content-wrapper"><div class="exp-content">
+           <p>El tráfico y las operaciones de archivos en un sistema son supervisados, lo cual detecta amenazas en base al comportamiento que tengan los archivos. Sin embargo, se pueden detectar ataques de ransomware a nivel de red realizando una búsqueda de tráfico inusual que indique una posible manifestación de ransomware.</p>
+          
+           <p>El ransomware solía tener una cantidad reducida de operaciones en una red antes de iniciar su proceso de infección (cifrado), lo cual le proporcionaba una ventaja debido a que su presencia se podía ocultar en el sistema. Sin embargo, actualmente los ransomware toman la ventaja desde el principio, robando o filtrando datos en un sistema antes de iniciar el proceso de cifrado, lo que causa una gran ventaja cuando tienen que extorsionar a la víctima.</p>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bloqueo (5) -->
+   <section id="bloqueo" class="section">
+  <div class="container">
+    <h2 class="hidden">¿Cómo se puede bloquear?</h2>
+    <p class="problem-intro hidden">
+Aprender como se puede bloquear y mitigar el ransomware es de suma importancia para ti y tú PYME.
+Así que con SecLab aprenderemos con que métodos se puede lograr bloquearlo y mitigarlo. 
+</p>
+
+    <div class="accordion-group accordion-group--xl" data-scope="bloqueo">
+      <!-- 1 -->
+      <div class="exp-card hidden">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title" style="width:100%">
+            <div class="exp-title-row">
+              <span class="exp-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                  <path d="M4 11h16M8 7h8M6 15h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="exp-badge">1 · Mínimo privilegio</span>
+              <span class="exp-heading">Evitar enlaces extraños</span>
+            </div>
+            <div class="exp-sub"> Codigos Maliciosos, Sitios web, Correos eléctronicos </div>
+          </div>
+          <span class="exp-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="exp-content-wrapper"><div class="exp-content">
+          <ul>
+            <li>Los ransomware son códigos maliciosos, los cuales a menudo se disfrazan de archivos en correos electrónicos. Si algún correo electrónico o algún sitio web de dudosa procedencia contienen un enlace, se debe evitar entrar en ese enlace. Las entidades maliciosas usualmente infectan sistemas o dispositivos a través de enlaces que propagan descargas de malware. </li>
+            <li>Segmentación de red y microsegmentación para sistemas críticos.</li>
+            <li>Auditar membresías de grupos privilegiados y credenciales heredadas.</li>
+          </ul>
+        </div></div>
+      </div>
+
+      <!-- 2 -->
+      <div class="exp-card hidden">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title" style="width:100%">
+            <div class="exp-title-row">
+              <span class="exp-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                  <path d="M12 4l7 4v4c0 4-3 7-7 8-4-1-7-4-7-8V8l7-4z" stroke="currentColor" stroke-width="1.6"/>
+                </svg>
+              </span>
+              <span class="exp-badge">2 Escaneo</span>
+              <span class="exp-heading">Escaneo de correo electrónico</span>
+            </div>
+            <div class="exp-sub">Herramientas de escaneo</div>
+          </div>
+          <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="exp-content-wrapper"><div class="exp-content">
+          <ul>
+            <li>Existen herramientas de escaneo las cuales son eficaces a la hora de detectar enlaces maliciosos dentro de correos electrónicos. Los correos electrónicos maliciosos pueden ser eliminados inmediatamente por estos escáneres luego de detectar un malware, lo que evitará que el correo siquiera llegue al dispositivo, evitando infecciones en el dispositivo e incluso en la red en general. </li>
+           
+          </ul>
+        </div></div>
+      </div>
+
+      <!-- 3 -->
+      <div class="exp-card hidden">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title" style="width:100%">
+            <div class="exp-title-row">
+              <span class="exp-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                  <path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="exp-badge">3 Protección  </span>
+              <span class="exp-heading">Firewalls y protección de endpoint</span>
+            </div>
+            <div class="exp-sub">Protección y Escudos.</div>
+          </div>
+          <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="exp-content-wrapper"><div class="exp-content">
+          <ul>
+            <li>Los firewalls también actúan como un escáner en el tráfico de archivos en ambos lados de una red. Los firewalls son capaces de identificar la procedencia de un archivo y el destino que este tiene, además de ver el método que usó en su trayecto. Los firewalls analizan los datos obtenidos para detectar posibles amenazas.</li>
+            <li>La protección de endpoint cubre los puntos finales individuales de cualquier forma de amenaza. Las protecciones de endpoint protegen al dispositivo y le impiden acceder a ciertos datos que pertenecen a tráficos de malware. Los ransomware pueden ser propagados por medio de aplicaciones maliciosas, las cuales infectan los puntos finales de un dispositivo. La protección de endpoint actuará como un escudo contra estas aplicaciones.</li>
+    
+          </ul>
+        </div></div>
+      </div>
+
+      <!-- 4 -->
+      <div class="exp-card hidden">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title" style="width:100%">
+            <div class="exp-title-row">
+              <span class="exp-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                  <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="exp-badge">4 VPN</span>
+              <span class="exp-heading">Utilizar VPN</span>
+            </div>
+            <div class="exp-sub">Mayor protección, mayor confiabilidad.</div>
+          </div>
+          <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="exp-content-wrapper"><div class="exp-content">
+          <ul>
+            <li>Utilizar VPN
+Las redes públicas de Wi-Fi son de fácil acceso para los usuarios, ya que pueden acceder sin necesidad de 
+ingresar una contraseña de acceso, lo que las vuelve convenientes para la mayoría. Esto representa una gran
+ ventaja para los ataques cibernéticos, ya que también es muy sencillo utilizar una red pública de Wi-Fi para 
+ propagar un ataque.
+</li>
+            <li>Una VPN brinda protección confiable a los datos de un dispositivo, ya que esta los cifra durante todo
+               el momento en el que esté conectado a internet, formando un tipo de “túnel” por el cual los datos pasan, por lo
+                cual nadie puede tener acceso a ellos 
+              además del usuario del mismo dispositivo. </li>
+         
+          </ul>
+        </div></div>
+      </div>
+
+      <!-- 5 -->
+      <div class="exp-card hidden">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title" style="width:100%">
+            <div class="exp-title-row">
+              <span class="exp-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                  <path d="M7 7h10v10H7z" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M3 17h18M3 7h18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="exp-badge">5 Seguridad</span>
+              <span class="exp-heading">Software de seguridad</span>
+            </div>
+            <div class="exp-sub">Backups,Updates.</div>
+          </div>
+          <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="exp-content-wrapper"><div class="exp-content">
+          <ul>
+            <li>Los software de seguridad pertenecen a las cinco mejores medidas de prevención de ransomware. Estos software analizan los archivos provenientes de internet que acceden en una computadora. Una vez un malware es detectado dentro de un archivo, el software actúa como una pared la cual impide el acceso del archivo en la computadora.
+</li>
+            <li>El software de seguridad detecta posibles amenazas dentro de archivos mediante análisis de perfiles de amenazas y tipos de archivos maliciosos conocidos. Estos software son muy eficientes debido a que a medida que se encuentran nuevas amenazas, la información y perfil de estas se actualizan en el software, lo que lo hace más poderoso con el paso del tiempo.</li>
+         
+          </ul>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Recuperación -->
+    <section id="recuperacion" class="section">
+      <div class="container">
+        <h2 class="hidden">¿Cómo recuperar un sistema vulnerado?</h2>
+ <p class="problem-intro hidden"> Ya aprendimos que es, como bloquear el malware y como detectarlo, ¿Pero qué pasa si nuestro dispositivo es afectado o vulnerado?
+  Es por esto que en esta sección aprenderemos que hacer.
+</p>
+        <div class="accordion-group" data-scope="recuperacion">
+          <div class="exp-card hidden">
+            <button class="exp-header" aria-expanded="false">
+              <div class="exp-title">
+                <span class="exp-badge">Plan</span>
+                <span class="exp-heading">Repuesta Rápida</span>
+              </div>
+              <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            </button>
+            <div class="exp-content-wrapper"><div class="exp-content">
+              <ul>
+                <li>Cuando un sistema es infectado por ransomware, los archivos son cifrados y en la mayoría de los casos se exige un pago a cambio de la clave para descifrar los datos. Se pueden recuperar estos datos con ciertos pasos.</li>
+                <li>Primero se debe desconectar el equipo de la red, tanto por cable como Wi-Fi. Esto evita que el ransomware se propague a otros dispositivos dentro de la red.</li>
+                <li><strong>Erradicar</strong> persistencia y parchar.</li>
+                <li>Existen diferentes tipos de ransomware, por lo cual se debe identificar cuál es. Esto ayuda a saber si ya existe una herramienta de descifrado gratuita. 
+</li>
+              
+              </ul>
+            </div></div>
+          </div>
+
+          <div class="exp-card hidden">
+            <button class="exp-header" aria-expanded="false">
+              <div class="exp-title">
+                <span class="exp-badge">Decisión</span>
+                <span class="exp-heading">¿Pagar el rescate?</span>
+              </div>
+              <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            </button>
+            <div class="exp-content-wrapper"><div class="exp-content">
+              <p>El FBI en 2023 afirmó que pagar un rescate no garantiza la recuperación de archivos, además de que financia actividades delictivas.
+</p>
+ <p>La forma más efectiva de recuperar un sistema es restaurándolo desde una copia de seguridad previa al ataque, por lo que se deben tener copias de seguridad de un sistema por si llega a suceder algún tipo de ataque.
+Si no hay backups ni herramientas de descifrado, puede ser necesario formatear el sistema y reinstalar el SO desde cero, asegurándose de que el nuevo entorno esté actualizado y protegido.
+</p>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tipos (6) -->
+   <section id="tipos" class="section">
+  <div class="container">
+    <h2 class="hidden">Tipos de ransomware</h2>
+    <p class="problem-intro hidden">
+Usualmente las personas piensan que hay muchos tipos de ransomware pero es importante saber que existen dos tipos generales de ransomware, el ransomware criptográfico es el tipo más común el cual se realiza el cifrado y el mensaje de rescate a diferencia de el otro tipo de ransomware llamado ransomware sin cifrar el cual simplemente bloquea todo el sistema operativo enseñando únicamente el mensaje de rescate en la pantalla. Sin embargo estos tipos se dividen en subcategorías: 
+
+</p>
+
+    <div class="tile-grid">
+      <!-- 1 -->
+      <article class="tile tile--1 hidden">
+        <header class="tile-head">
+          <div class="tile-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+              <path d="M4 7h16v10H4z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M4 10h16" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="tile-title">
+            <span class="badge">1 · Doxware</span>
+            <h3>BLoquea datos</h3>
+          </div>
+        </header>
+        <div class="tile-body">
+          <p>El doxware roba información o datos personales y amenaza con filtrarlos, a diferencia de los demás roba estos datos sin cifrarlos.</p>
+        </div>
+      </article>
+
+      <!-- 2 -->
+      <article class="tile tile--2 hidden">
+        <header class="tile-head">
+          <div class="tile-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+              <rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M9 10V8a3 3 0 116 0v2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div class="tile-title">
+            <span class="badge">2 · Ransomware móvil </span>
+            <h3>Bloqueador de pantalla</h3>
+          </div>
+        </header>
+        <div class="tile-body">
+          <p>Como su nombre lo dice, este ransomware va específicamente para dispositivos móviles como celulares o tablets, y logra entrar por medio de descargas desautorizadas o aplicaciones maliciosas, para este ataque los hackers prefieren utilizar el ransomware sin cifrado, para que así sea más fácil que la víctima logre ver el mensaje de lo que debe pagar por el rescate.</p>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="tile tile--3 hidden">
+        <header class="tile-head">
+          <div class="tile-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+              <path d="M4 12h16" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M8 8l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tile-title">
+            <span class="badge">3 · Limpiaparabrisas</span>
+            <h3>Destructor</h3>
+          </div>
+        </header>
+        <div class="tile-body">
+          <p>Este ransomware no es tan usado por delincuentes cibernéticos, debido a que el principal objetivo de los limpiaparabrisas es robar los datos o información importante de la víctima y el atacante amenaza con destruir toda este información sino paga un rescate, en ocasiones extremas el hacker 
+destruye su información a pesar de que la víctima ya haya realizado el pago.
+</p>
+        </div>
+      </article>
+
+      <!-- 4 -->
+      <article class="tile tile--4 hidden">
+        <header class="tile-head">
+          <div class="tile-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+              <path d="M6 7h12M6 12h12M6 17h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tile-title">
+            <span class="badge">4 · Scareware</span>
+            <h3>Presión a terceros</h3>
+          </div>
+        </header>
+        <div class="tile-body">
+          <p>El scareware como dice su nombre, intenta engañar a la víctima para asustarla y que pague o instale algo peligroso, enviando mensajes amenazantes diciéndole al usuario que ha hecho algo ilegal haciéndose pasar por alguien de la policía o el gobierno o diciéndole que tiene que instalar un antivirus debido a que su dispositivo está infectado, esto con el fin de que el usuario entre en pánico y el atacante al cobrarle una “multa” a la víctima no le quede otra opción que pagar.s</p>
+        </div>
+      </article>
+
+      <!-- 5 -->
+      <article class="tile tile--5 hidden">
+        <header class="tile-head">
+          <div class="tile-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h10M4 17h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tile-title">
+            <span class="badge">5 · RaaS</span>
+            <h3>Ransomware como servicio</h3>
+          </div>
+        </header>
+        <div class="tile-body">
+          <p>El ransomware como servicio (RaaS) es un modelo de negocio de la ciberdelincuencia en el que los desarrolladores de ransomware venden código ransomware o malware a otros hackers, llamados "afiliados", que luego utilizan el código para iniciar sus propios ataques de ransomware.</p>
+            <p>Al subcontratar algunos de sus esfuerzos a los proveedores de RaaS, los posibles hackers tienen una entrada más rápida y fácil en la ciberdelincuencia. Incluso los actores de amenazas con experiencia técnica limitada ahora pueden iniciar ciberataques.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+    <!-- Carrusel + Footer -->
+    <section id="testimonials" class="testimonials-section">
+      <div class="container hidden">
+        <h2>SecLab Seguridad y Confianza</h2>
+        <div class="carousel-container">
+          <div class="carousel-slides">
+            <div class="carousel-slide"><p>"Recuerda hacer tu dosis diara de infromación para siempre estar protegido"</p><p><strong>- El equipo de SecLab</strong></p></div>
+            <div class="carousel-slide"><p>"Si necesitas contacto con el recuerda que esta en el apartado de contáctanos y que siempre puedes confiar en SecLab"</p><p><strong>- El equio de SecLab</strong></p></div>
+            <div class="carousel-slide"><p>""Gracias por elegir SecLab  como tu capacitación esencial y a mano. Seguridad y Confianza para tu PYME""</p><p><strong>- El equipo de SecLab</strong></p></div>
+          </div>
+          <div class="carousel-controls"><button id="prevBtn">‹</button><button id="nextBtn">›</button></div>
+          <div class="carousel-dots"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+     <footer class="footer">
+      <!-- FOOTER -->
+    <p>© 2025 SecLab — Seguridad y Confianza Digital</p>
+    <p>San José, Costa Rica | <a href="mailto:contacto@seclab.cr" style="color:inherit; text-decoration:underline">SecLab@gmail.com</a></p>
+  </div>
+    </footer>
+
+  <script>
+    /* Animaciones scroll */
+    const observer = new IntersectionObserver((entries)=>entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); }),{threshold:.1});
+    document.querySelectorAll('.hidden').forEach(el=>observer.observe(el));
+
+    /* Funciones de acordeón (una abierta por grupo) */
+    function setExpanded(btn, open){
+      btn.setAttribute('aria-expanded', String(open));
+      const card = btn.closest('.exp-card');
+      card.classList.toggle('open', open);
+      const wrap = card.querySelector('.exp-content-wrapper');
+      if(open){
+        const h = card.querySelector('.exp-content').scrollHeight + 16;
+        wrap.style.height = h + 'px';
+      } else {
+        wrap.style.height = '0px';
+      }
+    }
+
+    document.querySelectorAll('.accordion-group').forEach(group=>{
+      const cards = group.querySelectorAll('.exp-card');
+      cards.forEach(card=>{
+        const btn = card.querySelector('.exp-header');
+        const wrap = card.querySelector('.exp-content-wrapper');
+        wrap.style.height = '0px';
+
+        // Click abre y cierra, y cierra las demás del mismo grupo
+        btn.addEventListener('click', ()=>{
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+          // Cerrar todas en el grupo
+          group.querySelectorAll('.exp-card .exp-header[aria-expanded="true"]').forEach(openBtn=>{
+            if(openBtn !== btn) setExpanded(openBtn, false);
+          });
+          // Toggle actual
+          setExpanded(btn, !isOpen);
+        });
+
+        // Accesibilidad teclado
+        btn.setAttribute('role','button');
+        btn.setAttribute('tabindex','0');
+        btn.addEventListener('keydown', (ev)=>{
+          if(ev.key === 'Enter' || ev.key === ' '){
+            ev.preventDefault(); btn.click();
+          }
+        });
+
+        // Ajusta la altura si está abierta al redimensionar
+        window.addEventListener('resize', ()=>{
+          if(btn.getAttribute('aria-expanded') === 'true'){
+            const content = card.querySelector('.exp-content');
+            wrap.style.height = (content.scrollHeight + 16) + 'px';
+          }
+        });
+      });
+    });
+
+    /* Carrusel */
+    const slides = document.querySelector('.carousel-slides');
+    const slideItems = document.querySelectorAll('.carousel-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    let index = 0;
+
+    function renderDots(){
+      dotsContainer.innerHTML = '';
+      slideItems.forEach((_, i)=>{
+        const d = document.createElement('span');
+        d.className = 'dot' + (i===index?' active':'');
+        d.addEventListener('click', ()=> goTo(i));
+        dotsContainer.appendChild(d);
+      });
+    }
+    function updateCarousel(){
+      slides.style.transform = `translateX(-${index*100}%)`;
+      renderDots();
+    }
+    function goTo(i){ index = (i + slideItems.length) % slideItems.length; updateCarousel(); }
+    prevBtn.addEventListener('click', ()=> goTo(index-1));
+    nextBtn.addEventListener('click', ()=> goTo(index+1));
+    renderDots();
+    setInterval(()=> goTo(index+1), 7000);
+  </script>
+
+
+</body>
+</html>

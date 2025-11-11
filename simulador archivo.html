@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Escenario - SecLab</title>
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
+
+    :root {
+      --dark-blue:#1E3A5F;
+      --light-beige:#F2EBE0;
+      --gold-accent:#D4AC5D;
+      --white:#ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light-beige);
+      color: var(--dark-blue);
+      text-align: center;
+      padding: 50px;
+    }
+
+
+ h1 {
+color: var(--dark-blue);
+}
+
+p {
+font-size: 18px;
+}
+
+.btn {
+background-color: var(--gold-accent);
+color: var(--white);
+border: none;
+padding: 12px 24px;
+margin: 15px;
+font-size: 16px;
+border-radius: 8px;
+cursor: pointer;
+transition: 0.3s;
+}
+
+    .btn:hover {
+      background-color: var(--dark-blue);
+    }
+    .mensaje {
+      margin-top: 30px;
+      font-weight: 600;
+    }
+
+    /* ======= ESTILO DEL CORREO ======= */
+    .correo-simulado {
+      width: 80%;
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: var(--white);
+      box-shadow: var(--shadow);
+      border-radius: 10px;
+      text-align: left;
+      overflow: hidden;
+    }
+
+    .correo-header {
+      background-color: var(--dark-blue);
+      color: var(--white);
+      padding: 15px 25px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .correo-info {
+      padding: 15px 25px;
+      border-bottom: 1px solid #ddd;
+      background-color: #f9f9f9;
+    }
+
+    .correo-info p {
+      font-size: 14px;
+      margin: 4px 0;
+      color: #333;
+    }
+
+    .correo-cuerpo {
+      padding: 25px;
+      line-height: 1.6;
+      font-size: 16px;
+      color: #222;
+    }
+
+    .adjunto {
+      border-top: 1px solid #ddd;
+      padding: 15px 25px;
+      background-color: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .adjunto button {
+      background-color: var(--gold-accent);
+      border: none;
+      color: var(--white);
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .adjunto button:hover {
+      background-color: var(--dark-blue);
+    }
+
+    .archivo-icono {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--dark-blue);
+    }
+
+    .archivo-icono img {
+      width: 28px;
+      height: 28px;
+    }
+    /* 1) El navbar ocupará todo el ancho del viewport */
+html, body { margin: 0; }
+body { padding: 0; } /* movemos el padding al contenido (ver punto 2) */
+
+/* 2) Crea un contenedor para el contenido de la página */
+.site-content { padding: 50px; }
+
+/* 3) Navbar: sin cambios estructurales, solo ajustes finos */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 4) Marca y logo (corrige clamp invertido) */
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; height: 64px; }
+.brand img {
+  height: clamp(40px, 6vw, 60px); /* ahora sí: min 40, preferido 6vw, máx 60 */
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+.logo-text { font-size: clamp(1.1rem, 2.3vw, 1.6rem); }
+
+/* 5) Enlaces y wrap en pantallas pequeñas */
+.nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 28px; flex-wrap: wrap; }
+.nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+.nav-links .button {
+  padding: 8px 18px;
+  margin-left: 15px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-accent);
+  background-color: var(--gold-accent);   /* Fondo amarillo */
+  color: var(--dark-blue);                    /* Texto blanco */
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 1rem;
+}
+
+
+
+/* 6) Responsivo */
+@media (max-width: 900px) {
+  .navbar { padding: 10px 20px; }
+  .nav-links { gap: 18px; }
+}
+@media (max-width: 640px) {
+  .brand { gap: 10px; height: 56px; }
+  .brand img { height: clamp(36px, 8vw, 48px); } /* evita que se haga gigante en móvil */
+  .logo-text { font-size: clamp(1rem, 4vw, 1.35rem); }
+  .nav-links { gap: 12px; }
+}
+ .button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+
+  </style>
+</head>
+<body>
+ <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a class="button" href="team2.html">Contáctanos</a></li> 
+        </ul>
+        </nav>
+  <h1>Simulador de Escenario</h1>
+  <p>En este escenario que puede pasarle a tu empresa, recibes un correo con un archivo importante.<br> ¿Qué harías en esta situación?</p>
+
+  <button class="btn" onclick="escanear()">🧠 Escanear archivo</button>
+  <button class="btn" onclick="descargar()">⬇️ Descargar archivo</button>
+
+  <div id="resultado" class="mensaje"></div>
+
+  <!-- ====== CORREO SIMULADO ====== -->
+  <div class="correo-simulado">
+    <div class="correo-header">📧 Nuevo mensaje: “Factura pendiente de revisión”</div>
+    <div class="correo-info">
+      <p><strong>De:</strong> negocios@socioconfiable.com</p>
+      <p><strong>Para:</strong> usuario@tuempresa.com</p>
+      <p><strong>Asunto:</strong> ¡Felices Fiestas!</p>
+      <p><strong>Fecha:</strong> 3 de noviembre, 2025 · 9:47 a.m.</p>
+    </div>
+    <div class="correo-cuerpo">
+      <p>Estimado socio,</p>
+      <p>De parte del equipo de <strong><em>nombre de la empresa de tu socio</em> </strong>queremos desearles a todos nuestros socios comerciales unas felices fiestas de fin de año!🥳</p>
+      <p>Adjunta encontrará nuestra carta navideña la cual fue elaborada por nuestro equipo de diseño con mucho cariño; esta debe ser descargada para verla.</p>
+      <br>
+      <p>Esperamos que el siguiente año traiga alegrías y negocios exitosos para ambas empresas.</p>
+      <br>
+      <p>Saludos cordiales,<br><strong><em>Gerente de la empresa</em></strong></p>
+    </div>
+    <div class="adjunto">
+      <div class="archivo-icono">
+        <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="icono archivo">
+        <span>tarjeta navidad.zip</span>
+      </div>
+      <button onclick="descargar()">Descargar archivo</button>
+    </div>
+  </div>
+  <!-- =============================== -->
+
+  <script>
+    function escanear() {
+      document.getElementById('resultado').innerHTML =
+        "Buena decisión. Escanear archivos antes de abrirlos evita posibles infecciones por ransomware.";
+    }
+
+    function descargar() {
+      document.getElementById('resultado').innerHTML =
+        " Descargaste el archivo sin escanearlo... algo podría pasar.";
+      
+     
+      const link = document.createElement('a');
+      link.href = 'tarjeta navidad.jpg'; 
+      link.download = 'tarjeta navidad.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>

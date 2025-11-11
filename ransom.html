@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SecLab — Guía de Ransomware</title>
+
+<!-- Fuentes -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+  /* ===== Paleta y escala ===== */
+  :root{
+    --dark-blue:#1E3A5F;
+    --light-beige:#F2EBE0;
+    --gold-accent:#D4AC5D;
+    --brown-detail:#6B5B51;
+    --white:#ffffff;
+    --mustard:#D7B262;
+
+    /* tonos suaves derivados */
+    --beige-50:#F8F4EE;
+    --blue-10:#E9EEF5;
+    --gold-10:#F6ECD8;
+
+    --shadow:0 8px 28px rgba(0,0,0,.08);
+    --radius:14px;
+    --gap:22px;
+    --pad-y:18px;
+    --pad-x:20px;
+  }
+
+  /* ===== Base ===== */
+  html{scroll-behavior:smooth}
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:0; overflow-x:hidden;
+    font-family:'Montserrat',sans-serif; line-height:1.7;
+    color:var(--brown-detail); background:var(--white);
+  }
+  .container{max-width:1100px;margin:0 auto;padding:80px 20px}
+  h1,h2,h3{font-family:'Playfair Display',serif;color:var(--dark-blue);font-weight:700}
+  h1{font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.2;margin:0 0 16px}
+  h2{font-size:clamp(1.9rem,3.2vw,3rem);text-align:center;margin:0 0 8px}
+  h3{font-size:clamp(1.05rem,2.1vw,1.45rem);line-height:1.35;margin:0}
+  p{margin:0 0 10px;color:#555}
+  .lead{font-size:1.08rem}
+
+  /* ===== Navbar ===== */
+  .navbar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 40px;background:var(--white);border-bottom:1px solid #eee;
+    position:sticky;top:0;z-index:1000;width:100%;
+  }
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo img{height:44px;width:auto;display:block}
+  .logo span{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--dark-blue)}
+  .nav-links{list-style:none;display:flex;align-items:center;margin:0;padding:0;gap:26px}
+  .nav-links a{color:var(--dark-blue);text-decoration:none;font-weight:500}
+  .button{display:inline-block;padding:10px 18px;background:var(--gold-accent);color:var(--dark-blue);text-decoration:none;border-radius:10px;font-weight:800;transition:.25s}
+  .button:hover{transform:translateY(-2px);background:#c59b4b}
+  .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+  /* ===== Hero ===== */
+  .hero-wrapper{
+    background:
+      radial-gradient(1200px 400px at 20% -10%, var(--blue-10), transparent 60%),
+      radial-gradient(900px 380px at 100% 0%, var(--gold-10), transparent 60%),
+      var(--light-beige);
+    border-bottom:1px solid #eee;
+  }
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;padding-top:48px;padding-bottom:72px;align-items:center}
+  .hero-text .hero-badge{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:8px 14px;border-radius:999px;background:#fff;border:1px solid #eaeaea;
+    color:var(--dark-blue);font-weight:700
+  }
+  .hero-image{position:relative;}
+  .hero-photo{
+    border-radius:16px;overflow:hidden;box-shadow:var(--shadow);border:6px solid #fff
+  }
+  .hero-photo img{width:100%;height:340px;object-fit:cover;display:block}
+
+  /* ===== Feature boxes ===== */
+  .feature-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:-60px;position:relative;z-index:10;padding:0 20px}
+  .feature-box{
+    background:linear-gradient(180deg, var(--dark-blue), #18314d);
+    color:#fff;padding:22px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.08);display:grid;gap:8px
+  }
+  .feature-box p{color:#e8edf4;font-size:.97rem}
+  .icon{width:36px;height:36px;color:var(--mustard)}
+
+  /* ===== Acordeones ===== */
+  .section{padding:56px 0}
+  .problem-intro{max-width:780px;margin:0 auto 24px}
+  .accordion-group{display:grid;gap:18px}
+  .exp-card{
+    border:1px solid #eee;border-radius:16px;background:#fff;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column
+  }
+  .exp-header{
+    display:flex;align-items:flex-start;gap:14px;padding:18px 20px;cursor:pointer;background:#fff;border:0;text-align:left;outline:none;width:100%
+  }
+  .exp-header:focus-visible{box-shadow:0 0 0 3px rgba(212,172,93,.35);border-radius:16px}
+  .exp-title{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+  .exp-badge{width:max-content;font-size:.83rem;font-weight:800;letter-spacing:.2px;color:var(--dark-blue);background:var(--beige-50);border-radius:999px;padding:4px 10px}
+  .exp-heading{display:block;font-size:clamp(1.06rem,2.1vw,1.5rem);line-height:1.35;word-break:break-word}
+  .exp-toggle{margin-left:auto;flex-shrink:0;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:999px;border:1px solid #e6e6e6;background:#fff;transition:transform .25s ease}
+  .exp-card.open .exp-toggle{transform:rotate(180deg)}
+  .exp-toggle svg{width:18px;height:18px}
+
+  .exp-content-wrapper{height:0;overflow:hidden;transition:height .3s ease;border-top:1px dashed #eee;background:linear-gradient(#fff,#fff)}
+  .exp-content{padding:16px 20px 20px}
+  .exp-content p{margin:10px 0}
+  .exp-content ul{margin:10px 0 0 18px}
+
+  /* Bloque media dentro de cada acordeón */
+  .exp-media{
+    display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center
+  }
+  .exp-media.reverse{grid-template-columns:.9fr 1.1fr}
+  .img-card{
+    background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);position:relative
+  }
+  .img-card::after{
+    content:"";position:absolute;inset:0;border:4px solid rgba(212,172,93,.25);border-radius:14px;pointer-events:none
+  }
+  .img-card img{width:100%;height:220px;object-fit:cover;display:block}
+
+  /* ===== Fotos intercaladas ===== */
+  .inline-photo{
+    margin:16px 0;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);
+    border:6px solid #fff;outline:3px solid rgba(212,172,93,.3)
+  }
+  .inline-photo img{display:block;width:100%;height:260px;object-fit:cover}
+
+  /* ===== Tira de fotos ===== */
+  .photo-strip{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px
+  }
+  .photo-strip .ph{
+    border-radius:12px;overflow:hidden;border:4px solid #fff;outline:2px solid rgba(30,58,95,.12);
+    box-shadow:var(--shadow)
+  }
+  .photo-strip img{width:100%;height:140px;object-fit:cover;display:block}
+
+  /* ===== Tiles (Tipos) ===== */
+  .tile-grid{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+  .tile{background:#fff;border:1px solid #eee;border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:grid;gap:10px}
+  .tile-head{display:flex;align-items:center;gap:14px;padding:18px 20px;background:linear-gradient(180deg, var(--beige-50), #fff);border-bottom:1px dashed #eee}
+  .tile-icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--light-beige);color:var(--dark-blue)}
+  .tile-title{display:flex;flex-direction:column;gap:4px}
+  .tile-title .badge{font-size:.8rem;font-weight:800;color:var(--dark-blue);background:#fff;border:1px solid #eaeaea;border-radius:999px;padding:3px 10px;width:max-content}
+  .tile-title h3{font-size:clamp(1.05rem,2.1vw,1.45rem);margin:0;line-height:1.35}
+  .tile-body{padding:14px 20px 18px;color:#555}
+  .tile--1 .tile-icon{background:#F2EBE0}
+  .tile--2 .tile-icon{background:#e8f0fe}
+  .tile--3 .tile-icon{background:#eaf7f0}
+  .tile--5 .tile-icon{background:#efe9ff}
+
+  /* ===== Testimonios y Footer ===== */
+  .testimonials-section{background:linear-gradient(180deg,#18314d,var(--dark-blue))}
+  .testimonials-section h2{color:#fff}
+  .carousel-container{position:relative;max-width:800px;margin:auto;overflow:hidden}
+  .carousel-slides{display:flex;transition:transform .5s ease-in-out}
+  .carousel-slide{min-width:100%;box-sizing:border-box;padding:0 40px;text-align:center}
+  .carousel-slide p{font-size:1.1rem;font-style:italic;color:var(--light-beige)}
+  .carousel-slide strong{color:var(--mustard);font-weight:800}
+  .carousel-controls{position:absolute;top:50%;width:100%;display:flex;justify-content:space-between;transform:translateY(-50%)}
+  .carousel-controls button{
+    background:none;border:2px solid rgba(242,235,224,.5);color:var(--light-beige);
+    font-size:1.5rem;cursor:pointer;height:45px;width:45px;border-radius:50%;transition:.3s
+  }
+  .carousel-controls button:hover{background:var(--gold-accent);border-color:var(--gold-accent);color:var(--dark-blue)}
+  .carousel-dots{text-align:center;margin-top:25px}
+  .dot{cursor:pointer;height:12px;width:12px;margin:0 5px;background:rgba(242,235,224,.4);border-radius:50%;display:inline-block;transition:background-color .3s ease}
+  .dot.active{background:var(--mustard)}
+  .footer{background:var(--dark-blue);color:var(--light-beige);padding:40px 20px;text-align:center}
+
+  /* ===== Animaciones scroll ===== */
+  .hidden{opacity:0;transform:translateY(30px);transition:opacity .6s ease-out,transform .6s ease-out}
+  .show{opacity:1;transform:translateY(0)}
+
+  /* ===== Responsive ===== */
+  @media (max-width:992px){
+    .hero{grid-template-columns:1fr;gap:28px}
+    .feature-boxes{grid-template-columns:1fr;margin-top:-40px}
+    .tile-grid{grid-template-columns:repeat(2,1fr)}
+    .exp-media{grid-template-columns:1fr}
+    .photo-strip{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:640px){
+    .nav-links{gap:16px}
+    .tile-grid{grid-template-columns:1fr}
+    .exp-header{padding:16px}
+    .exp-content{padding:14px 16px 18px}
+    .photo-strip{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+    <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a class="button" href="team2.html">Contáctanos</a></li> 
+        </ul>
+        </nav>
+
+
+<main>
+  <!-- HERO (sin checklist) -->
+  <section class="hero-wrapper">
+    <div class="container hero">
+      <div class="hero-text hidden">
+        <span class="hero-badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3l7 3v6c0 4.97-3.05 8.11-7 9-3.95-.89-7-4.03-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" />
+            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Seguridad & Resiliencia para PYMEs
+        </span>
+        <h1>Guía esencial sobre Ransomware</h1>
+        <p class="lead">Qué es, cómo ataca y cómo detectarlo, bloquearlo y recuperarte con prácticas efectivas.</p>
+      </div>
+
+      <div class="hero-image hidden">
+        <figure class="hero-photo">
+          <img src="Imagenes/ranm1.jpg" alt="Ilustración de seguridad con candado y servidores">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="container" aria-label="puntos-clave">
+    <div class="feature-boxes hidden">
+      <article class="feature-box">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l7 4v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-4z" stroke="currentColor" stroke-width="1.6"/></svg>
+        <h3>Conciencia primero</h3>
+        <p>La formación del equipo reduce clics de riesgo.</p>
+      </article>
+      <article class="feature-box">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16v10H4z" stroke="currentColor" stroke-width="1.6"/><path d="M4 10h16" stroke="currentColor" stroke-width="1.2"/></svg>
+        <h3>Respaldo periódico</h3>
+        <p>Backups verificados aceleran la recuperación.</p>
+      </article>
+      <article class="feature-box">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 10V8a3 3 0 116 0v2" stroke="currentColor" stroke-width="1.6"/></svg>
+        <h3>Defensa en capas</h3>
+        <p>Correo, endpoint y red trabajando en conjunto.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section id="introduccion" class="section">
+    <div class="container">
+      <div class="problem-intro hidden">
+        <h2>Introducción al ransomware</h2>
+        <p>Para tener una buena definición de qué es el ransomware es importante entender cómo se crea, cómo afecta a los sistemas y cómo se filtra. También conviene conocer su comportamiento para diseñar controles efectivos.</p>
+      </div>
+
+      <!-- Tira de fotos para dar ritmo visual -->
+      <div class="photo-strip hidden" aria-label="galeria-intro">
+        <figure class="ph"><img src="Imagenes/ranm2.jpeg" alt="Sala de servidores con iluminación azul"></figure>
+        <figure class="ph"><img src="Imagenes/ranm3.jpg" alt="Equipo de TI analizando panel de seguridad"></figure>
+        <figure class="ph"><img src="Imagenes/ranm4.jpg" alt="Candado digital representando cifrado"></figure>
+      </div>
+
+      <div class="accordion-group" data-scope="intro">
+        <!-- Definición -->
+        <div class="exp-card hidden">
+          <button class="exp-header" aria-expanded="false">
+            <div class="exp-title">
+              <span class="exp-badge">Definición</span>
+              <span class="exp-heading">¿Qué es un ransomware?</span>
+            </div>
+            <span class="exp-toggle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="exp-content-wrapper"><div class="exp-content">
+            <p>Ransomware es un tipo de malware que retiene datos personales, confidenciales o información importante de la víctima amenazando con mantenerla encriptada hasta que se pague un rescate.</p>
+            
+            <div class="exp-media">
+              <div>
+                <p>En la mayoría de variantes modernas, el atacante además exfiltra datos para ejercer presión adicional (“doble extorsión”).</p>
+              </div>
+            
+            </div>
+          </div></div>
+        </div>
+
+        <!-- Cadena de ataque -->
+        <div class="exp-card hidden">
+          <button class="exp-header" aria-expanded="false">
+            <div class="exp-title">
+              <span class="exp-badge">Cadena de ataque</span>
+              <span class="exp-heading">¿Cómo ataca el ransomware?</span>
+            </div>
+            <span class="exp-toggle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="exp-content-wrapper"><div class="exp-content">
+            <p>El acceso suele iniciar con phishing, descargas maliciosas o explotación de vulnerabilidades. Luego busca persistencia y privilegios para cifrar datos.</p>
+         
+             
+              <div>
+                <p>Hoy muchos grupos realizan reconocimiento interno y exfiltración antes del cifrado para maximizar impacto.</p>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detección -->
+  <section id="deteccion" class="section">
+    <div class="container">
+      <h2 class="hidden">¿Cómo se puede detectar?</h2>
+      <p class="problem-intro hidden">Ya que aprendimos conceptos básicos del ransomware, ahora veremos cómo detectarlo.</p>
+
+      <div class="accordion-group" data-scope="deteccion">
+        <!-- 1 Firma -->
+        <div class="exp-card hidden">
+          <button class="exp-header" aria-expanded="false">
+            <div class="exp-title">
+              <span class="exp-badge">1 · Cambios masivos</span>
+              <span class="exp-heading">Detección por firma</span>
+            </div>
+            <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="exp-content-wrapper"><div class="exp-content">
+            <p>Hashes, dominios y otros IOC se comparan contra repositorios de firmas. Útil para amenazas conocidas.</p>
+           
+            <div class="exp-media">
+              <div>
+                <p>Limitaciones frente a variantes nuevas o empaquetadas. Complementar con análisis de comportamiento.</p>
+              </div>
+              <figure class="img-card">
+                <img src="Imagenes/direporfirma.jpg" alt="Pantalla con hashes y firmas de malware">
+              </figure>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- 2 Comportamiento -->
+        <div class="exp-card hidden">
+          <button class="exp-header" aria-expanded="false">
+            <div class="exp-title">
+              <span class="exp-badge">2 · Comportamiento</span>
+              <span class="exp-heading">Detección por comportamiento</span>
+            </div>
+            <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="exp-content-wrapper"><div class="exp-content">
+            <p>Analiza patrones anómalos (apertura y reemplazo masivo de archivos, acciones en lotes, etc.).</p>
+            <div class="inline-photo"><img src="Imagenes/comportamiento.jpg" alt="Gráfico de actividad anómala en archivos"></div>
+            <div class="exp-media reverse">
+            
+              <div>
+                <p>La correlación con telemetría de endpoint y red incrementa la precisión y reduce falsos positivos.</p>
+              </div>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- 3 Tráfico -->
+        <div class="exp-card hidden">
+          <button class="exp-header" aria-expanded="false">
+            <div class="exp-title">
+              <span class="exp-badge">3 · Tráfico</span>
+              <span class="exp-heading">Tráfico anormal</span>
+            </div>
+            <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="exp-content-wrapper"><div class="exp-content">
+            <p>Monitoreo de red para detectar exfiltración y conexiones a C2. La doble extorsión es común.</p>
+            
+              <div>
+                <p>Bloqueo por reputación y análisis SSL/TLS ayudan a cortar comunicaciones del atacante.</p>
+              </div>
+              <figure class="img-card">
+                <img src="Imagenes/trafico.jpg" alt="Panel de red con picos de tráfico sospechoso">
+              </figure>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloqueo -->
+ <section id="bloqueo" class="section">
+  <div class="container">
+    <h2 class="hidden">¿Cómo bloquear el ransomware?</h2>
+    <p class="problem-intro hidden">Aprender cómo bloquear y mitigar el ransomware es clave para tu PYME.</p>
+
+    <div class="accordion-group" data-scope="bloqueo">
+      <!-- 1 Enlaces -->
+      <div class="exp-card">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title">
+            <span class="exp-badge">1 · Conciencia</span>
+            <span class="exp-heading">Evitar enlaces extraños</span>
+          </div>
+          <span class="exp-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="exp-content-wrapper">
+          <div class="exp-content">
+            <p>Correos y sitios maliciosos suelen propagar descargas de malware.</p>
+            <div class="exp-media">
+              <div>
+                <ul>
+                  <li>Segmenta la red y restringe privilegios para limitar el movimiento lateral.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 Escaneo correo -->
+      <div class="exp-card">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title">
+            <span class="exp-badge">2 · Escaneo</span>
+            <span class="exp-heading">Escaneo de correo electrónico</span>
+          </div>
+          <span class="exp-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="exp-content-wrapper">
+          <div class="exp-content">
+            <p>Filtros detectan y eliminan adjuntos y URLs peligrosas antes de llegar al usuario.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Firewalls -->
+      <div class="exp-card">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title">
+            <span class="exp-badge">3 · Protección</span>
+            <span class="exp-heading">Firewalls y endpoint</span>
+          </div>
+          <span class="exp-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="exp-content-wrapper">
+          <div class="exp-content">
+            <p>Inspección de tráfico y bloqueo por reputación/detección. EDR para aislar procesos maliciosos.</p>
+        
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 VPN -->
+      <div class="exp-card">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title">
+            <span class="exp-badge">4 · VPN</span>
+            <span class="exp-heading">Utilizar VPN</span>
+          </div>
+          <span class="exp-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="exp-content-wrapper">
+          <div class="exp-content">
+            <p>En redes públicas, el cifrado punto a punto evita el espionaje.</p>
+            <div>
+              <ul><li>Implementa MFA y dispositivos confiables.</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Software seguridad -->
+      <div class="exp-card">
+        <button class="exp-header" aria-expanded="false">
+          <div class="exp-title">
+            <span class="exp-badge">5 · Seguridad</span>
+            <span class="exp-heading">Software de seguridad</span>
+          </div>
+          <span class="exp-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="exp-content-wrapper">
+          <div class="exp-content">
+            <p>Antimalware actualizado, backups y parches regulares.</p>
+           
+            <div>
+              <ul><li>Prueba restauraciones para validar tiempos de recuperación (RTO/RPO).</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Recuperación -->
+  <section id="recuperacion" class="section">
+    <div class="container">
+      <h2 class="hidden">¿Cómo recuperar un sistema vulnerado?</h2>
+      <div class="accordion-group" data-scope="recuperacion">
+        <!-- Plan -->
+        <div class="exp-card hidden">
+          <button class="exp-header" aria-expanded="false">
+            <div class="exp-title">
+              <span class="exp-badge">Plan</span>
+              <span class="exp-heading">Respuesta rápida</span>
+            </div>
+            <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="exp-content-wrapper"><div class="exp-content">
+            <p>Desconecta, identifica la familia, erradica persistencia y restaura servicios críticos.</p>
+           
+            <div class="exp-media">
+              <div>
+                <ul>
+                  <li>Notifica a las partes necesarias y activa el plan de comunicación.</li>
+                </ul>
+              </div>
+              <figure class="img-card">
+              
+            </div>
+          </div></div>
+        </div>
+
+        <!-- ¿Pagar? -->
+        <div class="exp-card hidden">
+          <button class="exp-header" aria-expanded="false">
+            <div class="exp-title">
+              <span class="exp-badge">Decisión</span>
+              <span class="exp-heading">¿Pagar el rescate?</span>
+            </div>
+            <span class="exp-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="exp-content-wrapper"><div class="exp-content">
+            <p>Lo más efectivo es restaurar desde copias. Sin backups ni descifradores, quizá debas reinstalar y endurecer el entorno.</p>
+            <div class="inline-photo"><img src="Imagenes/dinero.jpg" alt="Restauración desde copia de seguridad"></div>
+            <div class="exp-media reverse">
+             
+              <div>
+                <p>Documenta lecciones aprendidas y mejora controles preventivos.</p>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tipos -->
+  <section id="tipos" class="section">
+    <div class="container">
+      <h2 class="hidden">Tipos de ransomware</h2>
+      <p class="problem-intro hidden">Dos familias generales y subtipos frecuentes:</p>
+
+      <div class="tile-grid">
+        <article class="tile tile--1 hidden">
+          <header class="tile-head">
+            <div class="tile-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                <path d="M4 7h16v10H4z" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M4 10h16" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
+            </div>
+            <div class="tile-title">
+              <span class="badge">1 · Doxware</span>
+              <h3>Bloquea datos</h3>
+            </div>
+          </header>
+          <div class="tile-body"><p>Roba información y amenaza con filtrarla (sin cifrar).</p></div>
+        </article>
+
+        <article class="tile tile--2 hidden">
+          <header class="tile-head">
+            <div class="tile-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                <rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M9 10V8a3 3 0 116 0v2" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <div class="tile-title">
+              <span class="badge">2 · Ransomware móvil</span>
+              <h3>Bloqueador de pantalla</h3>
+            </div>
+          </header>
+          <div class="tile-body"><p>Apunta a móviles vía apps maliciosas; suele bloquear pantalla para mostrar el “rescate”.</p></div>
+        </article>
+
+        <article class="tile tile--3 hidden">
+          <header class="tile-head">
+            <div class="tile-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                <path d="M4 12h16" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M8 8l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="tile-title">
+              <span class="badge">3 · Limpiaparabrisas</span>
+              <h3>Destructor</h3>
+            </div>
+          </header>
+          <div class="tile-body"><p>Amenaza con destruir datos, incluso tras el pago, para generar presión.</p></div>
+        </article>
+
+        <article class="tile tile--5 hidden">
+          <header class="tile-head">
+            <div class="tile-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                <path d="M4 7h16M4 12h10M4 17h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="tile-title">
+              <span class="badge">5 · RaaS</span>
+              <h3>Ransomware como servicio</h3>
+            </div>
+          </header>
+          <div class="tile-body"><p>Desarrolladores venden el malware a “afiliados”, bajando la barrera de entrada a nuevos atacantes.</p></div>
+        </article>
+         <article class="tile tile--2 hidden">
+          <header class="tile-head">
+            <div class="tile-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                <rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M9 10V8a3 3 0 116 0v2" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <div class="tile-title">
+              <span class="badge">2 · Ransomware móvil</span>
+              <h3>Bloqueador de pantalla</h3>
+            </div>
+          </header>
+          <div class="tile-body"><p>Apunta a móviles vía apps maliciosas; suele bloquear pantalla para mostrar el “rescate”.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  
+
+<!-- CARRUSEL -->
+  <section id="testimonials" class="testimonials-section">
+    <div class="container hidden">
+      <h2>SecLab — Seguridad y Confianza</h2>
+      <div class="carousel-container">
+        <div class="carousel-slides" id="carouselSlides">
+          <div class="carousel-slide">
+            <p>"Gracias por elegir SecLab como tu capacitación esencial y a mano. Seguridad y Confianza para tu PYME"</p>
+            <p><strong>- El equipo de SecLab </strong></p>
+          </div>
+          <div class="carousel-slide">
+            <p>"En SecLab, cuidamos la seguridad digital de tu negocio."</p>
+            <p><strong>-SecLab</p>
+          </div>
+          <div class="carousel-slide">
+            <p>"SecLab Seguridad y resiliencia "</p>
+            <p><strong> Colaboradores de SecLab</strong></p>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button id="prevBtn">‹</button>
+          <button id="nextBtn">›</button>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>© 2025 SecLab — Seguridad y Confianza Digital</p>
+    <p>San José, Costa Rica | <a href="mailto:contacto@seclab.cr" style="color:inherit; text-decoration:underline">seclabexpotec2025@gmail.com</a></p>
+  </div>
+
+  <script>
+    
+/* ===== Acordeones (abrir/cerrar con animación) ===== */
+(function () {
+  const groups = document.querySelectorAll('.accordion-group');
+
+  groups.forEach(group => {
+    const cards = group.querySelectorAll('.exp-card');
+
+    cards.forEach(card => {
+      const headerBtn = card.querySelector('.exp-header');
+      const wrapper = card.querySelector('.exp-content-wrapper');
+
+      if (!headerBtn || !wrapper) return;
+
+      // Estado inicial: todo cerrado (a menos que ya tenga .open)
+      if (card.classList.contains('open')) {
+        headerBtn.setAttribute('aria-expanded', 'true');
+        wrapper.style.height = 'auto';
+      } else {
+        headerBtn.setAttribute('aria-expanded', 'false');
+        wrapper.style.height = '0px';
+      }
+
+      // Click / teclado
+      const toggle = (evt) => {
+        // Soporta Enter y Espacio además de click
+        if (evt.type === 'keydown' && !(evt.key === 'Enter' || evt.key === ' ')) return;
+        evt.preventDefault();
+
+        const isOpen = card.classList.contains('open');
+
+        // Cerrar hermanos dentro del mismo grupo
+        group.querySelectorAll('.exp-card.open').forEach(openCard => {
+          if (openCard === card) return;
+          closeCard(openCard);
+        });
+
+        // Abrir/cerrar actual
+        isOpen ? closeCard(card) : openCard(card);
+      };
+
+      headerBtn.addEventListener('click', toggle);
+      headerBtn.addEventListener('keydown', toggle);
+      headerBtn.setAttribute('role', 'button');
+      headerBtn.setAttribute('tabindex', '0');
+
+      // Funciones
+      function openCard(c) {
+        const btn = c.querySelector('.exp-header');
+        const wrap = c.querySelector('.exp-content-wrapper');
+
+        // De 0 -> altura del contenido
+        wrap.style.height = wrap.scrollHeight + 'px';
+        c.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+
+        // Al finalizar, dejar en 'auto' para que sea responsivo
+        const onEnd = (e) => {
+          if (e.propertyName !== 'height') return;
+          wrap.style.height = 'auto';
+          wrap.removeEventListener('transitionend', onEnd);
+        };
+        wrap.addEventListener('transitionend', onEnd);
+      }
+
+      function closeCard(c) {
+        const btn = c.querySelector('.exp-header');
+        const wrap = c.querySelector('.exp-content-wrapper');
+
+        // De 'auto' -> px actual -> 0 (truco para animar)
+        wrap.style.height = wrap.scrollHeight + 'px';
+        // Forzar un frame para que el cambio se aplique
+        requestAnimationFrame(() => {
+          wrap.style.height = '0px';
+        });
+
+        c.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+})();
+
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('show'); observer.unobserve(e.target); }
+      });
+    },{threshold:.12});
+    document.querySelectorAll('.hidden').forEach(el=>observer.observe(el));
+
+    // Carrusel
+    const slides = document.getElementById('carouselSlides');
+    const dotsContainer = document.getElementById('carouselDots');
+    const total = slides.children.length;
+    let index = 0;
+
+    // Dots dinámicos
+    for(let i=0;i<total;i++){
+      const dot=document.createElement('span');
+      dot.classList.add('dot');
+      dot.addEventListener('click',()=>{index=i;updateCarousel();});
+      dotsContainer.appendChild(dot);
+    }
+
+    const dots=document.querySelectorAll('.dot');
+    const updateCarousel=()=>{
+      slides.style.transform=`translateX(-${index*100}%)`;
+      dots.forEach((d,i)=>d.classList.toggle('active',i===index));
+    };
+
+    document.getElementById('prevBtn').addEventListener('click',()=>{index=(index-1+total)%total;updateCarousel();});
+    document.getElementById('nextBtn').addEventListener('click',()=>{index=(index+1)%total;updateCarousel();});
+
+    updateCarousel();
+    setInterval(()=>{index=(index+1)%total;updateCarousel();},6000);
+  </script>
+  
+</body>
+</html>
+

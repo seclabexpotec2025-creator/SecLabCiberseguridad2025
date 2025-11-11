@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Pag3.css">
+    <title>ADWARE
+    </title>
+    <style>
+        /* --- Importación de Fuentes de Google --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
+
+        /* --- Paleta de Colores --- */
+        :root {
+            --dark-blue: #1E3A5F;
+            --light-beige: #F2EBE0;
+            --gold-accent: #D4AC5D;
+            --brown-detail: #6B5B51;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        /* --- Estilos Generales --- */
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--brown-detail);
+            background-color: var(--white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 80px 20px; }
+        h1, h3 { font-family: 'Playfair Display', serif; color: var(--dark-blue); font-weight: 700; }
+        h1 { font-size: 3.5rem; line-height: 1.2; }
+        h2 { font-size: 3rem; text-align: center; }
+        p { font-size: 1rem; color: #555; }
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--gold-accent);
+            color: var(--dark-blue);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .button:hover {   transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+        /* Brand (logo + texto) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+        /* --- Hero Section --- */
+        .hero-wrapper { background-color: var(--light-beige); }
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding-top: 60px;
+            padding-bottom: 120px;
+        }
+        .hero-text { flex: 1; }
+        .hero-text p { margin-bottom: 25px; }
+        .hero-image { flex: 1; }
+        .hero-image img { width: 100%; border-radius: 8px; box-shadow: var(--shadow); }
+
+        /* --- Feature Boxes (Superpuestos) --- */
+        .feature-boxes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: -100px;
+            position: relative;
+            z-index: 10;
+        }
+        .feature-box {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .feature-box .icon { width: 40px; height: 40px; margin-bottom: 15px; color: var(--gold-accent); }
+        .feature-box h3 { color: var(--white); font-size: 1.4rem; margin-bottom: 10px; }
+        .feature-box p { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
+        
+        /* --- Sección de Problemas (Lista Numerada) --- */
+        .problem-intro { text-align: center; max-width: 700px; margin: 0 auto 60px auto; }
+        .problem-intro .cta-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            border: 2px solid var(--light-beige);
+            font-weight: bold;
+            color: var(--dark-blue);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .problem-intro .cta-link:hover { background-color: var(--light-beige); }
+
+        .problem-list .item {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+        .problem-list .item:last-child { margin-bottom: 0; }
+        .problem-list .item.reverse { flex-direction: row-reverse; }
+        .problem-list .item-image { flex: 1; }
+        .problem-list .item-image img { width: 100%; border-radius: 8px; box-shadow: var(--shadow); }
+        .problem-list .item-content { flex: 1; display: flex; gap: 25px; }
+        .problem-list .big-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 800;
+            color: var(--gold-accent);
+            line-height: 1;
+        }
+        .problem-list .item-text { padding-top: 15px; }
+        .problem-list .item-text h3 { margin-top: 0; font-size: 2rem; }
+
+        /* --- Carrusel y Footer --- */
+        .testimonials-section { background-color: var(--dark-blue); }
+        .testimonials-section h2 { color: var(--white); }
+        .carousel-container { position: relative; max-width: 800px; margin: auto; overflow: hidden; }
+        .carousel-slides { display: flex; transition: transform 0.5s ease-in-out; }
+        .carousel-slide { min-width: 100%; box-sizing: border-box; padding: 0 40px; text-align: center; }
+        .carousel-slide p { font-size: 1.2rem; font-style: italic; color: var(--light-beige); }
+        .carousel-slide strong { color: var(--gold-accent); font-weight: bold; }
+        .carousel-controls { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; transform: translateY(-50%); }
+        .carousel-controls button { background: none; border: 2px solid rgba(242,235,224,0.5); color: var(--light-beige); font-size: 1.5rem; cursor: pointer; height: 45px; width: 45px; border-radius: 50%; transition: all 0.3s ease; }
+        .carousel-controls button:hover { background-color: var(--gold-accent); border-color: var(--gold-accent); color: var(--dark-blue); }
+        .carousel-dots { text-align: center; margin-top: 25px; }
+        .dot { cursor: pointer; height: 12px; width: 12px; margin: 0 5px; background-color: rgba(242, 235, 224, 0.4); border-radius: 50%; display: inline-block; transition: background-color 0.3s ease; }
+        .dot.active { background-color: var(--gold-accent); }
+        
+        .footer {
+            background-color: var(--dark-blue);
+            color: var(--light-beige);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        /* --- Animaciones y Responsive --- */
+        .hidden { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
+        @media (max-width: 768px) {
+            /* ... (código responsive de navbar y otros ajustes) ... */
+        }
+    </style>
+</head>
+<body>
+
+ 
+    <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a class="button" href="team2.html">Contáctanos</a></li> 
+        </ul>
+        </nav>
+
+    <main>
+<div class="main" id="main">
+        <div class="linea">
+        <div class="correo" id="correo1" >
+            <h2>Correo 1</h2>
+            <p class="texto">Un nuevo acceso en el dispositivo windows. 
+                Detectamos un nuevo acceso a tu Cuenta de Google en el dispositivo Windows. Si fuiste tú, no tienes que hacer nada. De lo contrario, te ayudaremos a proteger tu cuenta.</p>
+             <button class="hob" onclick="verde0()">Seleccionar</button>
+        </div>
+            <div class="correoe" id="correoe1" >
+                <h2>Explicacion de Correo 1</h2>
+                <p class="texto">Este correo es bueno, ya que le avisa al usuario de un posible intruso a su cuenta de Google y gracias a esto puede tomar precauciones ante algún ataque.</p>
+            </div>
+        <div class="correo" id="correo2" >
+            <h2>Correo 2</h2>
+            <p class="texto">Estimado usuario:
+
+                Estamos actualizando varios de nuestros Términos y Condiciones del Mercado, incluidos los Términos Generales de Venta, Políticas de devoluciones,etc. No necesita tomar ninguna acción. Los Términos actualizados entrarán en vigor a partir del 31 de julio de 2025 y se aplicarán a todos los pedidos realizados a partir de esa fecha.
+                Si tiene alguna pregunta o inquietud sobre estos cambios, contáctese con nuestro equipo de Servicio al Cliente en el siguiente link:</p>
+             <button class="hob" onclick="verde2()">Seleccionar</button>
+        </div>
+                    <div class="correoe" id="correoe2" >
+                <h2>Explicacion de Correo 2</h2>
+                <p class="texto">Este es una notificación de actualización de Términos y Condiciones de la empresa, vela por el conocimiento y aprobación del usuario sobre estos cambios.
+                 No representa ningún tipo de amenaza para la información personal del usuario, y si no acepta estos cambios puede contactarse con el equipo o anular su suscripción.</p>
+            </div>
+        <div class="correo" id="correo3" >
+            <h2>Correo 3</h2>
+            <p class="texto">Estimado usuario:
+                Bnshop servicio de puntos te recuerda que tu cuenta actual de puntos (3022 puntos) expirará en tres días hábiles. Para evitar inconvenientes, canjea tus puntos a tiempo.
+                Entra en la
+                web para canjear tus regalos:
+                https://bnshop.bncr-fl.cc/cr</p>
+             <button class="hob" onclick="rojo()">Seleccionar</button>
+        </div>
+                    <div class="correoew" id="correoe3" >
+                <h2>Explicacion de Correo 3</h2>
+                <p class="texto">Este correo es un claro ejemplo de Fraude de Suplantación, finge ser una empresa que tiene un programa de recompensas por puntos al ingresar al link, lo cual . </p>
+            </div>
+    </div>
+    <div class="linea2">
+        <div class="correo" id="correo4">
+            <h2>Correo 4</h2>
+            <p class="texto">Tu código de acceso único para Disney+
+                Es necesario que verifiques la dirección de correo electrónico asociada a tu cuenta de MyDisney con este código de acceso que vencerá en 15 minutos.</p>
+             <button class="hob"  onclick="verde3()">Seleccionar</button>
+        </div>
+                    <div class="correoe" id="correoe4" >
+                <h2>Explicacion de Correo 4</h2>
+                <p class="texto">Este correo es bueno ya que está enviando un código único para que nadie más que el usuario pueda acceder a su cuenta de Disney+.</p>
+            </div>
+        <div class="correo" id="correo5" >
+            <h2>Correo 5</h2>
+            <p class="texto">🎊¡Felicidades! 🎊 
+                Haz sido seleccionado para un regalo gratuito y ₡5000 de Cashback. 💸💰🎉
+                Inserta tu tarjeta y contraseña para recibir la recompensa automáticamente!😊🎊</p>
+             <button class="hob" onclick="rojo2()">Seleccionar</button>
+        </div>
+                    <div class="correoew" id="correoe5" >
+                <h2>Explicacion de Correo 5</h2>
+                <p class="texto">En este, pretende ser una empresa que le dará una recompensa si figura su número de cuenta bancaria y contraseña, los cual es un claro ejemplo de estafa.</p>
+            </div>
+        <div class="correo" id="correo6" >
+            <h2>Correo 6</h2>
+            <p class="texto">A Estelle Richter le encanta tu comentario!❤️
+                Si no quieres recibir más emails sobre tus comentarios y respuestas de Youtube, puedes cancelar tu suscripción.</p>
+             <button class="hob" onclick="verde4()">Seleccionar</button>
+        </div>
+            <div class="correoe" id="correoe6" >
+                <h2>Explicacion de Correo 6</h2>
+                <p class="texto">Este se trata de un tipo de correo de Spam de una aplicación verificada, simplemente le informa al usuario una interacción que hubo en la respectiva red social.
+            Sin embargo no utiliza ningún tipo de información vulnerable ni solicita datos que no se obtengan ya por defecto desde esta app/sitio web.</p>
+            </div>
+    </div>
+
+
+
+
+
+
+
+
+
+<div class="gig" >
+<button onclick="veres()" id="tick">Ver resultado</button>
+<p class="ni" id="ni"></p>
+</div>
+<div class="gig" >
+<a href="inicio.html">
+<button id="tick2">Volver</button>
+</a>
+<p class="ni" id="ni"></p>
+</div>
+
+        
+        <section id="testimonials" class="testimonials-section">
+             <div class="container hidden">
+                <h2>SecLab Seguridad y Confianza</h2>
+                <div class="carousel-container">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide"><p>"Gracias por elegir SecLab como tu capacitación esencial y a mano. Seguridad y Confianza para tu PYME"</p><p><strong>- El equipo de SecLab</strong></p></div>
+                        <div class="carousel-slide"><p>"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."</p><p><strong>- CEO, Empresa Ejemplo</strong></p></div>
+                        <div class="carousel-slide"><p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."</p><p><strong>- Director de Marketing</strong></p></div>
+                    </div>
+                    <div class="carousel-controls"><button id="prevBtn">‹</button><button id="nextBtn">›</button></div>
+                    <div class="carousel-dots"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 SecLab — Seguridad y Confianza Digital</p>
+    <p>San José, Costa Rica | <a href="mailto:contacto@seclab.cr" style="color:inherit; text-decoration:underline">seclabexpotec2025@gmail.com</a></p>
+    </footer>
+
+    <script>
+        // --- Lógica para Animaciones de Scroll ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+
+        // --- Lógica del Carrusel (el código JS completo del carrusel y del menú hamburguesa iría aquí) ---
+    </script>
+</body>
+<script src="JS/interactiva.js"></script>
+</html>
+
+
+
+

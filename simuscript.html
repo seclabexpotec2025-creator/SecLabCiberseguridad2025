@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SecLab — Actividad Interactiva</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Estilos generales */
+    :root {
+      --dark-blue: #1E3A5F;
+      --light-beige: #F2EBE0;
+      --gold-accent: #D4AC5D;
+      --brown-detail: #6B5B51;
+      --white: #ffffff;
+      --shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+      --gap: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: var(--white); color: var(--brown-detail);
+    }
+    .container {
+      max-width: 1100px; margin: 0 auto; padding: 40px 20px;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif; color: var(--dark-blue); font-weight: 700;
+    }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; margin-top: 20px; }
+    h3 { font-size: 1.5rem; margin-top: 20px; }
+
+    .lead {
+      font-size: 1.1rem; margin-top: 20px;
+    }
+
+    /* Estilos del apartado de instrucciones */
+    .instructions {
+      background-color: var(--light-beige);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 40px;
+    }
+
+    .instructions p {
+      line-height: 1.6;
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+
+    /* Estilo del botón de descarga */
+    .download-section {
+      background-color: var(--dark-blue);
+      color: var(--white);
+      padding: 20px;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .download-section a {
+      color: var(--white);
+      background-color: var(--gold-accent);
+      padding: 12px 20px;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: var(--radius);
+      transition: background-color 0.3s;
+    }
+
+    .download-section a:hover {
+      background-color: #c59b4b;
+    }
+
+    /* Estilos responsivos */
+    @media (max-width: 768px) {
+      h1, h2, h3 {
+        font-size: 1.5rem;
+      }
+
+      .instructions {
+        padding: 15px;
+      }
+
+      .download-section {
+        padding: 15px;
+      }
+    }
+    .button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button {
+  padding: 8px 18px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-accent);
+  background-color: var(--gold-accent); /* Fondo amarillo */
+  color: var(--dark-blue); /* Texto blanco */
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+
+   
+        /* --- Barra de Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Brand (logo + texto) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Enlaces */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links .button {
+  padding: 8px 18px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-accent);
+}
+
+/* Ajustes responsive */
+@media (max-width: 900px) {
+  .navbar { padding: 10px 20px; }
+  .nav-links { gap: 18px; }
+}
+
+@media (max-width: 640px) {
+  .nav-links { gap: 14px; }
+  .brand { gap: 10px; }
+  .brand img { height: clamp(100px, 100vw, 100px); }
+  .logo-text { font-size: clamp(1rem, 4vw, 1.35rem); }
+}
+
+
+  </style>
+</head>
+<body>
+      <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a class="button" href="team2.html">Contáctanos</a></li> 
+        </ul>
+        </nav>
+
+
+  <!-- Sección principal -->
+  <div class="container">
+    <h1>SecLab — Actividad Interactiva</h1>
+
+    <!-- Instrucciones de la actividad -->
+    <section class="instructions">
+      <h2>Instrucciones</h2>
+      <p><strong>Bienvenido a la actividad “Prueba” del Simulador de Script Seguro.</strong> 
+    Aquí pondrás a prueba tu conocimiento sobre cómo las acciones de un script pueden afectar el estado de un sistema informático.</p>
+    <ul style="margin-top:10px;">
+      <li>Lee las instrucciones que aparecen en el área del editor: cada comando representa una acción dentro del equipo.</li>
+      <li>Ejecuta el script paso a paso o completo para observar cómo cambian los valores de CPU, RAM, Disco, Red y Firewall.</li>
+      <li>Analiza los resultados: identifica cuáles comandos aumentan el <b>riesgo</b> y cuáles mantienen un <b>estado seguro</b>.</li>
+      <li>Reflexiona: los scripts mal escritos o maliciosos pueden consumir recursos, desactivar protecciones o cifrar archivos.</li>
+      <li> Si necesitas más información en  <a class="button" href="afectaciones.html">Afectaciones</a> hay más información</li>
+    </ul>
+    <p style="margin-top:10px;">
+      💡 <b>Consejo:</b> Experimenta modificando el script. Por ejemplo, cambia <code>FIREWALL OFF</code> por <code>FIREWALL ON</code> y observa cómo el riesgo disminuye.
+    </p>
+    </section> 
+    
+
+    <!-- Sección para descargar el archivo -->
+    <section class="download-section">
+      <h3>¡Descarga el archivo para comenzar!</h3>
+      <a href="prueba.html.zip" download>Descargar archivo</a>
+    </section>
+  </div>
+
+</body>
+</html>
