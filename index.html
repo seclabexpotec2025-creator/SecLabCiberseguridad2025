@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecLab</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- Paleta de Colores --- */
+    :root {
+      --dark-blue: #1E3A5F;
+      --light-beige: #F2EBE0;
+      --gold-accent: #D4AC5D;
+      --brown-detail: #6B5B51;
+      --white: #ffffff;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--brown-detail);
+      background-color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+     h2, h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--white);
+      font-weight: 700;
+      text-align: center;
+    }
+    h1{
+        font-family: 'Playfair Display', serif;
+      color: var(--dark-blue);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: var(--gold-accent);
+      color: var(--dark-blue);
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #c59b4b;
+      transform: translateY(-3px);
+    }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: var(--white);
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand img {
+      height: 60px;
+      width: auto;
+      border-radius: 6px;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--dark-blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* --- HERO --- */
+    .hero-wrapper {
+      background-color: var(--light-beige);
+      padding: 80px 20px;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1 1 400px;
+      text-align: left;
+    }
+
+    .hero-image {
+      flex: 1 1 400px;
+      text-align: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    /* --- FEATURE BOXES --- */
+    .feature-boxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin: 60px auto;
+      max-width: 1100px;
+      padding: 0 20px;
+    }
+
+    .feature-box {
+      background-color: var(--dark-blue);
+      color: var(--white);
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-box .icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 15px;
+      color: var(--gold-accent);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: var(--dark-blue);
+      color: var(--light-beige);
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 60px;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .brand img {
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="brand" href="index.html">
+      <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+     
+    </a>
+    <ul class="nav-links">
+      <li><a class="button" href="login.html">Inicia Sesión</a></li>
+      <li><a href="Registro.html">Regístrate</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-wrapper">
+    <div class="hero">
+      <div class="hero-text">
+        <h1>Bienvenido a SecLab</h1>
+        <p>Para garantizar la seguridad y personalización de tu experiencia, debes registrarte o iniciar sesión antes de acceder a nuestro curso.</p>
+        <p>La seguridad comienza contigo,da el primer paso hacia una PYME más protegida.</p>
+        <a href="Registro.html" class="button">Regístrate</a>
+      </div>
+      <div class="hero-image">
+        <img src="Imagenes/ciberseguridad.jpg" alt="Ciberseguridad">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE BOXES -->
+  <section class="feature-boxes">
+    <div class="feature-box">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18" /></svg>
+      <h3>¿Por Qué Capacitamos?</h3>
+      <p>Porque una empresa informada es una empresa protegida. Capacitamos para prevenir ataques, reducir errores humanos y crear una cultura de seguridad digital desde adentro.</p>
+    </div>
+
+    <div class="feature-box">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+      <h3>Misión en Capacitación</h3>
+      <p>Formamos equipos para que tomen decisiones seguras. Llevamos el conocimiento en ciberseguridad a empresas que necesitan protegerse sin complicaciones ni tecnicismos.</p>
+    </div>
+
+    <div class="feature-box">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>
+      <h3>Formación Clara, Seguridad Real</h3>
+      <p>Hablamos en tu idioma. Nuestras actividades son prácticas, accesibles y diseñadas para generar resultados reales frente a amenazas como el ransomware.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 SecLab — Seguridad y Confianza Digital
+  </footer>
+
+</body>
+</html>
