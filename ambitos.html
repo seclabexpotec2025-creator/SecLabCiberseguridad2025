@@ -4,10 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Seguridad & Ransomware — Guía clara</title>
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
-      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap');
-
     :root{
       --dark-blue: #1E3A5F;
       --light-beige: #F2EBE0;
@@ -172,66 +170,6 @@
 
     /* Hero right wrapper spacing */
     .hero-right > * + *{ margin-top:14px }
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 30px;
-      background-color: var(--white);
-      border-bottom: 1px solid #eee;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      font-family: 'Playfair Display', serif;
-      font-weight: 800;
-      color: var(--dark-blue);
-      font-size: 1.4rem;
-    }
-
-    .logo img { height: 28px; width: auto; display: block; }
-    
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 25px;
-      margin: 0; padding: 0;
-    }
-    .nav-links a {
-      text-decoration: none; color: var(--dark-blue); font-weight: 500;
-      transition: color 0.3s ease, transform 0.2s ease;
-    }
-    .nav-links a:hover { color: var(--gold-accent); transform: translateY(-2px); }
-    .button {
-      background: var(--gold-accent); color: var(--dark-blue);
-      padding: 8px 14px; border-radius: 8px; font-weight: 700;
-      transition: all 0.3s ease;
-    }
-    .brand img {
-  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
-  width: auto;                    /* mantiene proporción */
-  display: block;                 /* elimina espacios fantasmas */
-  object-fit: contain;
-}
-
-/* Texto del logo (antes .logo) */
-.logo-text {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
-  font-weight: 700;
-  color: var(--dark-blue);
-  line-height: 1;
-  white-space: nowrap;
-}
-    .button:hover { background: #c59b4b; color: var(--white); }
   </style>
 </head>
 <body>
@@ -251,20 +189,20 @@
   <symbol id="ico-vault" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2"/><path d="M13 12h5"/></symbol>
 </svg>
 
-  <nav class="navbar">
-  <!-- Brand (logo + texto) -->
-  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
-    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
- 
-  </a>
-        <ul class="nav-links">
-            <li><a href="inicio.html">Inicio</a></li>
-            <li><a href="inicio.html#services">Información</a></li>
-            <li><a href="inicioactividades.html">Actividades</a></li>
-         <li><a  href="team2.html">Contáctanos</a></li> 
-         <li><a class="button" href="perfil.html">Perfil</a></li>
-        </ul>
-        </nav>
+<div id="progress" aria-hidden="true"></div>
+  <header>
+    <div class="logo">SecLab</div>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#personal">Ámbito personal</a></li>
+        <li><a href="#protegerte">Consejos</a></li>
+        <li><a href="#empresarial">Ámbito empresarial</a></li>
+        <li><a href="#checklist">Checklist</a></li>
+        <li><a href="#footer">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
   <!-- HERO -->
   <section class="hero">
     <div class="container">
