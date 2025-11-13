@@ -77,6 +77,22 @@
         .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
         .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
         .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
     .controls{
         display: block; 
         justify-content: center; 
@@ -162,4 +178,5 @@
 .button:hover, .boton:hover, .primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+
 }
