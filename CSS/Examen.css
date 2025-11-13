@@ -64,7 +64,7 @@
             font-weight: bold;
             transition: all 0.3s ease;
         }
-        .navbar {
+           .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -77,6 +77,24 @@
         .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
         .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
         .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+   
+        /* --- Barra de Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Brand (logo + texto) */
 .brand {
   display: flex;
   align-items: center;
@@ -92,6 +110,52 @@
   width: auto;                    /* mantiene proporción */
   display: block;                 /* elimina espacios fantasmas */
   object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Enlaces */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links .button {
+  padding: 8px 18px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-accent);
+}
+
+/* Ajustes responsive */
+@media (max-width: 900px) {
+  .navbar { padding: 10px 20px; }
+  .nav-links { gap: 18px; }
+}
+
+@media (max-width: 640px) {
+  .nav-links { gap: 14px; }
+  .brand { gap: 10px; }
+  .brand img { height: clamp(100px, 100vw, 100px); }
+  .logo-text { font-size: clamp(1rem, 4vw, 1.35rem); }
 }
     .controls{
         display: block; 
@@ -180,3 +244,4 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 
 }
+
