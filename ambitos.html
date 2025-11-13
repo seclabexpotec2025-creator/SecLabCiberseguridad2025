@@ -170,6 +170,102 @@
 
     /* Hero right wrapper spacing */
     .hero-right > * + *{ margin-top:14px }
+    .button:hover { background-color: #c59b4b; transform: translateY(-3px); }
+
+        /* --- Barra de Navegación --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 1000; width: 100%; box-sizing: border-box;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: bold; color: var(--dark-blue); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; gap: 30px; }
+        .nav-links a { color: var(--dark-blue); text-decoration: none; font-weight: 500; }
+        .nav-links .button { padding: 8px 18px; margin-left: 15px; }
+   
+        /* --- Barra de Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 40px;
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Brand (logo + texto) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+  height: 80px;
+}
+
+/* Logo fluido, sin deformarse */
+.brand img {
+  height: clamp(60px, 6vw, 40px); /* se adapta a la pantalla */
+  width: auto;                    /* mantiene proporción */
+  display: block;                 /* elimina espacios fantasmas */
+  object-fit: contain;
+}
+
+/* Texto del logo (antes .logo) */
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--dark-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Enlaces */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--dark-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links .button {
+  padding: 8px 18px;
+  margin-left: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-accent);
+}
+
+/* Ajustes responsive */
+@media (max-width: 900px) {
+  .navbar { padding: 10px 20px; }
+  .nav-links { gap: 18px; }
+}
+
+@media (max-width: 640px) {
+  .nav-links { gap: 14px; }
+  .brand { gap: 10px; }
+  .brand img { height: clamp(100px, 100vw, 100px); }
+  .logo-text { font-size: clamp(1rem, 4vw, 1.35rem); }
+}
   </style>
 </head>
 <body>
@@ -191,16 +287,20 @@
 
 <div id="progress" aria-hidden="true"></div>
   <header>
-    <div class="logo">SecLab</div>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#personal">Ámbito personal</a></li>
-        <li><a href="#protegerte">Consejos</a></li>
-        <li><a href="#empresarial">Ámbito empresarial</a></li>
-        <li><a href="#checklist">Checklist</a></li>
-        <li><a href="#footer">Contacto</a></li>
-      </ul>
-    </nav>
+     <nav class="navbar">
+  <!-- Brand (logo + texto) -->
+  <a class="brand" href="inicio.html" aria-label="Ir a inicio">
+    <img src="Imagenes/logo.jpeg" alt="Logo de SecLab">
+ 
+  </a>
+        <ul class="nav-links">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="inicio.html#services">Información</a></li>
+            <li><a href="inicioactividades.html">Actividades</a></li>
+         <li><a  href="team2.html">Contáctanos</a></li> 
+         <li><a class="button" href="perfil.html">Perfil</a></li>
+        </ul>
+        </nav>
   </header>
 
   <!-- HERO -->
@@ -726,3 +826,4 @@
   </script>
 </body>
 </html>
+
